@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace API.Models.Product
 {
-    public class ProductKeyFeature
+    public class ProductAttributeValue
     {
         public int Id { get; set; }
-        public int ProductId { get; set; }
-        public int KeyFeatureDefinitionId { get; set; }
-        public required KeyFeatureDefinition KeyFeatureDefinition { get; set; }
+        public int ProductId { get; set; } 
+        public int CategoryAttributeId { get; set; }
+
         public required string Value { get; set; }
     }
-
 }

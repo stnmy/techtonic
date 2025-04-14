@@ -11,8 +11,7 @@ namespace API.Models.Product
         public int ProductId { get; set; }
         public required string ReviewerName { get; set; }
         public required string Comment { get; set; }
-        public int Rating { get; set; } // 1 to 5
-        public DateTime CreatedAt { get; set; }
+        public int Rating { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
-
 }

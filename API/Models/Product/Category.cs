@@ -10,8 +10,7 @@ namespace API.Models.Product
         public int Id { get; set; }
         public required string Name { get; set; }
         public string? Slug { get; set; }
+        public ICollection<CategoryAttribute> Attributes { get; set; } = new List<CategoryAttribute>();
         public ICollection<Product> Products { get; set; } = new List<Product>();
-        public ICollection<KeyFeatureDefinition> KeyFeatureDefinitions { get; set; } = new List<KeyFeatureDefinition>();
-        public ICollection<SpecificationSection> SpecificationSections { get; set; } = new List<SpecificationSection>();
     }
 }

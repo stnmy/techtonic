@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.Migrations
+namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -39,10 +39,10 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("API.Models.Product.KeyFeatureDefinition", b =>
+            modelBuilder.Entity("API.Models.Product.CategoryAttribute", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,15 +53,21 @@ namespace API.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsKeyFeature")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecificationCategory")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("KeyFeatureDefinition");
+                    b.ToTable("CategoryAttributes");
                 });
 
             modelBuilder.Entity("API.Models.Product.Product", b =>
@@ -87,8 +93,7 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("DiscountPrice")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<bool>("IsDealOfTheDay")
                         .HasColumnType("bit");
@@ -101,8 +106,7 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");
@@ -115,6 +119,33 @@ namespace API.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("API.Models.Product.ProductAttributeValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryAttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryAttributeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductAttributeValues");
                 });
 
             modelBuilder.Entity("API.Models.Product.ProductImage", b =>
@@ -136,34 +167,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
-                });
-
-            modelBuilder.Entity("API.Models.Product.ProductKeyFeature", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("KeyFeatureDefinitionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KeyFeatureDefinitionId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductKeyFeature");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("API.Models.Product.ProductQuestion", b =>
@@ -191,7 +195,7 @@ namespace API.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductQuestion");
+                    b.ToTable("ProductQuestions");
                 });
 
             modelBuilder.Entity("API.Models.Product.ProductReview", b =>
@@ -223,10 +227,10 @@ namespace API.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductReview");
+                    b.ToTable("ProductReviews");
                 });
 
-            modelBuilder.Entity("API.Models.Product.ProductSpecificationValue", b =>
+            modelBuilder.Entity("API.Models.Product.ProductVisit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,70 +241,20 @@ namespace API.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SpecificationFieldId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("VisitTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("SpecificationFieldId");
-
-                    b.ToTable("ProductSpecificationValue");
+                    b.ToTable("ProductVisits");
                 });
 
-            modelBuilder.Entity("API.Models.Product.SpecificationField", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpecificationSectionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SpecificationSectionId");
-
-                    b.ToTable("SpecificationField");
-                });
-
-            modelBuilder.Entity("API.Models.Product.SpecificationSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SpecificationSection");
-                });
-
-            modelBuilder.Entity("API.Models.Product.KeyFeatureDefinition", b =>
+            modelBuilder.Entity("API.Models.Product.CategoryAttribute", b =>
                 {
                     b.HasOne("API.Models.Product.Category", null)
-                        .WithMany("KeyFeatureDefinitions")
+                        .WithMany("Attributes")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -317,6 +271,21 @@ namespace API.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("API.Models.Product.ProductAttributeValue", b =>
+                {
+                    b.HasOne("API.Models.Product.CategoryAttribute", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryAttributeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Product.Product", null)
+                        .WithMany("AttributeValues")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API.Models.Product.ProductImage", b =>
                 {
                     b.HasOne("API.Models.Product.Product", null)
@@ -324,23 +293,6 @@ namespace API.Data.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("API.Models.Product.ProductKeyFeature", b =>
-                {
-                    b.HasOne("API.Models.Product.KeyFeatureDefinition", "KeyFeatureDefinition")
-                        .WithMany()
-                        .HasForeignKey("KeyFeatureDefinitionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.Product.Product", null)
-                        .WithMany("KeyFeatures")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("KeyFeatureDefinition");
                 });
 
             modelBuilder.Entity("API.Models.Product.ProductQuestion", b =>
@@ -361,55 +313,27 @@ namespace API.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Models.Product.ProductSpecificationValue", b =>
+            modelBuilder.Entity("API.Models.Product.ProductVisit", b =>
                 {
-                    b.HasOne("API.Models.Product.Product", null)
-                        .WithMany("SpecificationValues")
+                    b.HasOne("API.Models.Product.Product", "Product")
+                        .WithMany("Visits")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Models.Product.SpecificationField", "SpecificationField")
-                        .WithMany()
-                        .HasForeignKey("SpecificationFieldId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("SpecificationField");
-                });
-
-            modelBuilder.Entity("API.Models.Product.SpecificationField", b =>
-                {
-                    b.HasOne("API.Models.Product.SpecificationSection", "SpecificationSection")
-                        .WithMany("Fields")
-                        .HasForeignKey("SpecificationSectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SpecificationSection");
-                });
-
-            modelBuilder.Entity("API.Models.Product.SpecificationSection", b =>
-                {
-                    b.HasOne("API.Models.Product.Category", null)
-                        .WithMany("SpecificationSections")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("API.Models.Product.Category", b =>
                 {
-                    b.Navigation("KeyFeatureDefinitions");
+                    b.Navigation("Attributes");
 
                     b.Navigation("Products");
-
-                    b.Navigation("SpecificationSections");
                 });
 
             modelBuilder.Entity("API.Models.Product.Product", b =>
                 {
-                    b.Navigation("KeyFeatures");
+                    b.Navigation("AttributeValues");
 
                     b.Navigation("ProductImages");
 
@@ -417,12 +341,7 @@ namespace API.Data.Migrations
 
                     b.Navigation("Reviews");
 
-                    b.Navigation("SpecificationValues");
-                });
-
-            modelBuilder.Entity("API.Models.Product.SpecificationSection", b =>
-                {
-                    b.Navigation("Fields");
+                    b.Navigation("Visits");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace API.Models.Product
 {
-    public class ProductImage
-    {
-        public int Id { get; set; }
-        public required string ImageUrl { get; set; }
-        public int ProductId { get; set; }
-
-    }
-
+public class ProductImage
+{
+    public int Id { get; set; }
+    public required string ImageUrl { get; set; }
+    public int ProductId { get; set; }
+}
 }

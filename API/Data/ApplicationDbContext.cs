@@ -9,39 +9,47 @@ namespace API.Data
 {
     public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
-        public required DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryAttribute> CategoryAttributes { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
+        public DbSet<ProductReview> ProductReviews { get; set; }
+        public DbSet<ProductQuestion> ProductQuestions { get; set; }
+        public DbSet<ProductVisit> ProductVisits { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-                modelBuilder.Entity<ProductSpecificationValue>()
-                    .HasOne<SpecificationField>(psv => psv.SpecificationField)
-                    .WithMany()
-                    .HasForeignKey(psv => psv.SpecificationFieldId)
-                    .OnDelete(DeleteBehavior.Restrict);
-            
-            // Configure ProductKeyFeature -> Product relationship
-            modelBuilder.Entity<ProductKeyFeature>()
-                .HasOne<KeyFeatureDefinition>(pkf => pkf.KeyFeatureDefinition)
-                .WithMany()
-                .HasForeignKey(pkf => pkf.KeyFeatureDefinitionId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascading delete
-
-            modelBuilder.Entity<ProductKeyFeature>()
-                .HasOne<Product>()
-                .WithMany(p => p.KeyFeatures)
-                .HasForeignKey(pkf => pkf.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
-                .HasPrecision(18, 2);
+                .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
+                .IsRequired();
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.DiscountPrice)
-                .HasPrecision(18, 2);
+                .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
+                .IsRequired(false); // DiscountPrice is nullable
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ProductAttributeValue>()
+                .HasOne<CategoryAttribute>()
+                .WithMany()
+                .HasForeignKey(pav => pav.CategoryAttributeId)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ProductVisit>()
+                .HasOne(pv => pv.Product)
+                .WithMany(p => p.Visits)
+                .HasForeignKey(pv => pv.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
         }
-
 
     }
 }

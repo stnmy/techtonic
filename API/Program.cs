@@ -12,5 +12,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 var app = builder.Build();
 
 app.MapControllers();
+DbInitializer.InitDb(app);
 
 app.Run();
