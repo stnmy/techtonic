@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace API.Models.Product
 {
-public class ProductVisit
+public class Brand
 {
     public int Id { get; set; }
-    public int ProductId { get; set; }
+    public required string Name { get; set; }
+    public string? Slug { get; set; }
+
     [JsonIgnore]
-    public Product Product { get; set; } = null!;
-    public DateTime VisitTime { get; set; } = DateTime.UtcNow;
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 }
+
 }

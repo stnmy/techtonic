@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace API.Models.Product
@@ -15,17 +16,24 @@ namespace API.Models.Product
         public decimal Price { get; set; }
         public decimal? DiscountPrice { get; set; }
 
-        public required string Brand { get; set; }
-        public string? Type { get; set; }
+        public int BrandId { get; set; }
+        [JsonIgnore]
+        public Brand Brand { get; set; } = null!;
 
         public int CategoryId { get; set; }
-        public required Category Category { get; set; }
+        [JsonIgnore]
+        public Category Category { get; set; } = null!;
+        
+        public int? SubCategoryId { get; set; }
+
+        [JsonIgnore]
+        public SubCategory? SubCategory { get; set; }
 
         public bool IsFeatured { get; set; }
         public bool IsDealOfTheDay { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        
+
         public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
 
         public ICollection<ProductAttributeValue> AttributeValues { get; set; } = new List<ProductAttributeValue>();

@@ -10,8 +10,9 @@ namespace API.Data
     public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CategoryAttribute> CategoryAttributes { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
@@ -24,30 +25,26 @@ namespace API.Data
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
-                .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
+                .HasColumnType("decimal(18, 2)")
                 .IsRequired();
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.DiscountPrice)
-                .HasColumnType("decimal(18, 2)") // Adjust precision and scale as needed
-                .IsRequired(false); // DiscountPrice is nullable
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.Category)
-                .WithMany(c => c.Products)
-                .HasForeignKey(p => p.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasColumnType("decimal(18, 2)")
+                .IsRequired(false);
+
 
             modelBuilder.Entity<ProductAttributeValue>()
-                .HasOne<CategoryAttribute>()
-                .WithMany()
-                .HasForeignKey(pav => pav.CategoryAttributeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasOne<Product>() // or pav => pav.Product if navigation kept
+                .WithMany(p => p.AttributeValues)
+                .HasForeignKey(pav => pav.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<ProductVisit>()
                 .HasOne(pv => pv.Product)
                 .WithMany(p => p.Visits)
                 .HasForeignKey(pv => pv.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-
 
         }
 

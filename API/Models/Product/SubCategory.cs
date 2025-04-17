@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace API.Models.Product
 {
-    public class Category
+    public class SubCategory
     {
         public int Id { get; set; }
         public required string Name { get; set; }
         public string? Slug { get; set; }
+
+        public int CategoryId { get; set; }
         [JsonIgnore]
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public required Category Category { get; set; }
         [JsonIgnore]
-        public ICollection<SubCategory> SubCategories {get; set;} = new List<SubCategory>();
+        public ICollection<Product> Products { get; set; } =  new List<Product>();
     }
 }
