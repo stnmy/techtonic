@@ -483,3 +483,8 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 API/appsettings.json
+API/Models/Product/CategoryAttribute.cs
+API/Models/Product/CategoryAttribute.cs
+API/Models/Product/CategoryAttribute.cs
+API/Migrations/ApplicationDbContextModelSnapshot.cs
+API/Migrations/20250417174759_CategoryAttributeRemoved.cs

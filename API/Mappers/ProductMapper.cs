@@ -23,6 +23,7 @@ namespace API.Mappers
                 SubCategoryName = product.SubCategory?.Name,
                 IsFeatured = product.IsFeatured,
                 IsDealOfTheDay = product.IsDealOfTheDay,
+                StockQuantity = product.StockQuantity,
                 CreatedAt = product.CreatedAt,
                 Images = product.ProductImages.Select(pi => pi.ImageUrl).ToList(),
                 Attributes = product.AttributeValues.Select(av => new ProductAttributeValueDto

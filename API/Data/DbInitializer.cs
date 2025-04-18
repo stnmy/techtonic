@@ -37,7 +37,8 @@ namespace API.Data
                 new Brand { Name = "Samsung", Slug = "samsung" },
                 new Brand { Name = "Sony", Slug = "sony" },
                 new Brand { Name = "Xiaomi", Slug = "xiaomi" },
-                new Brand { Name = "Amazfit", Slug = "amazfit" }
+                new Brand { Name = "Amazfit", Slug = "amazfit" },
+                new Brand { Name = "Intel", Slug = "intel" }
             };
 
             var categories = new List<Category>
@@ -98,6 +99,7 @@ namespace API.Data
                     SubCategory = subCategories[0], // UltraBook
                     IsFeatured = true,
                     IsDealOfTheDay = false,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -154,6 +156,7 @@ namespace API.Data
                     SubCategory = subCategories[1], // Gaming
                     IsFeatured = true,
                     IsDealOfTheDay = true,
+                    StockQuantity = 25,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -210,6 +213,7 @@ namespace API.Data
                     SubCategory = subCategories[2], // Gaming Monitor
                     IsFeatured = true,
                     IsDealOfTheDay = false,
+                    StockQuantity = 7,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -265,6 +269,7 @@ namespace API.Data
                     Category = categories[2], // Graphics Card
                     IsFeatured = true,
                     IsDealOfTheDay = false,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -316,10 +321,11 @@ namespace API.Data
                     Slug = "intel-core-i9-14900k",
                     Description = "The fastest gaming processor with 24 cores and 32 threads.",
                     Price = 70000,
-                    Brand = brands[0], // Asus
+                    Brand = brands[9], // Intel
                     Category = categories[3], // Processor
                     IsFeatured = true,
                     IsDealOfTheDay = false,
+                    StockQuantity = 22,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -376,6 +382,7 @@ namespace API.Data
                     SubCategory = subCategories[4], // iPhone
                     IsFeatured = true,
                     IsDealOfTheDay = true,
+                    StockQuantity = 8,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -432,6 +439,7 @@ namespace API.Data
                     SubCategory = subCategories[6], // Mechanical
                     IsFeatured = false,
                     IsDealOfTheDay = false,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -488,6 +496,7 @@ namespace API.Data
                     SubCategory = subCategories[7], // Gaming Mouse
                     IsFeatured = false,
                     IsDealOfTheDay = false,
+                    StockQuantity = 21,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -544,6 +553,7 @@ namespace API.Data
                     SubCategory = subCategories[8], // Fitness Tracker
                     IsFeatured = true,
                     IsDealOfTheDay = false,
+                    StockQuantity = 10,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -599,6 +609,7 @@ namespace API.Data
                     Category = categories[8], // Gaming Console
                     IsFeatured = true,
                     IsDealOfTheDay = true,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -654,6 +665,7 @@ namespace API.Data
                     Category = categories[9], // Bluetooth Earphone
                     IsFeatured = false,
                     IsDealOfTheDay = false,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -710,6 +722,7 @@ namespace API.Data
                     SubCategory = subCategories[3], // 4K Monitor
                     IsFeatured = false,
                     IsDealOfTheDay = false,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -766,6 +779,7 @@ namespace API.Data
                     SubCategory = subCategories[5], // Android
                     IsFeatured = true,
                     IsDealOfTheDay = false,
+                    StockQuantity = 25,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -822,6 +836,7 @@ namespace API.Data
                     SubCategory = subCategories[8], // Fitness Tracker
                     IsFeatured = false,
                     IsDealOfTheDay = false,
+                    StockQuantity = 15,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
@@ -877,6 +892,7 @@ namespace API.Data
                     Category = categories[9], // Bluetooth Earphone
                     IsFeatured = false,
                     IsDealOfTheDay = true,
+                    StockQuantity = 5,
                     CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {

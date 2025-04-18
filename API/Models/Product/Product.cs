@@ -28,9 +28,11 @@ namespace API.Models.Product
 
         [JsonIgnore]
         public SubCategory? SubCategory { get; set; }
+        public required int StockQuantity {get; set;}
 
         public bool IsFeatured { get; set; }
         public bool IsDealOfTheDay { get; set; }
+
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

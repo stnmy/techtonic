@@ -18,6 +18,7 @@ namespace API.DTOS
         public string? SubCategoryName { get; set; }
         public bool IsFeatured { get; set; }
         public bool IsDealOfTheDay { get; set; }
+        public required int StockQuantity {get; set;}
         public DateTime CreatedAt { get; set; }
         public List<string> Images { get; set; } = new();
         public List<ProductAttributeValueDto> Attributes { get; set; } = new();
