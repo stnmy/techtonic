@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace API.Data.Migrations
+namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class DynamicRouting : Migration
+    public partial class FilterValuesAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,6 +40,28 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FilterAttribute",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    FilterName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilterSlug = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DefaultValues = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilterAttribute", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FilterAttribute_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SubCategories",
                 columns: table => new
                 {
@@ -67,7 +89,7 @@ namespace API.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DiscountPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -109,6 +131,7 @@ namespace API.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SpecificationCategory = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -209,6 +232,11 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_FilterAttribute_CategoryId",
+                table: "FilterAttribute",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductAttributeValues_ProductId",
                 table: "ProductAttributeValues",
                 column: "ProductId");
@@ -257,6 +285,9 @@ namespace API.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FilterAttribute");
+
             migrationBuilder.DropTable(
                 name: "ProductAttributeValues");
 

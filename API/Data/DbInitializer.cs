@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Models;
 using API.Models.Product;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,16 +44,138 @@ namespace API.Data
 
             var categories = new List<Category>
             {
-                new Category { Name = "Laptop", Slug = "laptop" },
-                new Category { Name = "Monitor", Slug = "monitor" },
-                new Category { Name = "Graphics Card", Slug = "graphics-card" },
-                new Category { Name = "Processor", Slug = "processor" },
-                new Category { Name = "Mobile", Slug = "mobile" },
-                new Category { Name = "Keyboard", Slug = "keyboard" },
-                new Category { Name = "Mouse", Slug = "mouse" },
-                new Category { Name = "Smart Watch", Slug = "smart-watch" },
-                new Category { Name = "Gaming Console", Slug = "gaming-console" },
-                new Category { Name = "Bluetooth Earphone", Slug = "bluetooth-earphone" }
+                new Category
+                {
+                    Name = "Laptop",
+                    Slug = "laptop",
+                    Filters = new List<FilterAttribute>
+                    {
+                        // Note: "Category" filter usually represents Subcategories or main category name itself
+                        new FilterAttribute { FilterName = "Category", FilterSlug = "category", DefaultValues = new List<string> { "Ultrabook", "Gaming", "2-in-1 Convertible", "Traditional Laptop" } },
+                        new FilterAttribute { FilterName = "Processor Type", FilterSlug = "processor-type", DefaultValues = new List<string> { "Intel Core i7", "AMD Ryzen 9", "AMD Ryzen 5", "Intel Core i5", "Intel Core i3", "AMD Ryzen 7" } },
+                        new FilterAttribute { FilterName = "Processor Model", FilterSlug = "processor-model", DefaultValues = new List<string> { "1165G7", "5900HX", "5500U", "12500H", "13700H", "7730U", "Other" } },
+                        new FilterAttribute { FilterName = "Generation/Series", FilterSlug = "generation-series", DefaultValues = new List<string> { "11th Gen", "12th Gen", "13th Gen", "14th Gen", "Ryzen 5000 Series", "Ryzen 6000 Series", "Ryzen 7000 Series" } },
+                        new FilterAttribute { FilterName = "Display Type", FilterSlug = "display-type", DefaultValues = new List<string> { "IPS", "Touch Display", "OLED", "TN", "VA" } },
+                        new FilterAttribute { FilterName = "Display Size", FilterSlug = "display-size", DefaultValues = new List<string> { "14\"", "15.6\"", "13.3\"", "16\"", "17.3\"" } },
+                        new FilterAttribute { FilterName = "RAM Size", FilterSlug = "ram-size", DefaultValues = new List<string> { "16GB", "8GB", "4GB", "12GB", "32GB" } },
+                        new FilterAttribute { FilterName = "RAM Type", FilterSlug = "ram-type", DefaultValues = new List<string> { "LPDDR4X", "DDR4", "DDR5", "LPDDR5" } },
+                        new FilterAttribute { FilterName = "HDD", FilterSlug = "hdd", DefaultValues = new List<string> { "None", "500GB", "1TB", "2TB" } },
+                        new FilterAttribute { FilterName = "SSD", FilterSlug = "ssd", DefaultValues = new List<string> { "512GB", "1TB", "128GB", "256GB", "2TB", "4TB" } },
+                        new FilterAttribute { FilterName = "Graphics", FilterSlug = "graphics-memory", DefaultValues = new List<string> { "Intel Iris Xe", "NVIDIA RTX 3060", "NVIDIA RTX 4070", "AMD Radeon Graphics", "NVIDIA MX Series" } },
+                        new FilterAttribute { FilterName = "Operating System", FilterSlug = "operating-system", DefaultValues = new List<string> { "Windows 11 Pro", "Windows 11 Home", "Windows 10 Pro", "Windows 10 Home", "macOS", "ChromeOS", "Linux" } },
+                        new FilterAttribute { FilterName = "Special Feature", FilterSlug = "feature", DefaultValues = new List<string> { "Backlit Keyboard", "Fingerprint Reader", "RGB Keyboard", "Adaptive Sync", "Stylus Support", "Convertible", "Thin and Light", "High Refresh Rate Display" } }
+                    }
+                },
+                new Category
+                {
+                    Name = "Monitor",
+                    Slug = "monitor",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Screen Size", FilterSlug="screen-size", DefaultValues = new List<string> { "27\"", "32\"", "24\"", "34\"", "49\"" } },
+                        new FilterAttribute { FilterName = "Resolution", FilterSlug= "resolution", DefaultValues = new List<string> { "QHD (2560x1440)", "4K UHD (3840x2160)", "FHD (1920x1080)", "UWQHD (3440x1440)", "5K (5120x2880)" } },
+                        new FilterAttribute { FilterName = "Panel Type", FilterSlug="panel-type", DefaultValues = new List<string> { "VA", "IPS", "TN", "OLED" } },
+                        new FilterAttribute { FilterName = "Refresh Rate", FilterSlug="refresh-rate", DefaultValues = new List<string> { "240Hz", "165Hz", "60Hz", "75Hz", "144Hz", "360Hz" } },
+                        new FilterAttribute { FilterName = "Response Time", FilterSlug="response-time", DefaultValues = new List<string> { "1ms (GtG)", "1ms (MPRT)", "4ms (GtG)", "5ms", "Faster than 1ms" } },
+                        new FilterAttribute { FilterName = "Input Type", FilterSlug="input-type", DefaultValues = new List<string> { "HDMI", "DisplayPort", "USB-C", "VGA", "DVI" } },
+                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<string> { "NVIDIA G-SYNC Compatible", "AMD FreeSync Premium Pro", "ELMB Sync", "Picture-by-Picture", "Picture-in-Picture", "Curved", "HDR Support", "Built-in Speakers" } },
+                    }
+                },
+                new Category
+                {
+                    Name = "Graphics Card",
+                    Slug = "graphics-card",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Chipset", FilterSlug="chipset", DefaultValues = new List<string> { "NVIDIA GeForce RTX 4080", "NVIDIA GeForce RTX 4090", "NVIDIA GeForce RTX 4070", "AMD Radeon RX 7900 XTX", "AMD Radeon RX 7800 XT", "NVIDIA GeForce GTX 1650", "Other" } },
+                        new FilterAttribute { FilterName = "Memory", FilterSlug="memory", DefaultValues = new List<string> { "16GB", "8GB", "10GB", "12GB", "20GB", "24GB" } },
+                        new FilterAttribute { FilterName = "Memory Type", FilterSlug="memory-type", DefaultValues = new List<string> { "GDDR6X", "GDDR6", "GDDR5" } },
+                        new FilterAttribute { FilterName = "Max Resolution", FilterSlug="max-resolution", DefaultValues = new List<string> { "7680 x 4320", "3840 x 2160", "5120 x 1440" } }
+                    }
+                },
+                new Category
+                {
+                    Name = "Processor",
+                    Slug = "processor",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Socket", FilterSlug="socket", DefaultValues = new List<string> { "LGA 1700", "AM5", "AM4", "LGA 1200", "LGA 1151" } },
+                        new FilterAttribute { FilterName = "Number of Core", FilterSlug="number-of-core", DefaultValues = new List<string> { "4", "6", "8", "10", "16", "24+" } }, // Simplified core counts
+                        new FilterAttribute { FilterName = "Number of Thread", FilterSlug="number-of-thread", DefaultValues = new List<string> { "8", "12", "16", "20", "32", "32+" } }, // Simplified thread counts
+                        new FilterAttribute { FilterName = "Clock Speed", FilterSlug="clock-speed", DefaultValues = new List<string> { "Below 3.0 GHz", "3.0 GHz - 4.0 GHz", "4.0 GHz - 5.0 GHz", "5.0 GHz+" } },
+                        new FilterAttribute { FilterName = "Cache", FilterSlug="cache", DefaultValues = new List<string> { "L3 Cache 8MB+", "L3 Cache 16MB+", "L3 Cache 32MB+" } }, // Simplified cache
+                    }
+                },
+                new Category
+                {
+                    Name = "Mobile",
+                    Slug = "mobile",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Display Size", FilterSlug="display-size", DefaultValues = new List<string> { "6.1\"", "6.8\"", "6.67\"", "5.5\"", "6.5\"", "7.0+\"" } },
+                        new FilterAttribute { FilterName = "Display Type", FilterSlug="display-type", DefaultValues = new List<string> { "Super Retina XDR OLED", "Dynamic AMOLED 2X", "AMOLED 120Hz", "IPS LCD", "OLED" } },
+                        new FilterAttribute { FilterName = "Chipset", FilterSlug="chipset", DefaultValues = new List<string> { "A16 Bionic", "Snapdragon 8 Gen 2 for Galaxy", "MediaTek Dimensity 1080", "A15 Bionic", "Snapdragon 8 Gen 3", "MediaTek Dimensity 9200", "Exynos", "Other" } },
+                        new FilterAttribute { FilterName = "RAM", FilterSlug="ram", DefaultValues = new List<string> { "12GB", "8GB", "4GB", "6GB", "16GB" } },
+                        new FilterAttribute { FilterName = "Internal Storage", FilterSlug="internal-storage", DefaultValues = new List<string> { "128GB", "256GB", "64GB", "512GB", "1TB" } },
+                        new FilterAttribute { FilterName = "Clock Speed", FilterSlug="clock-speed", DefaultValues = new List<string> { "Below 2.0 GHz", "2.0 GHz - 3.0 GHz", "Above 3.0 GHz" } }, // General mobile clock speed ranges
+                        new FilterAttribute { FilterName = "Battery", FilterSlug="battery", DefaultValues = new List<string> { "5000 mAh", "4980 mAh", "3000-4000 mAh", "4000-5000 mAh", "5000+ mAh" } },
+                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<string> { "Dynamic Island", "Always-On display", "S Pen Support", "IP68 Water Resistance", "Heart Rate Monitor", "SpO₂ Tracking", "Sleep Tracking", "Fast Charging", "NFC", "Wireless Charging", "Fingerprint Sensor", "Dual SIM" } }
+                    }
+                },
+                new Category
+                {
+                    Name = "Keyboard",
+                    Slug = "keyboard",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<string> { "Mechanical", "Membrane", "Optical" } },
+                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<string> { "USB", "USB-C (Detachable Cable)", "Wireless (Bluetooth)", "Wireless (2.4GHz)" } },
+                        new FilterAttribute { FilterName = "Switch Type", FilterSlug="switch-type", DefaultValues = new List<string> { "Cherry MX Speed", "Cherry MX Red", "Cherry MX Brown", "Cherry MX Blue", "Optical Switches", "Tactile", "Linear", "Clicky" } },
+                        new FilterAttribute { FilterName = "Special Feature", FilterSlug="special-feature", DefaultValues = new List<string> { "Per-Key RGB Backlighting", "Macro Keys", "Media Controls", "Wrist Rest Included" } },
+                    }
+                },
+                new Category
+                {
+                    Name = "Mouse",
+                    Slug = "mouse",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<string> { "Gaming Mouse", "Ergonomic Mouse", "Vertical Mouse" } },
+                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<string> { "Wireless (HyperSpeed)", "Wired (Speedflex Cable)", "USB", "Wireless (Bluetooth)" } },
+                        new FilterAttribute { FilterName = "Number of keys", FilterSlug="number-of-keys", DefaultValues = new List<string> { "3", "5", "6-8", "9+", "11 Programmable Buttons" } }, // Combined product value with ranges
+                        new FilterAttribute { FilterName = "Max DPI", FilterSlug="max-dpi", DefaultValues = new List<string> { "30000", "26000", "Below 8000", "8000-16000", "16000+", "Customizable" } },
+                    }
+                },
+                new Category
+                {
+                    Name = "Smart Watch",
+                    Slug = "smart-watch",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Display Type", FilterSlug="display-type", DefaultValues = new List<string> { "AMOLED", "TFT Touch Display", "LCD", "OLED", "E-Paper" } },
+                        new FilterAttribute { FilterName = "OS" , FilterSlug="os", DefaultValues = new List<string> { "Proprietary", "Zepp OS 2.0", "watchOS", "Wear OS", "HarmonyOS" } },
+                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<string> { "Heart Rate Monitor", "SpO₂ Tracking", "Sleep Tracking", "Built-in GPS", "Bluetooth phone calls", "Water Resistance", "ECG", "NFC Payments", "Music Storage" } } // Added Water Resistance based on product 11/12
+                    }
+                },
+                new Category
+                {
+                    Name = "Gaming Console",
+                    Slug = "gaming-console",
+                    // No filters defined in the original request for Gaming Console
+                    Filters = new List<FilterAttribute>()
+                },
+                new Category
+                {
+                    Name = "Headphone",
+                    Slug = "headphone",
+                    Filters = new List<FilterAttribute>
+                    {
+                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<string> { "Over-ear", "Gaming Headset", "In-ear", "On-ear", "Earbuds" } },
+                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<string> { "Wireless (Bluetooth)", "Wired (3.5mm)", "USB-C", "3.5mm Jack", "USB-A", "Wireless (2.4GHz)" } },
+                        new FilterAttribute { FilterName = "Color", FilterSlug="color", DefaultValues = new List<string> { "Black", "White", "Red", "Blue", "Silver" } },
+                        new FilterAttribute { FilterName = "Special Feature", FilterSlug="feature", DefaultValues = new List<string> { "Active Noise Cancellation", "AniMe Matrix™ Display", "AI Noise-Cancelling Mic", "Built-in Microphone", "Volume Control", "Foldable Design" } }, // Combined "Special Feature" and "Features" used in products
+                    }
+                }
             };
 
             var subCategories = new List<SubCategory>
@@ -84,137 +207,21 @@ namespace API.Data
             context.SubCategories.AddRange(subCategories);
             context.SaveChanges();
             var imageUrl = "https://www.startech.com.bd/image/cache/catalog/laptop/lenovo/legion-slim-5-16irh8/legion-slim-5-16irh8-01-500x500.webp";
-
-            // Now create the products
             var products = new List<Product>
             {
+                // 1. Lenovo Ultrabook (Laptop)
                 new Product
                 {
-                    Name = "Lenovo Yoga Slim 7 15ILL9 Core Ultra 7 15.3inch IPS Laptop",
-                    Slug = "lenovo-yoga-slim-7-15ill9-core-ultra-7-laptop",
-                    Description = "A premium ultrabook with stunning display and powerful performance.",
-                    Price = 200000,
+                    Name = "Lenovo Yoga Slim 7 14ITL05 Core i7 11th Gen 14\" FHD IPS Laptop",
+                    Slug = "lenovo-yoga-slim-7-14itl05",
+                    Description = "Ultra-thin and light laptop with powerful performance",
+                    Price = 125000,
+                    DiscountPrice = 119999,
                     Brand = brands[1], // Lenovo
                     Category = categories[0], // Laptop
-                    SubCategory = subCategories[0], // UltraBook
-                    IsFeatured = true,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Processor", Value = "Intel Core Ultra 7 258V", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "RAM", Value = "16GB LPDDR5x-8533", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Display", Value = "15.3Inch 2.8K WQXGA+ (2880x1800) IPS", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Storage", Value = "1TB SSD", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery Life", Value = "Up to 15 hours", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Weight", Value = "1.5 kg", SpecificationCategory = "General" },
-                        new ProductAttributeValue { Name = "Operating System", Value = "Windows 11 Pro", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Ports", Value = "2x USB-C, 2x USB-A, HDMI", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Graphics", Value = "Intel Arc Graphics", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "Warranty", Value = "2 years", SpecificationCategory = "Support" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "Alex Johnson",
-                            Comment = "Excellent build quality and performance",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-10)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Does it support Thunderbolt 4?",
-                            Answer = "Yes, both USB-C ports support Thunderbolt 4",
-                            CreatedAt = DateTime.UtcNow.AddDays(-5)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-2) }
-                    }
-                },
-
-                // 2. Gaming Laptop - Asus ROG
-                new Product
-                {
-                    Name = "ASUS ROG Strix G16 (2023) Gaming Laptop",
-                    Slug = "asus-rog-strix-g16-gaming-laptop",
-                    Description = "Powerful gaming laptop with high refresh rate display and RGB lighting.",
-                    Price = 250000,
-                    Brand = brands[0], // Asus
-                    Category = categories[0], // Laptop
-                    SubCategory = subCategories[1], // Gaming
-                    IsFeatured = true,
-                    IsDealOfTheDay = true,
+                    SubCategory = subCategories[0], // Ultrabook
                     StockQuantity = 25,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Processor", Value = "Intel Core i9-13980HX", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Graphics", Value = "NVIDIA GeForce RTX 4070 8GB GDDR6", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Display", Value = "16-inch QHD+ (2560 x 1600) 240Hz", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "RAM", Value = "32GB DDR5", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Cooling System", Value = "ROG Intelligent Cooling", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Storage", Value = "1TB PCIe 4.0 NVMe SSD", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Keyboard", Value = "RGB Backlit", SpecificationCategory = "Input" },
-                        new ProductAttributeValue { Name = "Battery", Value = "90WHrs", SpecificationCategory = "Power" },
-                        new ProductAttributeValue { Name = "Weight", Value = "2.5 kg", SpecificationCategory = "General" },
-                        new ProductAttributeValue { Name = "Operating System", Value = "Windows 11 Home", SpecificationCategory = "Software" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "GamerPro",
-                            Comment = "Handles all AAA games at max settings",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-7)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Is the RAM upgradable?",
-                            Answer = "Yes, it has 2 SODIMM slots with one available for upgrade",
-                            CreatedAt = DateTime.UtcNow.AddDays(-4)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-3) }
-                    }
-                },
-
-                // 3. Monitor - Samsung Odyssey
-                new Product
-                {
-                    Name = "Samsung Odyssey G7 32-inch QHD Curved Gaming Monitor",
-                    Slug = "samsung-odyssey-g7-32-inch-monitor",
-                    Description = "1000R curved gaming monitor with 240Hz refresh rate and QHD resolution.",
-                    Price = 80000,
-                    Brand = brands[5], // Samsung
-                    Category = categories[1], // Monitor
-                    SubCategory = subCategories[2], // Gaming Monitor
                     IsFeatured = true,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 7,
-                    CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
                         new ProductImage { ImageUrl = imageUrl },
@@ -222,339 +229,49 @@ namespace API.Data
                     },
                     AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductAttributeValue { Name = "Screen Size", Value = "32-inch", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Resolution", Value = "2560x1440 (QHD)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Refresh Rate", Value = "240Hz", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Curvature", Value = "1000R", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Response Time", Value = "1ms", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Panel Type", Value = "VA", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Brightness", Value = "350 cd/m²", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Ports", Value = "2x HDMI 2.0, 1x DisplayPort 1.4", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Adaptive Sync", Value = "NVIDIA G-SYNC Compatible", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Stand Adjustment", Value = "Height, Tilt, Swivel", SpecificationCategory = "Ergonomics" }
+                        new ProductAttributeValue { Name = "Processor Type", Slug = "processor-type", Value = "Intel Core i7", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug = "generation-series", Value = "11th Gen", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "RAM Size", Slug = "ram-size", Value = "16GB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "SSD", Slug = "ssd", Value = "512GB", SpecificationCategory ="Key Feature" },
+                        new ProductAttributeValue { Name = "Processor Model", Slug = "processor-model", Value = "1165G7", SpecificationCategory = "Processor" },
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "IPS", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "14\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "RAM Type", Slug = "ram-type", Value = "LPDDR4X", SpecificationCategory = "Memory" },
+                        new ProductAttributeValue { Name = "Graphics", Slug = "graphics", Value = "Intel Iris Xe", SpecificationCategory = "Graphics" },
+                        new ProductAttributeValue { Name = "Operating System", Slug = "operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "Backlit Keyboard, Fingerprint Reader", SpecificationCategory = "Features" }
                     },
                     Reviews = new List<ProductReview>
                     {
-                        new ProductReview
-                        {
-                            ReviewerName = "DisplayExpert",
-                            Comment = "The curve is perfect for immersive gaming",
-                            Rating = 4,
-                            CreatedAt = DateTime.UtcNow.AddDays(-8)
-                        }
+                        new ProductReview { ReviewerName = "TechEnthusiast", Comment = "Excellent build quality and performance", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-5) },
+                        new ProductReview { ReviewerName = "ProfessionalUser", Comment = "Perfect for business travel", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-2) }
                     },
                     Questions = new List<ProductQuestion>
                     {
-                        new ProductQuestion
-                        {
-                            Question = "Does this support HDR?",
-                            Answer = "Yes, it supports HDR600",
-                            CreatedAt = DateTime.UtcNow.AddDays(-6)
-                        }
+                        new ProductQuestion { Question = "Does it have Thunderbolt 4?", Answer = "Yes, it has 2 Thunderbolt 4 ports", CreatedAt = DateTime.UtcNow.AddDays(-3) },
+                        new ProductQuestion { Question = "Is the RAM upgradable?", Answer = "No, it's soldered to the motherboard", CreatedAt = DateTime.UtcNow.AddDays(-1) }
                     },
                     Visits = new List<ProductVisit>
                     {
+                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-12) },
+                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-5) },
                         new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-1) }
                     }
                 },
 
-                // 4. Graphics Card - Asus RTX 4090
+                // 2. ASUS Gaming Laptop
                 new Product
                 {
-                    Name = "ASUS ROG Strix GeForce RTX 4090 OC Edition",
-                    Slug = "asus-rog-strix-rtx-4090",
-                    Description = "The ultimate graphics card for 4K gaming and content creation.",
-                    Price = 300000,
-                    Brand = brands[0], // Asus
-                    Category = categories[2], // Graphics Card
-                    IsFeatured = true,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "GPU", Value = "NVIDIA GeForce RTX 4090", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Video Memory", Value = "24GB GDDR6X", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "CUDA Cores", Value = "16384", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Boost Clock", Value = "2640 MHz (OC Mode)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Cooling", Value = "Triple Axial-tech Fans", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Power Connectors", Value = "1x 16-pin", SpecificationCategory = "Power" },
-                        new ProductAttributeValue { Name = "Recommended PSU", Value = "850W", SpecificationCategory = "Power" },
-                        new ProductAttributeValue { Name = "Outputs", Value = "2x HDMI 2.1, 3x DisplayPort 1.4a", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Dimensions", Value = "357.6 x 149.3 x 70.1mm", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Warranty", Value = "3 years", SpecificationCategory = "Support" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "PCBuilder",
-                            Comment = "Absolute beast for 4K gaming",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-9)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "What power supply is recommended?",
-                            Answer = "Minimum 850W PSU is recommended",
-                            CreatedAt = DateTime.UtcNow.AddDays(-7)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-4) }
-                    }
-                },
-
-                // 5. Processor - Intel Core i9
-                new Product
-                {
-                    Name = "Intel Core i9-14900K Processor",
-                    Slug = "intel-core-i9-14900k",
-                    Description = "The fastest gaming processor with 24 cores and 32 threads.",
-                    Price = 70000,
-                    Brand = brands[9], // Intel
-                    Category = categories[3], // Processor
-                    IsFeatured = true,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 22,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Cores", Value = "24 (8P+16E)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Threads", Value = "32", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Max Turbo Frequency", Value = "6.0 GHz", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Cache", Value = "36MB", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Unlocked", Value = "Yes", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Socket", Value = "LGA1700", SpecificationCategory = "Compatibility" },
-                        new ProductAttributeValue { Name = "TDP", Value = "125W", SpecificationCategory = "Power" },
-                        new ProductAttributeValue { Name = "Memory Support", Value = "DDR5-5600, DDR4-3200", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Integrated Graphics", Value = "Intel UHD Graphics 770", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "Warranty", Value = "3 years", SpecificationCategory = "Support" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "Overclocker",
-                            Comment = "Amazing performance for gaming and productivity",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-12)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Does it come with a cooler?",
-                            Answer = "No, you need to purchase a cooler separately",
-                            CreatedAt = DateTime.UtcNow.AddDays(-8)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-6) }
-                    }
-                },
-
-                // 6. Mobile - iPhone 15 Pro
-                new Product
-                {
-                    Name = "Apple iPhone 15 Pro 256GB",
-                    Slug = "apple-iphone-15-pro-256gb",
-                    Description = "The most advanced iPhone with A17 Pro chip and titanium design.",
+                    Name = "ASUS ROG Strix G15 AMD Ryzen 9 5900HX 15.6\" FHD 144Hz Gaming Laptop",
+                    Slug = "asus-rog-strix-g15",
+                    Description = "High-performance gaming laptop with RGB lighting",
                     Price = 150000,
-                    Brand = brands[4], // Apple
-                    Category = categories[4], // Mobile
-                    SubCategory = subCategories[4], // iPhone
-                    IsFeatured = true,
-                    IsDealOfTheDay = true,
-                    StockQuantity = 8,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Chip", Value = "A17 Pro", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Display", Value = "6.1-inch Super Retina XDR", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Camera System", Value = "Pro 48MP Main + 12MP Ultra Wide + 12MP Telephoto", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Storage", Value = "256GB", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Build", Value = "Titanium with textured matte glass back", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery Life", Value = "Up to 23 hours video playback", SpecificationCategory = "Battery" },
-                        new ProductAttributeValue { Name = "Water Resistance", Value = "IP68", SpecificationCategory = "Durability" },
-                        new ProductAttributeValue { Name = "Operating System", Value = "iOS 17", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "5G", Value = "Yes", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Colors", Value = "Black Titanium, White Titanium, Blue Titanium, Natural Titanium", SpecificationCategory = "Design" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "AppleFan",
-                            Comment = "The titanium build feels premium and durable",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-5)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Does it support USB-C fast charging?",
-                            Answer = "Yes, supports up to 27W fast charging",
-                            CreatedAt = DateTime.UtcNow.AddDays(-3)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-2) }
-                    }
-                },
-
-                // 7. Keyboard - Corsair K100
-                new Product
-                {
-                    Name = "Corsair K100 RGB Mechanical Gaming Keyboard",
-                    Slug = "corsair-k100-rgb-mechanical-keyboard",
-                    Description = "Premium mechanical keyboard with OPX optical-mechanical switches.",
-                    Price = 25000,
-                    Brand = brands[2], // Corsair
-                    Category = categories[5], // Keyboard
-                    SubCategory = subCategories[6], // Mechanical
-                    IsFeatured = false,
-                    IsDealOfTheDay = false,
+                    DiscountPrice = 139999,
+                    Brand = brands[0], // ASUS
+                    Category = categories[0], // Laptop
+                    SubCategory = subCategories[1], // Gaming
                     StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Switch Type", Value = "OPX Optical-Mechanical", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Lighting", Value = "Per-key RGB", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Polling Rate", Value = "4000Hz", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Construction", Value = "Aircraft-grade aluminum frame", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Media Controls", Value = "Dedicated multimedia and volume roller", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Keycaps", Value = "Double-shot PBT", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "USB Passthrough", Value = "Yes", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Cable", Value = "Detachable braided fiber", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "Dimensions", Value = "472.5 x 165 x 39.5mm", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Weight", Value = "1.35kg", SpecificationCategory = "Physical" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "KeyboardEnthusiast",
-                            Comment = "The optical switches are incredibly responsive",
-                            Rating = 4,
-                            CreatedAt = DateTime.UtcNow.AddDays(-11)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Is this keyboard wireless?",
-                            Answer = "No, this is a wired keyboard",
-                            CreatedAt = DateTime.UtcNow.AddDays(-9)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-5) }
-                    }
-                },
-
-                // 8. Mouse - Razer Viper
-                new Product
-                {
-                    Name = "Razer Viper V2 Pro Wireless Gaming Mouse",
-                    Slug = "razer-viper-v2-pro-wireless",
-                    Description = "Ultra-lightweight wireless mouse with Focus Pro 30K optical sensor.",
-                    Price = 15000,
-                    Brand = brands[3], // Razer
-                    Category = categories[6], // Mouse
-                    SubCategory = subCategories[7], // Gaming Mouse
-                    IsFeatured = false,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 21,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Sensor", Value = "Focus Pro 30K Optical", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Weight", Value = "58g", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Connectivity", Value = "HyperSpeed Wireless & Bluetooth", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery Life", Value = "Up to 80 hours", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Switches", Value = "Optical Mouse Gen-3", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "DPI", Value = "30000", SpecificationCategory = "Performance" },
-                        new ProductAttributeValue { Name = "IPS", Value = "750", SpecificationCategory = "Performance" },
-                        new ProductAttributeValue { Name = "Buttons", Value = "8 programmable", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "Grip Type", Value = "Ambidextrous", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "Color", Value = "Black", SpecificationCategory = "Design" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "ProGamer",
-                            Comment = "Perfect for FPS games with its lightweight design",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-14)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Does it work with Mac computers?",
-                            Answer = "Yes, it works with both Windows and Mac",
-                            CreatedAt = DateTime.UtcNow.AddDays(-10)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-7) }
-                    }
-                },
-
-                // 9. Smart Watch - Apple Watch Ultra
-                new Product
-                {
-                    Name = "Apple Watch Ultra 2 (GPS + Cellular)",
-                    Slug = "apple-watch-ultra-2",
-                    Description = "The most rugged and capable Apple Watch for extreme adventures.",
-                    Price = 120000,
-                    Brand = brands[4], // Apple
-                    Category = categories[7], // Smart Watch
-                    SubCategory = subCategories[8], // Fitness Tracker
                     IsFeatured = true,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 10,
-                    CreatedAt = DateTime.UtcNow,
                     ProductImages = new List<ProductImage>
                     {
                         new ProductImage { ImageUrl = imageUrl },
@@ -562,381 +279,685 @@ namespace API.Data
                     },
                     AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductAttributeValue { Name = "Display", Value = "49mm Always-On Retina", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Chip", Value = "S9 SiP", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery Life", Value = "Up to 36 hours", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Durability", Value = "Titanium case, 100m water resistant", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Health Sensors", Value = "ECG, Blood Oxygen, Temperature", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Connectivity", Value = "GPS + Cellular", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Strap", Value = "Alpine Loop (included)", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "Operating System", Value = "watchOS 10", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Storage", Value = "64GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Colors", Value = "Titanium", SpecificationCategory = "Design" }
+                        new ProductAttributeValue { Name = "Processor Type", Slug = "processor-type", Value = "AMD Ryzen 9", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Graphics", Slug = "graphics", Value = "NVIDIA RTX 3060", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "RAM Size", Slug = "ram-size", Value = "16GB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "SSD", Slug = "ssd", Value = "1TB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Processor Model", Slug = "processor-model", Value = "5900HX", SpecificationCategory = "Processor" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "15.6\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Display Resolution", Slug = "display-resolution", Value = "FHD", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Display Refresh Rate", Slug = "display-refresh-rate", Value = "144Hz", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "RGB Keyboard, Adaptive Sync", SpecificationCategory = "Features" }
                     },
                     Reviews = new List<ProductReview>
                     {
-                        new ProductReview
-                        {
-                            ReviewerName = "OutdoorEnthusiast",
-                            Comment = "Perfect for hiking and outdoor activities",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-6)
-                        }
+                        new ProductReview { ReviewerName = "GamerPro", Comment = "Handles all AAA games at max settings!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-7) },
+                        new ProductReview { ReviewerName = "ContentCreator", Comment = "Great for video editing too", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-3) }
                     },
                     Questions = new List<ProductQuestion>
                     {
-                        new ProductQuestion
-                        {
-                            Question = "Can I swim with this watch?",
-                            Answer = "Yes, it's water resistant up to 100 meters",
-                            CreatedAt = DateTime.UtcNow.AddDays(-4)
-                        }
+                        new ProductQuestion { Question = "Does it support G-Sync?", Answer = "Yes, it supports G-Sync", CreatedAt = DateTime.UtcNow.AddDays(-4) },
+                        new ProductQuestion { Question = "How many USB ports?", Answer = "3 USB-A and 1 USB-C", CreatedAt = DateTime.UtcNow.AddDays(-1) }
                     },
                     Visits = new List<ProductVisit>
                     {
+                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-8) },
                         new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-3) }
                     }
                 },
 
-                // 10. Gaming Console - Sony PS5
+                // 3. Samsung Gaming Monitor
                 new Product
                 {
-                    Name = "Sony PlayStation 5 Digital Edition",
-                    Slug = "sony-playstation-5-digital",
-                    Description = "Next-gen gaming console with ultra-high speed SSD.",
-                    Price = 60000,
-                    Brand = brands[6], // Sony
-                    Category = categories[8], // Gaming Console
+                    Name = "Samsung Odyssey G7 27\" QHD 240Hz Curved Gaming Monitor",
+                    Slug = "samsung-odyssey-g7",
+                    Description = "Immersive curved gaming monitor with high refresh rate",
+                    Price = 65000,
+                    DiscountPrice = 59900,
+                    Brand = brands[5], // Samsung
+                    Category = categories[1], // Monitor
+                    SubCategory = subCategories[2], // Gaming Monitor
+                    StockQuantity = 10,
                     IsFeatured = true,
-                    IsDealOfTheDay = true,
-                    StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
                     AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductAttributeValue { Name = "CPU", Value = "AMD Zen 2, 8-core/16-thread", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "GPU", Value = "AMD RDNA 2, 10.28 TFLOPs", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Memory", Value = "16GB GDDR6", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Storage", Value = "825GB Custom SSD", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Resolution", Value = "Up to 8K", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Ray Tracing", Value = "Yes", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "Backward Compatibility", Value = "PS4 games", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Controller", Value = "DualSense Wireless Controller", SpecificationCategory = "Included" },
-                        new ProductAttributeValue { Name = "Dimensions", Value = "390 x 260 x 104mm", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Weight", Value = "3.9kg", SpecificationCategory = "Physical" }
+                        new ProductAttributeValue { Name = "Screen Size", Slug = "screen-size", Value = "27\"", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Resolution", Slug = "resolution", Value = "QHD (2560x1440)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Refresh Rate", Slug = "refresh-rate", Value = "240Hz", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Response Time", Slug = "response-time", Value = "1ms (GtG)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Panel Type", Slug = "panel-type", Value = "VA", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Curvature", Slug = "curvature", Value = "1000R", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Input Type", Slug = "input-type", Value = "HDMI, DisplayPort", SpecificationCategory = "Connectivity" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "NVIDIA G-SYNC Compatible, AMD FreeSync Premium Pro", SpecificationCategory = "Features" }
                     },
                     Reviews = new List<ProductReview>
                     {
-                        new ProductReview
-                        {
-                            ReviewerName = "ConsoleGamer",
-                            Comment = "The SSD makes loading times almost non-existent",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-13)
-                        }
+                        new ProductReview { ReviewerName = "GamerReview", Comment = "Smooth gameplay, amazing curve!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-10) }
                     },
                     Questions = new List<ProductQuestion>
                     {
-                        new ProductQuestion
-                        {
-                            Question = "Does this version support physical discs?",
-                            Answer = "No, this is the digital-only version",
-                            CreatedAt = DateTime.UtcNow.AddDays(-11)
-                        }
+                        new ProductQuestion { Question = "Does it come with a stand?", Answer = "Yes, an adjustable stand is included", CreatedAt = DateTime.UtcNow.AddDays(-5) }
                     },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-8) }
-                    }
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-6) } }
                 },
 
-                // 11. Bluetooth Earphone - Sony WH-1000XM5
+                // 4. Apple iPhone 14 Pro
+                new Product
+                {
+                    Name = "Apple iPhone 14 Pro 128GB Deep Purple",
+                    Slug = "apple-iphone-14-pro-128gb",
+                    Description = "Powerful smartphone with A16 Bionic chip and ProMotion display",
+                    Price = 145000,
+                    DiscountPrice = 139000,
+                    Brand = brands[4], // Apple
+                    Category = categories[4], // Mobile
+                    SubCategory = subCategories[4], // iPhone
+                    StockQuantity = 8,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Chipset", Slug = "chipset", Value = "A16 Bionic", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "Super Retina XDR OLED", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Internal Storage", Slug = "internal-storage", Value = "128GB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Rear Camera", Slug = "rear-camera", Value = "48MP Main, 12MP Ultrawide, 12MP Telephoto", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "6.1\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Refresh Rate", Slug = "refresh-rate", Value = "ProMotion (120Hz adaptive)", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "OS", Slug = "os", Value = "iOS", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "Dynamic Island, Always-On display", SpecificationCategory = "Features" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "AppleFan", Comment = "The camera is incredible!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-15) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Is it water resistant?", Answer = "Yes, IP68 rated", CreatedAt = DateTime.UtcNow.AddDays(-7) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-2) } }
+                },
+
+                // 5. Samsung Galaxy S23 Ultra
+                new Product
+                {
+                    Name = "Samsung Galaxy S23 Ultra 256GB Phantom Black",
+                    Slug = "samsung-galaxy-s23-ultra-256gb",
+                    Description = "Premium Android phone with S Pen support and powerful camera",
+                    Price = 130000,
+                    DiscountPrice = 125000,
+                    Brand = brands[5], // Samsung
+                    Category = categories[4], // Mobile
+                    SubCategory = subCategories[5], // Android
+                    StockQuantity = 12,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Chipset", Slug = "chipset", Value = "Snapdragon 8 Gen 2 for Galaxy", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Internal Storage", Slug = "internal-storage", Value = "256GB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Rear Camera", Slug = "rear-camera", Value = "200MP Main, 12MP Ultrawide, 10MP Periscope Telephoto, 10MP Telephoto", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Battery", Slug = "battery", Value = "5000 mAh", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "6.8\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "Dynamic AMOLED 2X", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "RAM", Slug = "ram", Value = "12GB", SpecificationCategory = "Memory" },
+                        new ProductAttributeValue { Name = "OS", Slug = "os", Value = "Android", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "S Pen Support, IP68 Water Resistance", SpecificationCategory = "Features" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "AndroidUser", Comment = "Best Android phone I've ever used, zoom is amazing", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-12) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does the S Pen come with it?", Answer = "Yes, the S Pen is included and stored in the phone", CreatedAt = DateTime.UtcNow.AddDays(-6) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-4) } }
+                },
+
+                // 6. Corsair K95 RGB Platinum XT Mechanical Keyboard
+                new Product
+                {
+                    Name = "Corsair K95 RGB Platinum XT Cherry MX Speed Mechanical Gaming Keyboard",
+                    Slug = "corsair-k95-rgb-platinum-xt",
+                    Description = "High-end mechanical gaming keyboard with RGB lighting",
+                    Price = 22000,
+                    DiscountPrice = 20500,
+                    Brand = brands[2], // Corsair
+                    Category = categories[5], // Keyboard
+                    SubCategory = subCategories[6], // Mechanical
+                    StockQuantity = 20,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Type", Slug = "type", Value = "Mechanical", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Switch Type", Slug = "switch-type", Value = "Cherry MX Speed", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "USB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "Per-Key RGB Backlighting", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Layout", Slug = "layout", Value = "Full Size", SpecificationCategory = "General" },
+                        new ProductAttributeValue { Name = "Wrist Rest", Slug = "wrist-rest", Value = "Detachable Padded", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "Software", Slug = "software", Value = "Corsair iCUE", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Number of Macro Keys", Slug = "number-of-macro-keys", Value = "6", SpecificationCategory = "Features" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "KeyboardFan", Comment = "Love the feel of the switches and the RGB!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-9) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Is it loud?", Answer = "Cherry MX Speed switches are linear and not clicky, so relatively quiet compared to clicky switches", CreatedAt = DateTime.UtcNow.AddDays(-4) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-1) } }
+                },
+
+                // 7. Razer DeathAdder V3 Pro Gaming Mouse
+                new Product
+                {
+                    Name = "Razer DeathAdder V3 Pro Wireless Gaming Mouse",
+                    Slug = "razer-deathadder-v3-pro",
+                    Description = "Ergonomic and lightweight wireless gaming mouse",
+                    Price = 15000,
+                    DiscountPrice = 13800,
+                    Brand = brands[3], // Razer
+                    Category = categories[6], // Mouse
+                    SubCategory = subCategories[7], // Gaming Mouse
+                    StockQuantity = 18,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Type", Slug = "type", Value = "Gaming Mouse", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "Wireless (HyperSpeed)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Max DPI", Slug = "max-dpi", Value = "30000", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Sensor", Slug = "sensor", Value = "Focus Pro 30K Optical Sensor", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Ergonomics", Slug = "ergonomics", Value = "Right-Handed", SpecificationCategory = "General" },
+                        new ProductAttributeValue { Name = "Weight", Slug = "weight", Value = "63g", SpecificationCategory = "General" },
+                        new ProductAttributeValue { Name = "Number of Buttons", Slug = "number-of-buttons", Value = "5", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "Battery Life", Slug = "battery-life", Value = "Up to 90 hours", SpecificationCategory = "Battery" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "FPSPlayer", Comment = "Super light and accurate, improved my aim!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-8) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does it use a standard USB dongle?", Answer = "Yes, it uses the Razer HyperSpeed USB dongle", CreatedAt = DateTime.UtcNow.AddDays(-3) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-2) } }
+                },
+
+                // 8. Sony WH-1000XM5 Noise Cancelling Headphones
                 new Product
                 {
                     Name = "Sony WH-1000XM5 Wireless Noise Cancelling Headphones",
                     Slug = "sony-wh-1000xm5",
-                    Description = "Industry-leading noise cancellation with exceptional sound quality.",
-                    Price = 45000,
+                    Description = "Industry-leading noise cancellation and premium sound",
+                    Price = 40000,
+                    DiscountPrice = 37500,
                     Brand = brands[6], // Sony
-                    Category = categories[9], // Bluetooth Earphone
-                    IsFeatured = false,
-                    IsDealOfTheDay = false,
+                    Category = categories[9], // Headphone
+                    SubCategory = null,
                     StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Noise Cancellation", Value = "Industry-leading ANC", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery Life", Value = "Up to 30 hours (ANC on)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Quick Charge", Value = "3 mins = 3 hours playback", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Sound Quality", Value = "High-Resolution Audio", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Microphones", Value = "8 for calls and ANC", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Weight", Value = "250g", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Bluetooth Version", Value = "5.2", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Touch Controls", Value = "Yes", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Foldable", Value = "Yes", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "Colors", Value = "Black, Silver", SpecificationCategory = "Design" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "Audiophile",
-                            Comment = "Best noise cancellation I've ever experienced",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-15)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Can I use these wired?",
-                            Answer = "Yes, they include a 3.5mm audio cable",
-                            CreatedAt = DateTime.UtcNow.AddDays(-12)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-9) }
-                    }
-                },
-
-                // 12. Monitor - Asus ProArt
-                new Product
-                {
-                    Name = "ASUS ProArt PA32UCX 32-inch 4K HDR Monitor",
-                    Slug = "asus-proart-pa32ucx",
-                    Description = "Professional 4K HDR monitor with 99% Adobe RGB coverage.",
-                    Price = 250000,
-                    Brand = brands[0], // Asus
-                    Category = categories[1], // Monitor
-                    SubCategory = subCategories[3], // 4K Monitor
-                    IsFeatured = false,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
-                    AttributeValues = new List<ProductAttributeValue>
-                    {
-                        new ProductAttributeValue { Name = "Resolution", Value = "3840 x 2160 (4K UHD)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Color Gamut", Value = "99% Adobe RGB, 99% DCI-P3", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "HDR", Value = "Dolby Vision, HDR10, HLG", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Brightness", Value = "1200 cd/m² peak", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Panel Type", Value = "IPS", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Refresh Rate", Value = "60Hz", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Response Time", Value = "5ms", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Ports", Value = "Thunderbolt 3, HDMI 2.0, DisplayPort 1.4", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Calibration", Value = "Factory calibrated", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Stand Adjustment", Value = "Height, tilt, swivel, pivot", SpecificationCategory = "Ergonomics" }
-                    },
-                    Reviews = new List<ProductReview>
-                    {
-                        new ProductReview
-                        {
-                            ReviewerName = "DesignPro",
-                            Comment = "Perfect color accuracy for graphic design work",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-16)
-                        }
-                    },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion
-                        {
-                            Question = "Is this suitable for video editing?",
-                            Answer = "Yes, it's excellent for color-critical video work",
-                            CreatedAt = DateTime.UtcNow.AddDays(-14)
-                        }
-                    },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-10) }
-                    }
-                },
-
-                // 13. Mobile - Samsung Galaxy S23 Ultra
-                new Product
-                {
-                    Name = "Samsung Galaxy S23 Ultra 12GB/512GB",
-                    Slug = "samsung-galaxy-s23-ultra",
-                    Description = "Flagship smartphone with 200MP camera and S Pen support.",
-                    Price = 180000,
-                    Brand = brands[5], // Samsung
-                    Category = categories[4], // Mobile
-                    SubCategory = subCategories[5], // Android
                     IsFeatured = true,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 25,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
                     AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductAttributeValue { Name = "Processor", Value = "Snapdragon 8 Gen 2", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Display", Value = "6.8-inch Dynamic AMOLED 2X, 120Hz", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Camera", Value = "200MP main + 12MP ultra wide + 10MP telephoto x2", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "S Pen", Value = "Included", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery", Value = "5000mAh", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "RAM", Value = "12GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Storage", Value = "512GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Water Resistance", Value = "IP68", SpecificationCategory = "Durability" },
-                        new ProductAttributeValue { Name = "Operating System", Value = "Android 13", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Colors", Value = "Phantom Black, Cream, Green, Lavender", SpecificationCategory = "Design" }
+                        new ProductAttributeValue { Name = "Type", Slug = "type", Value = "Over-ear", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "Wireless (Bluetooth), Wired (3.5mm)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "Active Noise Cancellation", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Battery Life", Slug = "battery-life", Value = "Up to 30 hours (with ANC)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Audio Codecs", Slug = "audio-codecs", Value = "LDAC, AAC, SBC", SpecificationCategory = "Audio" },
+                        new ProductAttributeValue { Name = "Microphone", Slug = "microphone", Value = "Integrated for Calls and ANC", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "App Support", Slug = "app-support", Value = "Sony Headphones Connect App", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Color", Slug = "color", Value = "Black", SpecificationCategory = "General" }
                     },
                     Reviews = new List<ProductReview>
                     {
-                        new ProductReview
-                        {
-                            ReviewerName = "MobilePhotographer",
-                            Comment = "The 200MP camera captures incredible detail",
-                            Rating = 5,
-                            CreatedAt = DateTime.UtcNow.AddDays(-17)
-                        }
+                        new ProductReview { ReviewerName = "MusicLover", Comment = "Amazing noise cancellation, perfect for flights!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-18) }
                     },
                     Questions = new List<ProductQuestion>
                     {
-                        new ProductQuestion
-                        {
-                            Question = "Does it support expandable storage?",
-                            Answer = "No, it doesn't have a microSD slot",
-                            CreatedAt = DateTime.UtcNow.AddDays(-15)
-                        }
+                        new ProductQuestion { Question = "Does it come with a carrying case?", Answer = "Yes, a foldable carrying case is included", CreatedAt = DateTime.UtcNow.AddDays(-10) }
                     },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-11) }
-                    }
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-5) } }
                 },
 
-                // 14. Smart Watch - Amazfit GTR 4
+                // 9. Intel Core i9-13900K Processor
                 new Product
                 {
-                    Name = "Amazfit GTR 4 Smart Watch",
-                    Slug = "amazfit-gtr-4",
-                    Description = "Premium smartwatch with 14-day battery life and built-in GPS.",
-                    Price = 25000,
-                    Brand = brands[8], // Amazfit
+                    Name = "Intel Core i9-13900K 24 Cores 3.0 GHz LGA 1700 Desktop Processor",
+                    Slug = "intel-core-i9-13900k",
+                    Description = "High-performance desktop processor for gaming and content creation",
+                    Price = 60000,
+                    DiscountPrice = 58000,
+                    Brand = brands[9], // Intel
+                    Category = categories[3], // Processor
+                    SubCategory = null,
+                    StockQuantity = 7,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Processor Type", Slug = "processor-type", Value = "Intel Core i9", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Socket", Slug = "socket", Value = "LGA 1700", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Number of Cores", Slug = "number-of-cores", Value = "24 (8 Performance-cores, 16 Efficient-cores)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Max Turbo Frequency", Slug = "max-turbo-frequency", Value = "5.8 GHz", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug = "generation-series", Value = "13th Gen", SpecificationCategory = "General" },
+                        new ProductAttributeValue { Name = "Number of Threads", Slug = "number-of-threads", Value = "32", SpecificationCategory = "General" },
+                        new ProductAttributeValue { Name = "Cache", Slug = "cache", Value = "36MB Intel Smart Cache", SpecificationCategory = "Memory" },
+                        new ProductAttributeValue { Name = "Integrated Graphics", Slug = "integrated-graphics", Value = "Intel UHD Graphics 770", SpecificationCategory = "Graphics" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "PCTuner", Comment = "Incredible performance for multitasking!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-11) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does it come with a cooler?", Answer = "No, cooler is not included, a high-performance cooler is recommended", CreatedAt = DateTime.UtcNow.AddDays(-5) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-3) } }
+                },
+
+                // 10. NVIDIA GeForce RTX 4080 Graphics Card
+                new Product
+                {
+                    Name = "ASUS ROG Strix GeForce RTX 4080 16GB GDDR6X OC Edition Graphics Card",
+                    Slug = "asus-rog-strix-rtx-4080",
+                    Description = "Extreme performance graphics card for 4K gaming",
+                    Price = 180000,
+                    DiscountPrice = 175000,
+                    Brand = brands[0], // ASUS
+                    Category = categories[2], // Graphics Card
+                    SubCategory = null,
+                    StockQuantity = 5,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Chipset", Slug = "chipset", Value = "NVIDIA GeForce RTX 4080", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Memory", Slug = "memory", Value = "16GB", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Memory Type", Slug = "memory-type", Value = "GDDR6X", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Max Resolution", Slug = "max-resolution", Value = "7680 x 4320", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "PCI Express 4.0", SpecificationCategory = "Connectivity" },
+                        new ProductAttributeValue { Name = "Cooling", Slug = "cooling", Value = "Triple Fan", SpecificationCategory = "Cooling" },
+                        new ProductAttributeValue { Name = "Power Connectors", Slug = "power-connectors", Value = "1 x 16-pin", SpecificationCategory = "Power" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "Ray Tracing, DLSS 3", SpecificationCategory = "Features" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "HardcoreGamer", Comment = "Absolutely crushes 4K gaming, worth every penny!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-20) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "What PSU is recommended?", Answer = "A high-quality 850W PSU or greater is recommended", CreatedAt = DateTime.UtcNow.AddDays(-9) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-7) } }
+                },
+
+                // 11. Xiaomi Mi Smart Band 7
+                new Product
+                {
+                    Name = "Xiaomi Mi Smart Band 7 Fitness Tracker",
+                    Slug = "xiaomi-mi-smart-band-7",
+                    Description = "Affordable fitness tracker with AMOLED display",
+                    Price = 3500,
+                    DiscountPrice = 3200,
+                    Brand = brands[7], // Xiaomi
                     Category = categories[7], // Smart Watch
                     SubCategory = subCategories[8], // Fitness Tracker
+                    StockQuantity = 50,
                     IsFeatured = false,
-                    IsDealOfTheDay = false,
-                    StockQuantity = 15,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
                     AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductAttributeValue { Name = "Battery Life", Value = "Up to 14 days", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Display", Value = "1.43-inch AMOLED", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "GPS", Value = "Dual-band GPS", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Health Monitoring", Value = "Heart rate, blood oxygen, sleep", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Water Resistance", Value = "5ATM", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Compatibility", Value = "Android & iOS", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Workout Modes", Value = "150+", SpecificationCategory = "Fitness" },
-                        new ProductAttributeValue { Name = "Weight", Value = "34g", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Materials", Value = "Aluminum alloy case", SpecificationCategory = "Design" },
-                        new ProductAttributeValue { Name = "Colors", Value = "Infinite Black, Brown Leather", SpecificationCategory = "Design" }
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "AMOLED", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Battery Life", Slug = "battery-life", Value = "Up to 14 days", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Water Resistance", Slug = "water-resistance", Value = "5ATM", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "Heart Rate Monitor, SpO₂ Tracking, Sleep Tracking", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "1.62\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Connectivity", Slug = "connectivity", Value = "Bluetooth 5.2", SpecificationCategory = "Connectivity" },
+                        new ProductAttributeValue { Name = "OS", Slug = "os", Value = "Proprietary", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Compatibility", Slug = "compatibility", Value = "Android & iOS", SpecificationCategory = "Compatibility" }
                     },
                     Reviews = new List<ProductReview>
                     {
-                        new ProductReview
-                        {
-                            ReviewerName = "FitnessTracker",
-                            Comment = "The battery life is truly impressive",
-                            Rating = 4,
-                            CreatedAt = DateTime.UtcNow.AddDays(-18)
-                        }
+                        new ProductReview { ReviewerName = "FitnessFan", Comment = "Great value for the features, battery lasts forever", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-25) }
                     },
                     Questions = new List<ProductQuestion>
                     {
-                        new ProductQuestion
-                        {
-                            Question = "Can I make payments with this watch?",
-                            Answer = "Yes, it supports NFC payments",
-                            CreatedAt = DateTime.UtcNow.AddDays(-16)
-                        }
+                        new ProductQuestion { Question = "Can I reply to messages?", Answer = "No, you can only view notifications", CreatedAt = DateTime.UtcNow.AddDays(-11) }
                     },
-                    Visits = new List<ProductVisit>
-                    {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-12) }
-                    }
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-1) } }
                 },
 
-                // 15. Bluetooth Earphone - Xiaomi Buds 4 Pro
+                // 12. Amazfit Bip 5 Smart Watch
                 new Product
                 {
-                    Name = "Xiaomi Buds 4 Pro True Wireless Earbuds",
-                    Slug = "xiaomi-buds-4-pro",
-                    Description = "Premium TWS earbuds with active noise cancellation.",
-                    Price = 15000,
-                    Brand = brands[7], // Xiaomi
-                    Category = categories[9], // Bluetooth Earphone
+                    Name = "Amazfit Bip 5 Smart Watch with Built-in GPS",
+                    Slug = "amazfit-bip-5",
+                    Description = "Lightweight smartwatch with long battery life and GPS",
+                    Price = 8000,
+                    DiscountPrice = 7500,
+                    Brand = brands[8], // Amazfit
+                    Category = categories[7], // Smart Watch
+                    SubCategory = null, // Can be Smart Watch directly
+                    StockQuantity = 22,
                     IsFeatured = false,
-                    IsDealOfTheDay = true,
-                    StockQuantity = 5,
-                    CreatedAt = DateTime.UtcNow,
-                    ProductImages = new List<ProductImage>
-                    {
-                        new ProductImage { ImageUrl = imageUrl },
-                        new ProductImage { ImageUrl = imageUrl }
-                    },
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
                     AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductAttributeValue { Name = "Noise Cancellation", Value = "Active Noise Cancellation (ANC)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Battery Life", Value = "9 hours (ANC off), 6 hours (ANC on)", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Driver Size", Value = "11mm dynamic drivers", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Bluetooth Version", Value = "5.3", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Water Resistance", Value = "IP54", SpecificationCategory = "Key Feature" },
-                        new ProductAttributeValue { Name = "Codecs", Value = "LDAC, AAC, SBC", SpecificationCategory = "Audio" },
-                        new ProductAttributeValue { Name = "Charging Case", Value = "Yes, wireless charging", SpecificationCategory = "Battery" },
-                        new ProductAttributeValue { Name = "Touch Controls", Value = "Yes", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Weight", Value = "5g per earbud", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Colors", Value = "Black, White", SpecificationCategory = "Design" }
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "TFT Touch Display", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Built-in GPS", Slug = "built-in-gps", Value = "Yes", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Battery Life", Slug = "battery-life", Value = "Up to 10 days (typical use)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "Heart Rate, SpO₂, Sleep, Stress Monitoring", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "1.91\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Water Resistance", Slug = "water-resistance", Value = "IP68", SpecificationCategory = "Durability" },
+                        new ProductAttributeValue { Name = "OS", Slug = "os", Value = "Zepp OS 2.0", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Weight", Slug = "weight", Value = "26g (without strap)", SpecificationCategory = "General" }
                     },
                     Reviews = new List<ProductReview>
                     {
-                        new ProductReview
-                        {
-                            ReviewerName = "AudioLover",
-                            Comment = "Great sound quality for the price",
-                            Rating = 4,
-                            CreatedAt = DateTime.UtcNow.AddDays(-19)
-                        }
+                        new ProductReview { ReviewerName = "CasualUser", Comment = "Good basic smartwatch with reliable GPS", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-14) }
                     },
                     Questions = new List<ProductQuestion>
                     {
-                        new ProductQuestion
-                        {
-                            Question = "Do these support multipoint connection?",
-                            Answer = "Yes, they can connect to two devices simultaneously",
-                            CreatedAt = DateTime.UtcNow.AddDays(-17)
-                        }
+                        new ProductQuestion { Question = "Can I make calls on this watch?", Answer = "Yes, it supports Bluetooth phone calls", CreatedAt = DateTime.UtcNow.AddDays(-6) }
                     },
-                    Visits = new List<ProductVisit>
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-3) } }
+                },
+
+                // 13. Sony PlayStation 5 Console
+                new Product
+                {
+                    Name = "Sony PlayStation 5 (PS5) Console",
+                    Slug = "sony-playstation-5",
+                    Description = "Next-gen gaming console with lightning-fast loading",
+                    Price = 70000, // Assuming market price
+                    DiscountPrice = 68000,
+                    Brand = brands[6], // Sony
+                    Category = categories[8], // Gaming Console
+                    SubCategory = null,
+                    StockQuantity = 3,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
                     {
-                        new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-13) }
-                    }
+                        new ProductAttributeValue { Name = "Console Type", Slug = "console-type", Value = "Home Console", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Storage Type", Slug = "storage-type", Value = "Ultra-High Speed SSD", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Max Resolution", Slug = "max-resolution", Value = "8K Output", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "Ray Tracing, Tempest 3D AudioTech", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "CPU", Slug = "cpu", Value = "AMD Zen 2-based 8 Cores at 3.5GHz", SpecificationCategory = "Hardware" },
+                        new ProductAttributeValue { Name = "GPU", Slug = "gpu", Value = "AMD RDNA 2-based 10.28 TFLOPS", SpecificationCategory = "Hardware" },
+                        new ProductAttributeValue { Name = "System Memory", Slug = "system-memory", Value = "16GB GDDR6", SpecificationCategory = "Hardware" },
+                        new ProductAttributeValue { Name = "Disc Drive", Slug = "disc-drive", Value = "4K UHD Blu-ray Drive", SpecificationCategory = "Hardware" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "Gamer Enthusiast", Comment = "Loading times are insane! Games look and sound amazing.", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-30) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Is the SSD expandable?", Answer = "Yes, via an M.2 NVMe SSD slot", CreatedAt = DateTime.UtcNow.AddDays(-15) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-8) } }
+                },
+
+                // 14. Lenovo IdeaPad Flex 5 (Laptop)
+                new Product
+                {
+                    Name = "Lenovo IdeaPad Flex 5 14ALC05 AMD Ryzen 5 14\" FHD Touch Laptop",
+                    Slug = "lenovo-ideapad-flex-5-14alc05",
+                    Description = "Versatile 2-in-1 laptop with touch display",
+                    Price = 75000,
+                    DiscountPrice = 71000,
+                    Brand = brands[1], // Lenovo
+                    Category = categories[0], // Laptop
+                    SubCategory = null, // General Laptop
+                    StockQuantity = 18,
+                    IsFeatured = false,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Processor Type", Slug = "processor-type", Value = "AMD Ryzen 5", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "Touch Display", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Form Factor", Slug = "form-factor", Value = "2-in-1 Convertible", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "14\"", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Processor Model", Slug = "processor-model", Value = "5500U", SpecificationCategory = "Processor" },
+                        new ProductAttributeValue { Name = "RAM Size", Slug = "ram-size", Value = "8GB", SpecificationCategory = "Memory" },
+                        new ProductAttributeValue { Name = "SSD", Slug = "ssd", Value = "512GB", SpecificationCategory="Storage" },
+                        new ProductAttributeValue { Name = "Operating System", Slug = "operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "Stylus Support (Stylus not included)", SpecificationCategory = "Features" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "StudentUser", Comment = "Perfect for notes and media consumption", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-10) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does it support external monitors?", Answer = "Yes, via HDMI and USB-C", CreatedAt = DateTime.UtcNow.AddDays(-5) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-2) } }
+                },
+
+                // 15. Asus TUF Gaming VG27AQ Monitor
+                new Product
+                {
+                    Name = "ASUS TUF Gaming VG27AQ 27\" QHD 165Hz IPS Gaming Monitor",
+                    Slug = "asus-tuf-gaming-vg27aq",
+                    Description = "Responsive IPS gaming monitor with high refresh rate",
+                    Price = 45000,
+                    DiscountPrice = 42000,
+                    Brand = brands[0], // ASUS
+                    Category = categories[1], // Monitor
+                    SubCategory = subCategories[2], // Gaming Monitor
+                    StockQuantity = 12,
+                    IsFeatured = false,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Screen Size", Slug = "screen-size", Value = "27\"", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Resolution", Slug = "resolution", Value = "QHD (2560x1440)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Refresh Rate", Slug = "refresh-rate", Value = "165Hz", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Panel Type", Slug = "panel-type", Value = "IPS", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Response Time", Slug = "response-time", Value = "1ms (MPRT)", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Input Type", Slug = "input-type", Value = "HDMI, DisplayPort", SpecificationCategory = "Connectivity" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "ELMB Sync, G-SYNC Compatible", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "HDR", Slug = "hdr", Value = "HDR10 Support", SpecificationCategory = "Display" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "GamerCasual", Comment = "Smooth performance and great colors on this IPS panel", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-19) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does it have speakers?", Answer = "Yes, built-in stereo speakers", CreatedAt = DateTime.UtcNow.AddDays(-8) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-4) } }
+                },
+
+                // 16. Corsair K65 RGB Mini Mechanical Keyboard
+                new Product
+                {
+                    Name = "Corsair K65 RGB Mini 60% Mechanical Gaming Keyboard",
+                    Slug = "corsair-k65-rgb-mini",
+                    Description = "Compact 60% mechanical keyboard for gaming",
+                    Price = 12000,
+                    DiscountPrice = 11000,
+                    Brand = brands[2], // Corsair
+                    Category = categories[5], // Keyboard
+                    SubCategory = subCategories[6], // Mechanical
+                    StockQuantity = 25,
+                    IsFeatured = false,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Type", Slug = "type", Value = "Mechanical", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Form Factor", Slug = "form-factor", Value = "60%", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Switch Type", Slug = "switch-type", Value = "Cherry MX Speed", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "Per-Key RGB Backlighting", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "USB-C (Detachable Cable)", SpecificationCategory = "Connectivity" },
+                        new ProductAttributeValue { Name = "Polling Rate", Slug = "polling-rate", Value = "8000Hz Hyper-polling", SpecificationCategory = "Performance" },
+                        new ProductAttributeValue { Name = "Software", Slug = "software", Value = "Corsair iCUE", SpecificationCategory = "Software" },
+                        new ProductAttributeValue { Name = "Keycaps", Slug = "keycaps", Value = "Double-shot PBT", SpecificationCategory = "General" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "CompactSetup", Comment = "Great space saver, feels solid and responsive", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-13) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Are the keycaps replaceable?", Answer = "Yes, it uses standard Cherry MX stems", CreatedAt = DateTime.UtcNow.AddDays(-7) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-1) } }
+                },
+
+                // 17. Razer Basilisk V3 Gaming Mouse
+                new Product
+                {
+                    Name = "Razer Basilisk V3 Wired Gaming Mouse",
+                    Slug = "razer-basilisk-v3",
+                    Description = "Customizable wired gaming mouse with hypercroll tilt wheel",
+                    Price = 8000,
+                    DiscountPrice = 7500,
+                    Brand = brands[3], // Razer
+                    Category = categories[6], // Mouse
+                    SubCategory = subCategories[7], // Gaming Mouse
+                    StockQuantity = 28,
+                    IsFeatured = false,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Type", Slug = "type", Value = "Gaming Mouse", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "Wired (Speedflex Cable)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Max DPI", Slug = "max-dpi", Value = "26000", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Sensor", Slug = "sensor", Value = "Focus+ 26K DPI Optical Sensor", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Ergonomics", Slug = "ergonomics", Value = "Right-Handed", SpecificationCategory = "General" },
+                        new ProductAttributeValue { Name = "Number of Buttons", Slug = "number-of-buttons", Value = "11 Programmable Buttons", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "Razer HyperScroll Tilt Wheel", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "Lighting", Slug = "lighting", Value = "11-Zone Chroma RGB", SpecificationCategory = "Lighting" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "MMOPlayer", Comment = "Love the extra buttons and the scroll wheel modes", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-16) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Is the cable braided?", Answer = "Yes, it's a flexible braided Razer Speedflex cable", CreatedAt = DateTime.UtcNow.AddDays(-9) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-3) } }
+                },
+
+                // 18. Samsung 32" 4K UHD Monitor
+                new Product
+                {
+                    Name = "Samsung UJ59 Series 32\" 4K UHD (3840x2160) LED Monitor",
+                    Slug = "samsung-uj59-32-4k-monitor",
+                    Description = "Affordable 4K monitor for productivity and media",
+                    Price = 42000,
+                    DiscountPrice = 39500,
+                    Brand = brands[5], // Samsung
+                    Category = categories[1], // Monitor
+                    SubCategory = subCategories[3], // 4K Monitor
+                    StockQuantity = 9,
+                    IsFeatured = false,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Screen Size", Slug = "screen-size", Value = "32\"", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Resolution", Slug = "resolution", Value = "4K UHD (3840x2160)", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Panel Type", Slug = "panel-type", Value = "VA", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Refresh Rate", Slug = "refresh-rate", Value = "60Hz", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Response Time", Slug = "response-time", Value = "4ms (GtG)", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Input Type", Slug = "input-type", Value = "HDMI, DisplayPort", SpecificationCategory = "Connectivity" },
+                        new ProductAttributeValue { Name = "Features", Slug = "features", Value = "Picture-by-Picture, Picture-in-Picture", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "Brightness", Slug = "brightness", Value = "270 cd/m²", SpecificationCategory = "Display" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "DesignerUser", Comment = "Great screen real estate for design work", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-22) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does it have VESA mount support?", Answer = "Yes, 100x100mm VESA mount compatible", CreatedAt = DateTime.UtcNow.AddDays(-10) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-5) } }
+                },
+
+                // 19. Xiaomi Redmi Note 12 Pro+ 5G
+                new Product
+                {
+                    Name = "Xiaomi Redmi Note 12 Pro+ 5G 8GB RAM 256GB Storage",
+                    Slug = "xiaomi-redmi-note-12-pro-plus-5g",
+                    Description = "Mid-range 5G phone with 200MP camera and fast charging",
+                    Price = 38000,
+                    DiscountPrice = 36500,
+                    Brand = brands[7], // Xiaomi
+                    Category = categories[4], // Mobile
+                    SubCategory = subCategories[5], // Android
+                    StockQuantity = 15,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Connectivity", Slug = "connectivity", Value = "5G", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Rear Camera", Slug = "rear-camera", Value = "200MP Main", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Fast Charging", Slug = "fast-charging", Value = "120W HyperCharge", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Type", Slug = "display-type", Value = "AMOLED 120Hz", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Display Size", Slug = "display-size", Value = "6.67\"", SpecificationCategory = "Display" },
+                        new ProductAttributeValue { Name = "Chipset", Slug = "chipset", Value = "MediaTek Dimensity 1080", SpecificationCategory = "Processor" },
+                        new ProductAttributeValue { Name = "RAM", Slug = "ram", Value = "8GB", SpecificationCategory = "Memory" },
+                        new ProductAttributeValue { Name = "Internal Storage", Slug = "internal-storage", Value = "256GB", SpecificationCategory = "Storage" },
+                        new ProductAttributeValue { Name = "Battery", Slug = "battery", Value = "4980 mAh", SpecificationCategory = "Battery" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "BudgetTech", Comment = "Amazing camera for the price, charging speed is insane!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-10) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Does it have expandable storage?", Answer = "No, it does not have a microSD card slot", CreatedAt = DateTime.UtcNow.AddDays(-4) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-2) } }
+                },
+
+                // 20. Asus ROG Delta S Animate Headset
+                new Product
+                {
+                    Name = "ASUS ROG Delta S Animate USB-C Gaming Headset",
+                    Slug = "asus-rog-delta-s-animate",
+                    Description = "Gaming headset with AniMe Matrix™ display and AI Noise-Cancelling Mic",
+                    Price = 28000,
+                    DiscountPrice = 26500,
+                    Brand = brands[0], // ASUS
+                    Category = categories[9], // Headphone
+                    SubCategory = null,
+                    StockQuantity = 10,
+                    IsFeatured = true,
+                    ProductImages = new List<ProductImage> { new ProductImage { ImageUrl = imageUrl } },
+                    AttributeValues = new List<ProductAttributeValue>
+                    {
+                        new ProductAttributeValue { Name = "Type", Slug = "type", Value = "Gaming Headset", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Interface", Slug = "interface", Value = "USB-C", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Microphone", Slug = "microphone", Value = "AI Noise-Cancelling", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Special Feature", Slug = "special-feature", Value = "AniMe Matrix™ Display", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Audio Technology", Slug = "audio-technology", Value = "ESS 9281 Quad DAC", SpecificationCategory = "Audio" },
+                        new ProductAttributeValue { Name = "Lighting", Slug = "lighting", Value = "Customizable Animations", SpecificationCategory = "Features" },
+                        new ProductAttributeValue { Name = "Compatibility", Slug = "compatibility", Value = "PC, Mac, PlayStation 5, Nintendo Switch, Mobile", SpecificationCategory = "Compatibility" },
+                        new ProductAttributeValue { Name = "Software", Slug = "software", Value = "Armoury Crate", SpecificationCategory = "Software" }
+                    },
+                    Reviews = new List<ProductReview>
+                    {
+                        new ProductReview { ReviewerName = "StreamerLife", Comment = "Mic quality is fantastic, and the animations are a cool touch!", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-11) }
+                    },
+                    Questions = new List<ProductQuestion>
+                    {
+                        new ProductQuestion { Question = "Is the microphone detachable?", Answer = "Yes, the boom microphone is detachable", CreatedAt = DateTime.UtcNow.AddDays(-5) }
+                    },
+                    Visits = new List<ProductVisit> { new ProductVisit { VisitTime = DateTime.UtcNow.AddHours(-4) } }
                 }
             };
+            
 
             context.Products.AddRange(products);
             context.SaveChanges();

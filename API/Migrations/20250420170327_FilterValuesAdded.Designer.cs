@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.Migrations
+namespace API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250418110030_DynamicRouting")]
-    partial class DynamicRouting
+    [Migration("20250420170327_FilterValuesAdded")]
+    partial class FilterValuesAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,36 @@ namespace API.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("API.Models.FilterAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.PrimitiveCollection<string>("DefaultValues")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilterSlug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("FilterAttribute");
+                });
 
             modelBuilder.Entity("API.Models.Product.Brand", b =>
                 {
@@ -105,6 +135,7 @@ namespace API.Data.Migrations
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Slug")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StockQuantity")
@@ -138,6 +169,10 @@ namespace API.Data.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecificationCategory")
                         .IsRequired()
@@ -283,6 +318,15 @@ namespace API.Data.Migrations
                     b.ToTable("SubCategories");
                 });
 
+            modelBuilder.Entity("API.Models.FilterAttribute", b =>
+                {
+                    b.HasOne("API.Models.Product.Category", null)
+                        .WithMany("Filters")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API.Models.Product.Product", b =>
                 {
                     b.HasOne("API.Models.Product.Brand", "Brand")
@@ -373,6 +417,8 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Models.Product.Category", b =>
                 {
+                    b.Navigation("Filters");
+
                     b.Navigation("Products");
 
                     b.Navigation("SubCategories");

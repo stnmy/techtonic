@@ -15,5 +15,6 @@ namespace API.Models.Product
         public ICollection<Product> Products { get; set; } = new List<Product>();
         [JsonIgnore]
         public ICollection<SubCategory> SubCategories {get; set;} = new List<SubCategory>();
+        public ICollection<FilterAttribute> Filters {get; set;} = new List<FilterAttribute>();
     }
 }

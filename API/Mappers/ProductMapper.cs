@@ -9,8 +9,9 @@ namespace API.Mappers
 {
     public static class ProductMapper
     {
-        public static ProductDto toProductDto(this Product product){
-            return new ProductDto
+        public static ProductDetailDto toProductDto(this Product product)
+        {
+            return new ProductDetailDto
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -47,6 +48,28 @@ namespace API.Mappers
                     CreatedAt = q.CreatedAt
                 }).ToList(),
                 VisitCount = product.Visits.Count
+            };
+        }
+
+        public static ProductCardDto toProductCardDto(this Product product)
+        {
+            return new ProductCardDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Slug = product.Slug,
+                Price = product.Price,
+                DiscountPrice = product.DiscountPrice,
+                Image = product.ProductImages.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.jpg",
+                Attributes = product.AttributeValues
+                .Where(av => av.SpecificationCategory == "Key Feature")
+                .Select(av => new ProductAttributeValueDto
+                {
+                    Name = av.Name ?? "Unknown",
+                    Value = av.Value,
+                    SpecificationCategory = av.SpecificationCategory
+
+                }).ToList(),
             };
         }
     }

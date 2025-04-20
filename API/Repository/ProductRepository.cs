@@ -22,7 +22,7 @@ namespace API.Repository
             _context = context;
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<Product?> GetProductById(int id)
         {
             var product = await _context.Products
                 .Include(p => p.Brand)
@@ -58,21 +58,24 @@ namespace API.Repository
             var categories = await _context.Categories.Select(c => c.Slug.ToLower()).ToListAsync();
             var brands = await _context.Brands.Select(c => c.Slug.ToLower()).ToListAsync();
             var subCategories = await _context.SubCategories.Select(c => c.Slug.ToLower()).ToListAsync();
-            
+
             var identified = new List<IdentifiedSlug>();
             foreach (var slug in slugs)
             {
                 var lowerSlug = slug.ToLower();
-                if (categories.Contains(slug)){
+                if (categories.Contains(slug))
+                {
                     identified.Add(new IdentifiedSlug(lowerSlug, SlugType.Category));
                 }
-                else if(brands.Contains(slug)){
+                else if (brands.Contains(slug))
+                {
                     identified.Add(new IdentifiedSlug(lowerSlug, SlugType.Brand));
                 }
-                else if(subCategories.Contains(slug)){
+                else if (subCategories.Contains(slug))
+                {
                     identified.Add(new IdentifiedSlug(lowerSlug, SlugType.SubCategory));
                 }
-                
+
 
             }
             return identified;
@@ -84,6 +87,8 @@ namespace API.Repository
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
                 .Include(p => p.SubCategory)
+                .Include(p => p.AttributeValues)
+                .Include(p => p.ProductImages)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(categorySlug))
@@ -96,10 +101,27 @@ namespace API.Repository
             }
             if (!string.IsNullOrEmpty(subCategorySlug))
             {
-                query = query.Where(p => p.SubCategory!= null && p.SubCategory.Slug.ToLower() == subCategorySlug.ToLower());
+                query = query.Where(p => p.SubCategory != null && p.SubCategory.Slug.ToLower() == subCategorySlug.ToLower());
             }
 
             return await query.ToListAsync();
+        }
+
+        public async Task<List<FilterDto>> GetFiltersForCategoryAsync(string categorySlug)
+        {
+            var category = await _context.Categories
+                .Include(c => c.Filters)
+                .FirstOrDefaultAsync(c => c.Slug == categorySlug);
+
+            if (category == null) return new();
+
+            return category.Filters
+                .Select(f => new FilterDto
+                {
+                    FilterName = f.FilterName,
+                    FilterSlug = f.FilterSlug,
+                    Values = f.DefaultValues.OrderBy(v => v).ToList()
+                }).ToList();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace API.Models.Product
         public int ProductId { get; set; }
 
         public required string Name {get; set;}
+        public required string Slug {get; set;}
         public required string Value { get; set; }
         public required string SpecificationCategory {get; set;}
     }
