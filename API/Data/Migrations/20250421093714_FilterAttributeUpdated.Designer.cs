@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Migrations
+namespace API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250420170327_FilterValuesAdded")]
-    partial class FilterValuesAdded
+    [Migration("20250421093714_FilterAttributeUpdated")]
+    partial class FilterAttributeUpdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,10 +35,6 @@ namespace API.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
-
-                    b.PrimitiveCollection<string>("DefaultValues")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FilterName")
                         .IsRequired()
@@ -95,6 +91,28 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("API.Models.Product.FilterAttributeValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FilterAttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilterAttributeId");
+
+                    b.ToTable("FilterAttributeValue");
                 });
 
             modelBuilder.Entity("API.Models.Product.Product", b =>
@@ -327,6 +345,15 @@ namespace API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("API.Models.Product.FilterAttributeValue", b =>
+                {
+                    b.HasOne("API.Models.FilterAttribute", null)
+                        .WithMany("DefaultValues")
+                        .HasForeignKey("FilterAttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API.Models.Product.Product", b =>
                 {
                     b.HasOne("API.Models.Product.Brand", "Brand")
@@ -408,6 +435,11 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("API.Models.FilterAttribute", b =>
+                {
+                    b.Navigation("DefaultValues");
                 });
 
             modelBuilder.Entity("API.Models.Product.Brand", b =>

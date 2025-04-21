@@ -1,2 +1,3 @@
-// TODO : Make separate Dtos For ProductMini and ProductLarge
-// TODO : Find a way for working with Dynamic Filtering For categories, And implement with routing
+
+
+Make Filter and Product Return separate, workaround with filters containing anothing rather than numbers and ,

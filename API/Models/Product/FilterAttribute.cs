@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Models.Product;
 
 namespace API.Models
 {
@@ -11,6 +12,7 @@ namespace API.Models
         public int CategoryId { get; set; }
         public string FilterName { get; set; } = string.Empty; // Remove required and add default
         public string FilterSlug { get; set; } = string.Empty; // Remove required and add default
-        public List<string> DefaultValues { get; set; } = new();
+        public List<FilterAttributeValue> DefaultValues { get; set; } = new();
     }
+
 }

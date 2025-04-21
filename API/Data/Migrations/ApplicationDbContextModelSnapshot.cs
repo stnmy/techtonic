@@ -22,6 +22,32 @@ namespace API.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("API.Models.FilterAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FilterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilterSlug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("FilterAttribute");
+                });
+
             modelBuilder.Entity("API.Models.Product.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -64,6 +90,28 @@ namespace API.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("API.Models.Product.FilterAttributeValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FilterAttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilterAttributeId");
+
+                    b.ToTable("FilterAttributeValue");
+                });
+
             modelBuilder.Entity("API.Models.Product.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -102,6 +150,7 @@ namespace API.Data.Migrations
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("Slug")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StockQuantity")
@@ -135,6 +184,10 @@ namespace API.Data.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecificationCategory")
                         .IsRequired()
@@ -280,6 +333,24 @@ namespace API.Data.Migrations
                     b.ToTable("SubCategories");
                 });
 
+            modelBuilder.Entity("API.Models.FilterAttribute", b =>
+                {
+                    b.HasOne("API.Models.Product.Category", null)
+                        .WithMany("Filters")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("API.Models.Product.FilterAttributeValue", b =>
+                {
+                    b.HasOne("API.Models.FilterAttribute", null)
+                        .WithMany("DefaultValues")
+                        .HasForeignKey("FilterAttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("API.Models.Product.Product", b =>
                 {
                     b.HasOne("API.Models.Product.Brand", "Brand")
@@ -363,6 +434,11 @@ namespace API.Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("API.Models.FilterAttribute", b =>
+                {
+                    b.Navigation("DefaultValues");
+                });
+
             modelBuilder.Entity("API.Models.Product.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -370,6 +446,8 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Models.Product.Category", b =>
                 {
+                    b.Navigation("Filters");
+
                     b.Navigation("Products");
 
                     b.Navigation("SubCategories");

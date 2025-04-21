@@ -13,7 +13,7 @@ namespace API.Interfaces
         Task<List<Product>> GetProducts();
         Task<Product?> GetProductById(int id);
         Task<List<IdentifiedSlug>> IdentifySlugsAsync(string[] slugs);
-        Task<List<Product>> GetProductsBySlugs(string? categorySlug, string? subCategorySlug, string? brandSlug);
+        Task<List<Product>> GetProductsBySlugs(string? categorySlug, string? subCategorySlug, string? brandSlug, List<int>? filterIds);
         Task<List<FilterDto>> GetFiltersForCategoryAsync(string categorySlug);
     }
 }

@@ -50,20 +50,131 @@ namespace API.Data
                     Slug = "laptop",
                     Filters = new List<FilterAttribute>
                     {
-                        // Note: "Category" filter usually represents Subcategories or main category name itself
-                        new FilterAttribute { FilterName = "Category", FilterSlug = "category", DefaultValues = new List<string> { "Ultrabook", "Gaming", "2-in-1 Convertible", "Traditional Laptop" } },
-                        new FilterAttribute { FilterName = "Processor Type", FilterSlug = "processor-type", DefaultValues = new List<string> { "Intel Core i7", "AMD Ryzen 9", "AMD Ryzen 5", "Intel Core i5", "Intel Core i3", "AMD Ryzen 7" } },
-                        new FilterAttribute { FilterName = "Processor Model", FilterSlug = "processor-model", DefaultValues = new List<string> { "1165G7", "5900HX", "5500U", "12500H", "13700H", "7730U", "Other" } },
-                        new FilterAttribute { FilterName = "Generation/Series", FilterSlug = "generation-series", DefaultValues = new List<string> { "11th Gen", "12th Gen", "13th Gen", "14th Gen", "Ryzen 5000 Series", "Ryzen 6000 Series", "Ryzen 7000 Series" } },
-                        new FilterAttribute { FilterName = "Display Type", FilterSlug = "display-type", DefaultValues = new List<string> { "IPS", "Touch Display", "OLED", "TN", "VA" } },
-                        new FilterAttribute { FilterName = "Display Size", FilterSlug = "display-size", DefaultValues = new List<string> { "14\"", "15.6\"", "13.3\"", "16\"", "17.3\"" } },
-                        new FilterAttribute { FilterName = "RAM Size", FilterSlug = "ram-size", DefaultValues = new List<string> { "16GB", "8GB", "4GB", "12GB", "32GB" } },
-                        new FilterAttribute { FilterName = "RAM Type", FilterSlug = "ram-type", DefaultValues = new List<string> { "LPDDR4X", "DDR4", "DDR5", "LPDDR5" } },
-                        new FilterAttribute { FilterName = "HDD", FilterSlug = "hdd", DefaultValues = new List<string> { "None", "500GB", "1TB", "2TB" } },
-                        new FilterAttribute { FilterName = "SSD", FilterSlug = "ssd", DefaultValues = new List<string> { "512GB", "1TB", "128GB", "256GB", "2TB", "4TB" } },
-                        new FilterAttribute { FilterName = "Graphics", FilterSlug = "graphics-memory", DefaultValues = new List<string> { "Intel Iris Xe", "NVIDIA RTX 3060", "NVIDIA RTX 4070", "AMD Radeon Graphics", "NVIDIA MX Series" } },
-                        new FilterAttribute { FilterName = "Operating System", FilterSlug = "operating-system", DefaultValues = new List<string> { "Windows 11 Pro", "Windows 11 Home", "Windows 10 Pro", "Windows 10 Home", "macOS", "ChromeOS", "Linux" } },
-                        new FilterAttribute { FilterName = "Special Feature", FilterSlug = "feature", DefaultValues = new List<string> { "Backlit Keyboard", "Fingerprint Reader", "RGB Keyboard", "Adaptive Sync", "Stylus Support", "Convertible", "Thin and Light", "High Refresh Rate Display" } }
+                        new FilterAttribute { FilterName = "Category", FilterSlug = "category", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Ultrabook" },
+                                new FilterAttributeValue { Value = "Gaming" },
+                                new FilterAttributeValue { Value = "2-in-1 Convertible" },
+                                new FilterAttributeValue { Value = "Traditional Laptop" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Processor Type", FilterSlug = "processor-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Intel Core i7" },
+                                new FilterAttributeValue { Value = "AMD Ryzen 9" },
+                                new FilterAttributeValue { Value = "AMD Ryzen 5" },
+                                new FilterAttributeValue { Value = "Intel Core i5" },
+                                new FilterAttributeValue { Value = "Intel Core i3" },
+                                new FilterAttributeValue { Value = "AMD Ryzen 7" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Processor Model", FilterSlug = "processor-model", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "1165G7" },
+                                new FilterAttributeValue { Value = "5900HX" },
+                                new FilterAttributeValue { Value = "5500U" },
+                                new FilterAttributeValue { Value = "12500H" },
+                                new FilterAttributeValue { Value = "13700H" },
+                                new FilterAttributeValue { Value = "7730U" },
+                                new FilterAttributeValue { Value = "Other" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Generation/Series", FilterSlug = "generation-series", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "11th Gen" },
+                                new FilterAttributeValue { Value = "12th Gen" },
+                                new FilterAttributeValue { Value = "13th Gen" },
+                                new FilterAttributeValue { Value = "14th Gen" },
+                                new FilterAttributeValue { Value = "Ryzen 5000 Series" },
+                                new FilterAttributeValue { Value = "Ryzen 6000 Series" },
+                                new FilterAttributeValue { Value = "Ryzen 7000 Series" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Display Type", FilterSlug = "display-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "IPS" },
+                                new FilterAttributeValue { Value = "Touch Display" },
+                                new FilterAttributeValue { Value = "OLED" },
+                                new FilterAttributeValue { Value = "TN" },
+                                new FilterAttributeValue { Value = "VA" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Display Size", FilterSlug = "display-size", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "14\"" },
+                                new FilterAttributeValue { Value = "15.6\"" },
+                                new FilterAttributeValue { Value = "13.3\"" },
+                                new FilterAttributeValue { Value = "16\"" },
+                                new FilterAttributeValue { Value = "17.3\"" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "RAM Size", FilterSlug = "ram-size", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "16GB" },
+                                new FilterAttributeValue { Value = "8GB" },
+                                new FilterAttributeValue { Value = "4GB" },
+                                new FilterAttributeValue { Value = "12GB" },
+                                new FilterAttributeValue { Value = "32GB" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "RAM Type", FilterSlug = "ram-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "LPDDR4X" },
+                                new FilterAttributeValue { Value = "DDR4" },
+                                new FilterAttributeValue { Value = "DDR5" },
+                                new FilterAttributeValue { Value = "LPDDR5" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "HDD", FilterSlug = "hdd", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "None" },
+                                new FilterAttributeValue { Value = "500GB" },
+                                new FilterAttributeValue { Value = "1TB" },
+                                new FilterAttributeValue { Value = "2TB" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "SSD", FilterSlug = "ssd", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "512GB" },
+                                new FilterAttributeValue { Value = "1TB" },
+                                new FilterAttributeValue { Value = "128GB" },
+                                new FilterAttributeValue { Value = "256GB" },
+                                new FilterAttributeValue { Value = "2TB" },
+                                new FilterAttributeValue { Value = "4TB" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Graphics", FilterSlug = "graphics-memory", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Intel Iris Xe" },
+                                new FilterAttributeValue { Value = "NVIDIA RTX 3060" },
+                                new FilterAttributeValue { Value = "NVIDIA RTX 4070" },
+                                new FilterAttributeValue { Value = "AMD Radeon Graphics" },
+                                new FilterAttributeValue { Value = "NVIDIA MX Series" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Operating System", FilterSlug = "operating-system", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Windows 11 Pro" },
+                                new FilterAttributeValue { Value = "Windows 11 Home" },
+                                new FilterAttributeValue { Value = "Windows 10 Pro" },
+                                new FilterAttributeValue { Value = "Windows 10 Home" },
+                                new FilterAttributeValue { Value = "macOS" },
+                                new FilterAttributeValue { Value = "ChromeOS" },
+                                new FilterAttributeValue { Value = "Linux" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Special Feature", FilterSlug = "feature", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Backlit Keyboard" },
+                                new FilterAttributeValue { Value = "Fingerprint Reader" },
+                                new FilterAttributeValue { Value = "RGB Keyboard" },
+                                new FilterAttributeValue { Value = "Adaptive Sync" },
+                                new FilterAttributeValue { Value = "Stylus Support" },
+                                new FilterAttributeValue { Value = "Convertible" },
+                                new FilterAttributeValue { Value = "Thin and Light" },
+                                new FilterAttributeValue { Value = "High Refresh Rate Display" }
+                            }
+                        }
                     }
                 },
                 new Category
@@ -72,13 +183,72 @@ namespace API.Data
                     Slug = "monitor",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Screen Size", FilterSlug="screen-size", DefaultValues = new List<string> { "27\"", "32\"", "24\"", "34\"", "49\"" } },
-                        new FilterAttribute { FilterName = "Resolution", FilterSlug= "resolution", DefaultValues = new List<string> { "QHD (2560x1440)", "4K UHD (3840x2160)", "FHD (1920x1080)", "UWQHD (3440x1440)", "5K (5120x2880)" } },
-                        new FilterAttribute { FilterName = "Panel Type", FilterSlug="panel-type", DefaultValues = new List<string> { "VA", "IPS", "TN", "OLED" } },
-                        new FilterAttribute { FilterName = "Refresh Rate", FilterSlug="refresh-rate", DefaultValues = new List<string> { "240Hz", "165Hz", "60Hz", "75Hz", "144Hz", "360Hz" } },
-                        new FilterAttribute { FilterName = "Response Time", FilterSlug="response-time", DefaultValues = new List<string> { "1ms (GtG)", "1ms (MPRT)", "4ms (GtG)", "5ms", "Faster than 1ms" } },
-                        new FilterAttribute { FilterName = "Input Type", FilterSlug="input-type", DefaultValues = new List<string> { "HDMI", "DisplayPort", "USB-C", "VGA", "DVI" } },
-                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<string> { "NVIDIA G-SYNC Compatible", "AMD FreeSync Premium Pro", "ELMB Sync", "Picture-by-Picture", "Picture-in-Picture", "Curved", "HDR Support", "Built-in Speakers" } },
+                        new FilterAttribute { FilterName = "Screen Size", FilterSlug="screen-size", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "27\"" },
+                                new FilterAttributeValue { Value = "32\"" },
+                                new FilterAttributeValue { Value = "24\"" },
+                                new FilterAttributeValue { Value = "34\"" },
+                                new FilterAttributeValue { Value = "49\"" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Resolution", FilterSlug= "resolution", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "QHD (2560x1440)" },
+                                new FilterAttributeValue { Value = "4K UHD (3840x2160)" },
+                                new FilterAttributeValue { Value = "FHD (1920x1080)" },
+                                new FilterAttributeValue { Value = "UWQHD (3440x1440)" },
+                                new FilterAttributeValue { Value = "5K (5120x2880)" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Panel Type", FilterSlug="panel-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "VA" },
+                                new FilterAttributeValue { Value = "IPS" },
+                                new FilterAttributeValue { Value = "TN" },
+                                new FilterAttributeValue { Value = "OLED" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Refresh Rate", FilterSlug="refresh-rate", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "240Hz" },
+                                new FilterAttributeValue { Value = "165Hz" },
+                                new FilterAttributeValue { Value = "60Hz" },
+                                new FilterAttributeValue { Value = "75Hz" },
+                                new FilterAttributeValue { Value = "144Hz" },
+                                new FilterAttributeValue { Value = "360Hz" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Response Time", FilterSlug="response-time", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "1ms (GtG)" },
+                                new FilterAttributeValue { Value = "1ms (MPRT)" },
+                                new FilterAttributeValue { Value = "4ms (GtG)" },
+                                new FilterAttributeValue { Value = "5ms" },
+                                new FilterAttributeValue { Value = "Faster than 1ms" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Input Type", FilterSlug="input-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "HDMI" },
+                                new FilterAttributeValue { Value = "DisplayPort" },
+                                new FilterAttributeValue { Value = "USB-C" },
+                                new FilterAttributeValue { Value = "VGA" },
+                                new FilterAttributeValue { Value = "DVI" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "NVIDIA G-SYNC Compatible" },
+                                new FilterAttributeValue { Value = "AMD FreeSync Premium Pro" },
+                                new FilterAttributeValue { Value = "ELMB Sync" },
+                                new FilterAttributeValue { Value = "Picture-by-Picture" },
+                                new FilterAttributeValue { Value = "Picture-in-Picture" },
+                                new FilterAttributeValue { Value = "Curved" },
+                                new FilterAttributeValue { Value = "HDR Support" },
+                                new FilterAttributeValue { Value = "Built-in Speakers" }
+                            }
+                        },
                     }
                 },
                 new Category
@@ -87,10 +257,41 @@ namespace API.Data
                     Slug = "graphics-card",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Chipset", FilterSlug="chipset", DefaultValues = new List<string> { "NVIDIA GeForce RTX 4080", "NVIDIA GeForce RTX 4090", "NVIDIA GeForce RTX 4070", "AMD Radeon RX 7900 XTX", "AMD Radeon RX 7800 XT", "NVIDIA GeForce GTX 1650", "Other" } },
-                        new FilterAttribute { FilterName = "Memory", FilterSlug="memory", DefaultValues = new List<string> { "16GB", "8GB", "10GB", "12GB", "20GB", "24GB" } },
-                        new FilterAttribute { FilterName = "Memory Type", FilterSlug="memory-type", DefaultValues = new List<string> { "GDDR6X", "GDDR6", "GDDR5" } },
-                        new FilterAttribute { FilterName = "Max Resolution", FilterSlug="max-resolution", DefaultValues = new List<string> { "7680 x 4320", "3840 x 2160", "5120 x 1440" } }
+                        new FilterAttribute { FilterName = "Chipset", FilterSlug="chipset", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "NVIDIA GeForce RTX 4080" },
+                                new FilterAttributeValue { Value = "NVIDIA GeForce RTX 4090" },
+                                new FilterAttributeValue { Value = "NVIDIA GeForce RTX 4070" },
+                                new FilterAttributeValue { Value = "AMD Radeon RX 7900 XTX" },
+                                new FilterAttributeValue { Value = "AMD Radeon RX 7800 XT" },
+                                new FilterAttributeValue { Value = "NVIDIA GeForce GTX 1650" },
+                                new FilterAttributeValue { Value = "Other" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Memory", FilterSlug="memory", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "16GB" },
+                                new FilterAttributeValue { Value = "8GB" },
+                                new FilterAttributeValue { Value = "10GB" },
+                                new FilterAttributeValue { Value = "12GB" },
+                                new FilterAttributeValue { Value = "20GB" },
+                                new FilterAttributeValue { Value = "24GB" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Memory Type", FilterSlug="memory-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "GDDR6X" },
+                                new FilterAttributeValue { Value = "GDDR6" },
+                                new FilterAttributeValue { Value = "GDDR5" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Max Resolution", FilterSlug="max-resolution", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "7680 x 4320" },
+                                new FilterAttributeValue { Value = "3840 x 2160" },
+                                new FilterAttributeValue { Value = "5120 x 1440" }
+                            }
+                        }
                     }
                 },
                 new Category
@@ -99,11 +300,50 @@ namespace API.Data
                     Slug = "processor",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Socket", FilterSlug="socket", DefaultValues = new List<string> { "LGA 1700", "AM5", "AM4", "LGA 1200", "LGA 1151" } },
-                        new FilterAttribute { FilterName = "Number of Core", FilterSlug="number-of-core", DefaultValues = new List<string> { "4", "6", "8", "10", "16", "24+" } }, // Simplified core counts
-                        new FilterAttribute { FilterName = "Number of Thread", FilterSlug="number-of-thread", DefaultValues = new List<string> { "8", "12", "16", "20", "32", "32+" } }, // Simplified thread counts
-                        new FilterAttribute { FilterName = "Clock Speed", FilterSlug="clock-speed", DefaultValues = new List<string> { "Below 3.0 GHz", "3.0 GHz - 4.0 GHz", "4.0 GHz - 5.0 GHz", "5.0 GHz+" } },
-                        new FilterAttribute { FilterName = "Cache", FilterSlug="cache", DefaultValues = new List<string> { "L3 Cache 8MB+", "L3 Cache 16MB+", "L3 Cache 32MB+" } }, // Simplified cache
+                        new FilterAttribute { FilterName = "Socket", FilterSlug="socket", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "LGA 1700" },
+                                new FilterAttributeValue { Value = "AM5" },
+                                new FilterAttributeValue { Value = "AM4" },
+                                new FilterAttributeValue { Value = "LGA 1200" },
+                                new FilterAttributeValue { Value = "LGA 1151" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Number of Core", FilterSlug="number-of-core", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "4" },
+                                new FilterAttributeValue { Value = "6" },
+                                new FilterAttributeValue { Value = "8" },
+                                new FilterAttributeValue { Value = "10" },
+                                new FilterAttributeValue { Value = "16" },
+                                new FilterAttributeValue { Value = "24+" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Number of Thread", FilterSlug="number-of-thread", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "8" },
+                                new FilterAttributeValue { Value = "12" },
+                                new FilterAttributeValue { Value = "16" },
+                                new FilterAttributeValue { Value = "20" },
+                                new FilterAttributeValue { Value = "32" },
+                                new FilterAttributeValue { Value = "32+" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Clock Speed", FilterSlug="clock-speed", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Below 3.0 GHz" },
+                                new FilterAttributeValue { Value = "3.0 GHz - 4.0 GHz" },
+                                new FilterAttributeValue { Value = "4.0 GHz - 5.0 GHz" },
+                                new FilterAttributeValue { Value = "5.0 GHz+" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Cache", FilterSlug="cache", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "L3 Cache 8MB+" },
+                                new FilterAttributeValue { Value = "L3 Cache 16MB+" },
+                                new FilterAttributeValue { Value = "L3 Cache 32MB+" }
+                            }
+                        },
                     }
                 },
                 new Category
@@ -112,14 +352,87 @@ namespace API.Data
                     Slug = "mobile",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Display Size", FilterSlug="display-size", DefaultValues = new List<string> { "6.1\"", "6.8\"", "6.67\"", "5.5\"", "6.5\"", "7.0+\"" } },
-                        new FilterAttribute { FilterName = "Display Type", FilterSlug="display-type", DefaultValues = new List<string> { "Super Retina XDR OLED", "Dynamic AMOLED 2X", "AMOLED 120Hz", "IPS LCD", "OLED" } },
-                        new FilterAttribute { FilterName = "Chipset", FilterSlug="chipset", DefaultValues = new List<string> { "A16 Bionic", "Snapdragon 8 Gen 2 for Galaxy", "MediaTek Dimensity 1080", "A15 Bionic", "Snapdragon 8 Gen 3", "MediaTek Dimensity 9200", "Exynos", "Other" } },
-                        new FilterAttribute { FilterName = "RAM", FilterSlug="ram", DefaultValues = new List<string> { "12GB", "8GB", "4GB", "6GB", "16GB" } },
-                        new FilterAttribute { FilterName = "Internal Storage", FilterSlug="internal-storage", DefaultValues = new List<string> { "128GB", "256GB", "64GB", "512GB", "1TB" } },
-                        new FilterAttribute { FilterName = "Clock Speed", FilterSlug="clock-speed", DefaultValues = new List<string> { "Below 2.0 GHz", "2.0 GHz - 3.0 GHz", "Above 3.0 GHz" } }, // General mobile clock speed ranges
-                        new FilterAttribute { FilterName = "Battery", FilterSlug="battery", DefaultValues = new List<string> { "5000 mAh", "4980 mAh", "3000-4000 mAh", "4000-5000 mAh", "5000+ mAh" } },
-                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<string> { "Dynamic Island", "Always-On display", "S Pen Support", "IP68 Water Resistance", "Heart Rate Monitor", "SpO₂ Tracking", "Sleep Tracking", "Fast Charging", "NFC", "Wireless Charging", "Fingerprint Sensor", "Dual SIM" } }
+                        new FilterAttribute { FilterName = "Display Size", FilterSlug="display-size", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "6.1\"" },
+                                new FilterAttributeValue { Value = "6.8\"" },
+                                new FilterAttributeValue { Value = "6.67\"" },
+                                new FilterAttributeValue { Value = "5.5\"" },
+                                new FilterAttributeValue { Value = "6.5\"" },
+                                new FilterAttributeValue { Value = "7.0+\"" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Display Type", FilterSlug="display-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Super Retina XDR OLED" },
+                                new FilterAttributeValue { Value = "Dynamic AMOLED 2X" },
+                                new FilterAttributeValue { Value = "AMOLED 120Hz" },
+                                new FilterAttributeValue { Value = "IPS LCD" },
+                                new FilterAttributeValue { Value = "OLED" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Chipset", FilterSlug="chipset", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "A16 Bionic" },
+                                new FilterAttributeValue { Value = "Snapdragon 8 Gen 2 for Galaxy" },
+                                new FilterAttributeValue { Value = "MediaTek Dimensity 1080" },
+                                new FilterAttributeValue { Value = "A15 Bionic" },
+                                new FilterAttributeValue { Value = "Snapdragon 8 Gen 3" },
+                                new FilterAttributeValue { Value = "MediaTek Dimensity 9200" },
+                                new FilterAttributeValue { Value = "Exynos" },
+                                new FilterAttributeValue { Value = "Other" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "RAM", FilterSlug="ram", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "12GB" },
+                                new FilterAttributeValue { Value = "8GB" },
+                                new FilterAttributeValue { Value = "4GB" },
+                                new FilterAttributeValue { Value = "6GB" },
+                                new FilterAttributeValue { Value = "16GB" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Internal Storage", FilterSlug="internal-storage", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "128GB" },
+                                new FilterAttributeValue { Value = "256GB" },
+                                new FilterAttributeValue { Value = "64GB" },
+                                new FilterAttributeValue { Value = "512GB" },
+                                new FilterAttributeValue { Value = "1TB" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Clock Speed", FilterSlug="clock-speed", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Below 2.0 GHz" },
+                                new FilterAttributeValue { Value = "2.0 GHz - 3.0 GHz" },
+                                new FilterAttributeValue { Value = "Above 3.0 GHz" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Battery", FilterSlug="battery", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "5000 mAh" },
+                                new FilterAttributeValue { Value = "4980 mAh" },
+                                new FilterAttributeValue { Value = "3000-4000 mAh" },
+                                new FilterAttributeValue { Value = "4000-5000 mAh" },
+                                new FilterAttributeValue { Value = "5000+ mAh" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Dynamic Island" },
+                                new FilterAttributeValue { Value = "Always-On display" },
+                                new FilterAttributeValue { Value = "S Pen Support" },
+                                new FilterAttributeValue { Value = "IP68 Water Resistance" },
+                                new FilterAttributeValue { Value = "Heart Rate Monitor" },
+                                new FilterAttributeValue { Value = "SpO₂ Tracking" },
+                                new FilterAttributeValue { Value = "Sleep Tracking" },
+                                new FilterAttributeValue { Value = "Fast Charging" },
+                                new FilterAttributeValue { Value = "NFC" },
+                                new FilterAttributeValue { Value = "Wireless Charging" },
+                                new FilterAttributeValue { Value = "Fingerprint Sensor" },
+                                new FilterAttributeValue { Value = "Dual SIM" }
+                            }
+                        }
                     }
                 },
                 new Category
@@ -128,10 +441,41 @@ namespace API.Data
                     Slug = "keyboard",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<string> { "Mechanical", "Membrane", "Optical" } },
-                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<string> { "USB", "USB-C (Detachable Cable)", "Wireless (Bluetooth)", "Wireless (2.4GHz)" } },
-                        new FilterAttribute { FilterName = "Switch Type", FilterSlug="switch-type", DefaultValues = new List<string> { "Cherry MX Speed", "Cherry MX Red", "Cherry MX Brown", "Cherry MX Blue", "Optical Switches", "Tactile", "Linear", "Clicky" } },
-                        new FilterAttribute { FilterName = "Special Feature", FilterSlug="special-feature", DefaultValues = new List<string> { "Per-Key RGB Backlighting", "Macro Keys", "Media Controls", "Wrist Rest Included" } },
+                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Mechanical" },
+                                new FilterAttributeValue { Value = "Membrane" },
+                                new FilterAttributeValue { Value = "Optical" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "USB" },
+                                new FilterAttributeValue { Value = "USB-C (Detachable Cable)" },
+                                new FilterAttributeValue { Value = "Wireless (Bluetooth)" },
+                                new FilterAttributeValue { Value = "Wireless (2.4GHz)" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Switch Type", FilterSlug="switch-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Cherry MX Speed" },
+                                new FilterAttributeValue { Value = "Cherry MX Red" },
+                                new FilterAttributeValue { Value = "Cherry MX Brown" },
+                                new FilterAttributeValue { Value = "Cherry MX Blue" },
+                                new FilterAttributeValue { Value = "Optical Switches" },
+                                new FilterAttributeValue { Value = "Tactile" },
+                                new FilterAttributeValue { Value = "Linear" },
+                                new FilterAttributeValue { Value = "Clicky" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Special Feature", FilterSlug="special-feature", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Per-Key RGB Backlighting" },
+                                new FilterAttributeValue { Value = "Macro Keys" },
+                                new FilterAttributeValue { Value = "Media Controls" },
+                                new FilterAttributeValue { Value = "Wrist Rest Included" }
+                            }
+                        },
                     }
                 },
                 new Category
@@ -140,10 +484,40 @@ namespace API.Data
                     Slug = "mouse",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<string> { "Gaming Mouse", "Ergonomic Mouse", "Vertical Mouse" } },
-                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<string> { "Wireless (HyperSpeed)", "Wired (Speedflex Cable)", "USB", "Wireless (Bluetooth)" } },
-                        new FilterAttribute { FilterName = "Number of keys", FilterSlug="number-of-keys", DefaultValues = new List<string> { "3", "5", "6-8", "9+", "11 Programmable Buttons" } }, // Combined product value with ranges
-                        new FilterAttribute { FilterName = "Max DPI", FilterSlug="max-dpi", DefaultValues = new List<string> { "30000", "26000", "Below 8000", "8000-16000", "16000+", "Customizable" } },
+                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Gaming Mouse" },
+                                new FilterAttributeValue { Value = "Ergonomic Mouse" },
+                                new FilterAttributeValue { Value = "Vertical Mouse" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Wireless (HyperSpeed)" },
+                                new FilterAttributeValue { Value = "Wired (Speedflex Cable)" },
+                                new FilterAttributeValue { Value = "USB" },
+                                new FilterAttributeValue { Value = "Wireless (Bluetooth)" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Number of keys", FilterSlug="number-of-keys", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "3" },
+                                new FilterAttributeValue { Value = "5" },
+                                new FilterAttributeValue { Value = "6-8" },
+                                new FilterAttributeValue { Value = "9+" },
+                                new FilterAttributeValue { Value = "11 Programmable Buttons" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Max DPI", FilterSlug="max-dpi", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "30000" },
+                                new FilterAttributeValue { Value = "26000" },
+                                new FilterAttributeValue { Value = "Below 8000" },
+                                new FilterAttributeValue { Value = "8000-16000" },
+                                new FilterAttributeValue { Value = "16000+" },
+                                new FilterAttributeValue { Value = "Customizable" }
+                            }
+                        },
                     }
                 },
                 new Category
@@ -152,16 +526,43 @@ namespace API.Data
                     Slug = "smart-watch",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Display Type", FilterSlug="display-type", DefaultValues = new List<string> { "AMOLED", "TFT Touch Display", "LCD", "OLED", "E-Paper" } },
-                        new FilterAttribute { FilterName = "OS" , FilterSlug="os", DefaultValues = new List<string> { "Proprietary", "Zepp OS 2.0", "watchOS", "Wear OS", "HarmonyOS" } },
-                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<string> { "Heart Rate Monitor", "SpO₂ Tracking", "Sleep Tracking", "Built-in GPS", "Bluetooth phone calls", "Water Resistance", "ECG", "NFC Payments", "Music Storage" } } // Added Water Resistance based on product 11/12
+                        new FilterAttribute { FilterName = "Display Type", FilterSlug="display-type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "AMOLED" },
+                                new FilterAttributeValue { Value = "TFT Touch Display" },
+                                new FilterAttributeValue { Value = "LCD" },
+                                new FilterAttributeValue { Value = "OLED" },
+                                new FilterAttributeValue { Value = "E-Paper" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "OS" , FilterSlug="os", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Proprietary" },
+                                new FilterAttributeValue { Value = "Zepp OS 2.0" },
+                                new FilterAttributeValue { Value = "watchOS" },
+                                new FilterAttributeValue { Value = "Wear OS" },
+                                new FilterAttributeValue { Value = "HarmonyOS" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Features", FilterSlug="feature", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Heart Rate Monitor" },
+                                new FilterAttributeValue { Value = "SpO₂ Tracking" },
+                                new FilterAttributeValue { Value = "Sleep Tracking" },
+                                new FilterAttributeValue { Value = "Built-in GPS" },
+                                new FilterAttributeValue { Value = "Bluetooth phone calls" },
+                                new FilterAttributeValue { Value = "Water Resistance" },
+                                new FilterAttributeValue { Value = "ECG" },
+                                new FilterAttributeValue { Value = "NFC Payments" },
+                                new FilterAttributeValue { Value = "Music Storage" }
+                            }
+                        }
                     }
                 },
                 new Category
                 {
                     Name = "Gaming Console",
                     Slug = "gaming-console",
-                    // No filters defined in the original request for Gaming Console
                     Filters = new List<FilterAttribute>()
                 },
                 new Category
@@ -170,10 +571,44 @@ namespace API.Data
                     Slug = "headphone",
                     Filters = new List<FilterAttribute>
                     {
-                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<string> { "Over-ear", "Gaming Headset", "In-ear", "On-ear", "Earbuds" } },
-                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<string> { "Wireless (Bluetooth)", "Wired (3.5mm)", "USB-C", "3.5mm Jack", "USB-A", "Wireless (2.4GHz)" } },
-                        new FilterAttribute { FilterName = "Color", FilterSlug="color", DefaultValues = new List<string> { "Black", "White", "Red", "Blue", "Silver" } },
-                        new FilterAttribute { FilterName = "Special Feature", FilterSlug="feature", DefaultValues = new List<string> { "Active Noise Cancellation", "AniMe Matrix™ Display", "AI Noise-Cancelling Mic", "Built-in Microphone", "Volume Control", "Foldable Design" } }, // Combined "Special Feature" and "Features" used in products
+                        new FilterAttribute { FilterName = "Type", FilterSlug="type", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Over-ear" },
+                                new FilterAttributeValue { Value = "Gaming Headset" },
+                                new FilterAttributeValue { Value = "In-ear" },
+                                new FilterAttributeValue { Value = "On-ear" },
+                                new FilterAttributeValue { Value = "Earbuds" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Interface", FilterSlug="interface", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Wireless (Bluetooth)" },
+                                new FilterAttributeValue { Value = "Wired (3.5mm)" },
+                                new FilterAttributeValue { Value = "USB-C" },
+                                new FilterAttributeValue { Value = "3.5mm Jack" },
+                                new FilterAttributeValue { Value = "USB-A" },
+                                new FilterAttributeValue { Value = "Wireless (2.4GHz)" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Color", FilterSlug="color", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Black" },
+                                new FilterAttributeValue { Value = "White" },
+                                new FilterAttributeValue { Value = "Red" },
+                                new FilterAttributeValue { Value = "Blue" },
+                                new FilterAttributeValue { Value = "Silver" }
+                            }
+                        },
+                        new FilterAttribute { FilterName = "Special Feature", FilterSlug="feature", DefaultValues = new List<FilterAttributeValue>
+                            {
+                                new FilterAttributeValue { Value = "Active Noise Cancellation" },
+                                new FilterAttributeValue { Value = "AniMe Matrix™ Display" },
+                                new FilterAttributeValue { Value = "AI Noise-Cancelling Mic" },
+                                new FilterAttributeValue { Value = "Built-in Microphone" },
+                                new FilterAttributeValue { Value = "Volume Control" },
+                                new FilterAttributeValue { Value = "Foldable Design" }
+                            }
+                        },
                     }
                 }
             };
@@ -958,7 +1393,6 @@ namespace API.Data
                 }
             };
             
-
             context.Products.AddRange(products);
             context.SaveChanges();
 

@@ -81,7 +81,7 @@ namespace API.Repository
             return identified;
         }
 
-        public async Task<List<Product>> GetProductsBySlugs(string? categorySlug, string? subCategorySlug, string? brandSlug)
+        public async Task<List<Product>> GetProductsBySlugs(string? categorySlug, string? subCategorySlug, string? brandSlug, List<int>? filterIds)
         {
             var query = _context.Products
                 .Include(p => p.Brand)
@@ -104,6 +104,23 @@ namespace API.Repository
                 query = query.Where(p => p.SubCategory != null && p.SubCategory.Slug.ToLower() == subCategorySlug.ToLower());
             }
 
+            if (filterIds != null && filterIds.Count > 0 && !string.IsNullOrEmpty(categorySlug))
+            {
+                var filterValues = await _context.Categories
+                    .Where(c => c.Slug.ToLower() == categorySlug.ToLower())
+                    .SelectMany(c => c.Filters)
+                    .SelectMany(fa => fa.DefaultValues)
+                    .Where(fav => filterIds.Contains(fav.Id))
+                    .Select(fav => fav.Value)
+                    .ToListAsync();
+
+                if (filterValues.Count == 0)
+                {
+                    return new List<Product>();
+                }
+                query = query.Where(p => p.AttributeValues
+                    .Any(av => filterValues.Contains(av.Value)));
+            }
             return await query.ToListAsync();
         }
 
@@ -111,6 +128,7 @@ namespace API.Repository
         {
             var category = await _context.Categories
                 .Include(c => c.Filters)
+                    .ThenInclude(f => f.DefaultValues)
                 .FirstOrDefaultAsync(c => c.Slug == categorySlug);
 
             if (category == null) return new();
@@ -120,7 +138,13 @@ namespace API.Repository
                 {
                     FilterName = f.FilterName,
                     FilterSlug = f.FilterSlug,
-                    Values = f.DefaultValues.OrderBy(v => v).ToList()
+                    Values = f.DefaultValues
+                        .Select(df => new FilterValueDto
+                        {
+                            Id = df.Id,
+                            Value = df.Value
+                        })
+                        .OrderBy(v => v.Value).ToList()
                 }).ToList();
         }
     }

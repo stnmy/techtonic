@@ -60,7 +60,9 @@ namespace API.Controllers
 
 
         [HttpGet("{slug1}/{slug2?}/{slug3?}")]
-        public async Task<ActionResult<List<ProductCardDto>>> GetDynamicSlugUrl(string slug1, string? slug2, string? slug3)
+        public async Task<ActionResult<List<ProductCardDto>>> GetDynamicSlugUrl(
+            string slug1, string? slug2, string? slug3,
+            [FromQuery(Name = "filter")] string? filter)
         {
             var slugs = new[] { slug1, slug2, slug3 }
                 .Where(s => !string.IsNullOrEmpty(s))
@@ -68,23 +70,49 @@ namespace API.Controllers
                 .ToArray();
 
             var(categorySlug,brandSlug, subcategorySlug) = await GetValidSlugsAsync(slugs);
-
+            
             if( categorySlug == null && brandSlug == null  && subcategorySlug == null )
             {
                 return NotFound("No Products Found");
             };
 
-            var products = await _productRepository.GetProductsBySlugs(categorySlug, subcategorySlug, brandSlug);
-
-            if (products == null || products.Count == 0)
-            {
-                return NotFound("No Products Found!");
-            }
-            var productCardDtos = products.Select(p => p.toProductCardDto()).ToList();
-
             var filters = !string.IsNullOrEmpty(categorySlug)
             ? await _productRepository.GetFiltersForCategoryAsync(categorySlug)
             : new List<FilterDto>();
+
+
+            List<int> filterIds = new();
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                if (filter.All(c => char.IsDigit(c) || c == ','))
+                {
+                    filterIds = filter
+                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => int.TryParse(s, out var id) ? id : -1)
+                        .Where(id => id > 0)
+                        .ToList();
+                }
+                else
+                {
+                    return Ok(new ProductsPageReturnDto
+                    {
+                        Products = new(),
+                        Filters = filters
+                    });
+                }
+            }
+            
+
+            var products = await _productRepository.GetProductsBySlugs(categorySlug, subcategorySlug, brandSlug, filterIds);
+
+            if (products == null || products.Count == 0)
+            {
+                return Ok(new ProductsPageReturnDto{
+                    Products = new(),
+                    Filters = filters
+                });
+            }
+            var productCardDtos = products.Select(p => p.toProductCardDto()).ToList();
 
             return Ok(new ProductsPageReturnDto
             {

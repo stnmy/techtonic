@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace API.Migrations
+namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FilterValuesAdded : Migration
+    public partial class FilterAttributeUpdated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,8 +47,7 @@ namespace API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     FilterName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FilterSlug = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DefaultValues = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FilterSlug = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,6 +77,26 @@ namespace API.Migrations
                         name: "FK_SubCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FilterAttributeValue",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FilterAttributeId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilterAttributeValue", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FilterAttributeValue_FilterAttribute_FilterAttributeId",
+                        column: x => x.FilterAttributeId,
+                        principalTable: "FilterAttribute",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -237,6 +256,11 @@ namespace API.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FilterAttributeValue_FilterAttributeId",
+                table: "FilterAttributeValue",
+                column: "FilterAttributeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductAttributeValues_ProductId",
                 table: "ProductAttributeValues",
                 column: "ProductId");
@@ -286,7 +310,7 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "FilterAttribute");
+                name: "FilterAttributeValue");
 
             migrationBuilder.DropTable(
                 name: "ProductAttributeValues");
@@ -302,6 +326,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductVisits");
+
+            migrationBuilder.DropTable(
+                name: "FilterAttribute");
 
             migrationBuilder.DropTable(
                 name: "Products");

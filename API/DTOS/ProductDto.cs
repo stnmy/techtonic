@@ -53,7 +53,12 @@ namespace API.DTOS
     {
         public string FilterName { get; set; } = null!;
         public string FilterSlug { get; set; } = null!;
-        public List<string> Values { get; set; } = new();
+        public List<FilterValueDto> Values { get; set; } = new();
+    }
+    public class FilterValueDto
+    {
+        public int Id { get; set; }
+        public string Value { get; set; } = string.Empty ;
     }
     public class ProductsPageReturnDto
     {
