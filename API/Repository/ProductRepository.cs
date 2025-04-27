@@ -34,6 +34,15 @@ namespace API.Repository
                 .Include(p => p.Questions)
                 .Include(p => p.Visits)
                 .FirstOrDefaultAsync(p => p.Id == id);
+            
+            if(product != null){
+                _context.ProductVisits.Add( new ProductVisit{
+                    ProductId = product.Id,
+                    VisitTime = DateTime.UtcNow
+                });
+                
+                await _context.SaveChangesAsync();
+            }
 
             return product;
         }
@@ -146,6 +155,50 @@ namespace API.Repository
                         })
                         .OrderBy(v => v.Value).ToList()
                 }).ToList();
+        }
+
+        public async Task<Product?> GetDealOfTheDayAsync()
+        {
+            var product = await _context.Products
+                            .Include(p => p.AttributeValues)
+                            .Include(p => p.ProductImages)
+                            .FirstOrDefaultAsync( p => p.IsDealOfTheDay == true);
+            return product;
+        }
+
+        public async Task<List<Product>> GetMostVisitedProductsAsync(int count, DateTime? fromDate = null)
+        {
+                // Get visited products first
+            var visitedProductsQuery = _context.Products
+                .Include(p => p.ProductImages)
+                .Include(p => p.Visits)
+                .Include(p => p.AttributeValues)
+                .Where(p => fromDate == null || p.Visits.Any(v => v.VisitTime >= fromDate))
+                .OrderByDescending(p => p.Visits.Count)
+                .Take(count);
+
+            var visitedProducts = await visitedProductsQuery.ToListAsync();
+
+            // If we have enough products with visits, return them
+            if (visitedProducts.Count >= count)
+            {
+                return visitedProducts;
+            }
+
+            // Get IDs of already selected products
+            var visitedProductIds = visitedProducts.Select(p => p.Id).ToList();
+
+            // Get additional products (excluding already selected ones)
+            var additionalProductsNeeded = count - visitedProducts.Count;
+            var additionalProducts = await _context.Products
+                .Include(p => p.ProductImages)
+                .Include(p => p.AttributeValues)
+                .Where(p => !visitedProductIds.Contains(p.Id))
+                .OrderBy(p => p.Id) // Or your preferred ordering
+                .Take(additionalProductsNeeded)
+                .ToListAsync();
+
+            return visitedProducts.Concat(additionalProducts).ToList();
         }
     }
 }

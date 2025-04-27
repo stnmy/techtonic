@@ -476,6 +476,7 @@ $RECYCLE.BIN/
 *.msix
 *.msm
 *.msp
+*.png
 
 # Windows shortcuts
 *.lnk
@@ -488,3 +489,5 @@ API/Models/Product/CategoryAttribute.cs
 API/Models/Product/CategoryAttribute.cs
 API/Migrations/ApplicationDbContextModelSnapshot.cs
 API/Migrations/20250417174759_CategoryAttributeRemoved.cs
+API/Models/Product/CategoryAttribute.cs
+API/Models/Product/ProductSpecificationValue.cs

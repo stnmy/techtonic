@@ -122,7 +122,6 @@ namespace API.Controllers
 
         }
 
-
         private async Task<(string? CategorySlug, string? BrandSlug, string? SubCategorySlug)> GetValidSlugsAsync(string[] slugs)
         {
             var identifiedSlugs = await _productRepository.IdentifySlugsAsync(slugs);
@@ -141,5 +140,45 @@ namespace API.Controllers
             );
         }
 
+
+        [HttpGet("DealOfTheDay")]
+        public async Task<ActionResult<ProductCardDto>> GetDealOfTheDay(){
+            var dealProduct = await _productRepository.GetDealOfTheDayAsync();
+
+            if (dealProduct == null){
+                return NotFound();
+            }
+            return dealProduct.toProductCardDto();
+        }
+
+        [HttpGet("MostVisited")]
+        public async Task<ActionResult<List<ProductCardDto>>> GetMostVisitedProducts(
+            [FromQuery] TimePeriod period = TimePeriod.All,
+            [FromQuery] int count = 5)
+            {
+
+            if (count<5 || count> 50){
+                return BadRequest("Must be between 10 and 50");
+            }
+
+            var now =DateTime.UtcNow;
+            DateTime fromTime = period switch
+            {
+                TimePeriod.Day => now.Date,
+                TimePeriod.Week => now.Date.AddDays(-(int)now.DayOfWeek),
+                TimePeriod.Month => new DateTime (now.Year, now.Month,1),
+                TimePeriod.Year => new DateTime(now.Year, 1,1),
+                TimePeriod.All => DateTime.MinValue,
+                _ => DateTime.MinValue
+            };
+
+            var products = await _productRepository.GetMostVisitedProductsAsync(count,fromTime);
+            if (products == null || products.Count == 0){
+                return NotFound("No visited Products Found");
+            }
+            return products.Select( p => p.toProductCardDto()).ToList();
+        }
     }
+
+
 }
