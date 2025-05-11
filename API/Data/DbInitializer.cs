@@ -981,8 +981,8 @@ namespace API.Data
                     Name = "HP Envy x360 15-fe0053dx Ryzen 7 7730U 16GB 512GB 15.6\" FHD Touch",
                     Slug = "hp-envy-x360-15-fe0053dx-r7-16gb-512gb",
                     Description = "A versatile and stylish 2-in-1 laptop with a large touchscreen, powerful AMD Ryzen processor, and premium features for creativity and entertainment.",
-                    Price = 120000,
-                    DiscountPrice = 148000,
+                    Price = 148000,
+                    DiscountPrice = 120000,
                     Brand = brands[8], // HP
                     Category = categories[0],
                     SubCategory = subCategories[0], // Could be Ultrabook or Consumer due to convertible nature
@@ -1052,8 +1052,8 @@ namespace API.Data
                     Name = "Dell G15 5530 Gaming Laptop i5-13450HX RTX 3050 8GB 512GB 120Hz",
                     Slug = "dell-g15-5530-gaming-i5-rtx3050-8gb-512gb",
                     Description = "Affordable gaming laptop with a 13th Gen Intel Core processor, NVIDIA RTX graphics, and a fast refresh rate display for smooth gameplay.",
-                    Price = 112000,
-                    DiscountPrice = 120000,
+                    Price = 120000,
+                    DiscountPrice = 112000,
                     Brand = brands[7], // DELL
                     Category = categories[0],
                     SubCategory = subCategories[1], // Gaming
@@ -1415,7 +1415,7 @@ namespace API.Data
                     IsDealOfTheDay = false,
                     ProductImages = new List<ProductImage>
                     {
-                        new ProductImage { ImageUrl = "/images/products/macbook-pro-14-m3-pro-1.jpg" },
+                        new ProductImage { ImageUrl = "/images/products/MacBook-Pro-M3-14inch-Silver-1368.png" },
                         new ProductImage { ImageUrl = "/images/products/MacBook-Pro-M3-14inch-Space-Black-3747.png" }
                     },
                     AttributeValues = new List<ProductAttributeValue>

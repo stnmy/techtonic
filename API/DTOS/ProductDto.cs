@@ -60,10 +60,6 @@ namespace API.DTOS
         public int Id { get; set; }
         public string Value { get; set; } = string.Empty ;
     }
-    public class ProductsPageReturnDto
-    {
-        public List<ProductCardDto> Products { get; set; } = new();
-        public List<FilterDto> Filters { get; set; } = new();
-    }
+
 
 }

@@ -22,7 +22,7 @@ namespace API.Repository
             _context = context;
         }
 
-        public async Task<Product?> GetProductById(int id)
+        public async Task<ProductWithRelatedProductsDto> GetProductById(int id)
         {
             var product = await _context.Products
                 .Include(p => p.Brand)
@@ -35,16 +35,50 @@ namespace API.Repository
                 .Include(p => p.Visits)
                 .FirstOrDefaultAsync(p => p.Id == id);
             
-            if(product != null){
-                _context.ProductVisits.Add( new ProductVisit{
-                    ProductId = product.Id,
-                    VisitTime = DateTime.UtcNow
-                });
-                
-                await _context.SaveChangesAsync();
-            }
+            if(product == null){
+                return null;
+            }   
+            
+            _context.ProductVisits.Add( new ProductVisit{
+                ProductId = product.Id,
+                VisitTime = DateTime.UtcNow
+            });            
+            await _context.SaveChangesAsync();
+            
+            var relatedProducts = await GetRelatedProducts(product);
+            return new ProductWithRelatedProductsDto
+            {
+                Product = product.toProductDto(),
+                RelatedProducts = relatedProducts.Select(rp => rp.toRelatedProductCardDto()).ToList()
+            };
+        }
 
-            return product;
+        private async Task<List<Product>> GetRelatedProducts(Product product){
+            const decimal upperLimit = 1.10M;
+            const decimal lowerLimit = 0.91M;
+
+            decimal lowerPrice = product.DiscountPrice.HasValue
+                ? product.DiscountPrice.Value * lowerLimit
+                : product.Price * lowerLimit ;
+
+            decimal upperPrice = product.DiscountPrice.HasValue
+                ? product.DiscountPrice.Value * upperLimit
+                : product.Price * upperLimit ;
+
+            return await _context.Products
+                .Where(p => p.Id != product.Id)
+                .Where(p => p.CategoryId == product.CategoryId)
+                // .Where(p => p.SubCategoryId == product.SubCategoryId)
+                .Where(p => 
+                    p.DiscountPrice.HasValue
+                    ? p.DiscountPrice.Value >= lowerPrice && p.DiscountPrice.Value <= upperPrice
+                    : p.Price >= lowerPrice && p.Price <= upperPrice )
+                .Include(p => p.Reviews)
+                .OrderByDescending(p => p.Reviews.Any()
+                    ? p.Reviews.Average(r => r.Rating)
+                    : 0)
+                .Take(4)
+                .ToListAsync();
         }
 
         public async Task<List<Product>> GetProducts()
@@ -200,5 +234,6 @@ namespace API.Repository
 
             return visitedProducts.Concat(additionalProducts).ToList();
         }
+
     }
 }

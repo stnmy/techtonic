@@ -47,15 +47,15 @@ namespace API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ProductDetailDto>> GetProduct(int id)
+        public async Task<ActionResult<ProductWithRelatedProductsDto>> GetProduct(int id)
         {
-            var product = await _productRepository.GetProductById(id);
+            var productWithRelatedProducts = await _productRepository.GetProductById(id);
 
-            if (product == null)
+            if(productWithRelatedProducts == null){
                 return NotFound();
+            }
 
-            var productDetailDto = product.toProductDto();
-            return productDetailDto;
+            return productWithRelatedProducts;
         }
 
 
@@ -94,11 +94,7 @@ namespace API.Controllers
                 }
                 else
                 {
-                    return Ok(new ProductsPageReturnDto
-                    {
-                        Products = new(),
-                        Filters = filters
-                    });
+                    return BadRequest("Invalid filter format");
                 }
             }
             
@@ -107,19 +103,27 @@ namespace API.Controllers
 
             if (products == null || products.Count == 0)
             {
-                return Ok(new ProductsPageReturnDto{
-                    Products = new(),
-                    Filters = filters
-                });
+                return NotFound("No Products Found");
             }
             var productCardDtos = products.Select(p => p.toProductCardDto()).ToList();
 
-            return Ok(new ProductsPageReturnDto
-            {
-                Products = productCardDtos,
-                Filters = filters
-            });
+            return Ok(productCardDtos);
+        }
 
+        [HttpGet("filters/{categorySlug}")]
+        public async Task<ActionResult<List<FilterDto>>> GetFiltersForCategory(string categorySlug)
+        {
+            if(string.IsNullOrWhiteSpace(categorySlug)){
+                return BadRequest("Category slug is required");
+            }
+
+            var filters = await _productRepository.GetFiltersForCategoryAsync(categorySlug);
+            if ( filters == null || filters.Count == 0)
+            {
+                return Ok(new List<FilterDto>());
+            }
+
+            return Ok(filters);
         }
 
         private async Task<(string? CategorySlug, string? BrandSlug, string? SubCategorySlug)> GetValidSlugsAsync(string[] slugs)
@@ -178,6 +182,8 @@ namespace API.Controllers
             }
             return products.Select( p => p.toProductCardDto()).ToList();
         }
+    
+
     }
 
 

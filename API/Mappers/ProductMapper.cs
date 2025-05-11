@@ -72,5 +72,16 @@ namespace API.Mappers
                 }).ToList(),
             };
         }
+
+        public static RelatedProductCardDto toRelatedProductCardDto (this Product product){
+            return new RelatedProductCardDto{
+                Id = product.Id,
+                Name = product.Name,
+                Slug = product.Slug,
+                Price = product.Price,
+                DiscountPrice = product.DiscountPrice,
+                Image = product.ProductImages.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.jpg",
+            };
+        }
     }
 }
