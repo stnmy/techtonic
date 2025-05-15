@@ -107,11 +107,10 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
             <Grid sx={{display:'flex', alignItems:'center', justifyItems:'center', gap: 1, mt:7, mb:7}}>
               <Typography variant="h6">Price:</Typography>
               <Typography
-                variant="h4"
+                variant="h3"
                 sx={{ fontWeight: "bold", color: "error.main" }}
               >
-                Price:
-                {product.discountPrice}
+                {product.discountPrice} BDT
               </Typography>
               <Typography
                 variant="h6"
@@ -127,7 +126,7 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
             <Grid sx={{display:'flex', alignItems:'center', justifyItems:'center', gap: 1, mt:7, mb:7}}>
               <Typography variant="h6">Price:</Typography>
               <Typography
-                variant="h4"
+                variant="h3"
                 sx={{ fontWeight: "bold", color: "error.main" }}
               >
                 {product.price} BDT
@@ -161,8 +160,15 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
               value={quantity}
               variant="standard"
               label="Quantity"
+              slotProps={{
+                htmlInput: {
+                  style: {
+                    textAlign: "center",
+                  },
+                },
+              }}
               sx={{
-                textAlign: "center",
+                // textAlign: "center",
                 width: "60px",
               }}
             />
@@ -187,8 +193,8 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
           Add to Cart
         </Button>
 
-        <Button variant="contained" size="large">
-          <FavoriteIcon />
+        <Button variant="contained" size="large" sx={{backgroundColor:'error.main'}}>
+          <FavoriteIcon/>
         </Button>
       </Grid>
     </Grid>

@@ -27,6 +27,6 @@ export default function ProductDetails() {
   }
 
   return (
-    <ProductDetailsMainSection product={product}/>
+    <ProductDetailsMainSection product={product} relatedProducts={relatedProducts}/>
   )
 }

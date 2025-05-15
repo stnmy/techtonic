@@ -33,10 +33,7 @@ export default function ProductCard({ product }: Props) {
         },
       }}
     >
-      <CardActionArea
-        component = {Link}
-        to={`/ProductBrowser/${product.id}`}
-      >
+      <CardActionArea component={Link} to={`/ProductBrowser/${product.id}`}>
         <CardMedia
           component="img"
           height="190"
@@ -105,7 +102,11 @@ export default function ProductCard({ product }: Props) {
             <>
               <Typography
                 variant="h5"
-                sx={{ color: "primary.main", fontWeight: "bold", marginRight: "8px" }}
+                sx={{
+                  color: "error.main",
+                  fontWeight: "bold",
+                  marginRight: "8px",
+                }}
               >
                 {product.discountPrice}
               </Typography>
@@ -120,7 +121,10 @@ export default function ProductCard({ product }: Props) {
               </Typography>
             </>
           ) : (
-            <Typography variant="h5" sx={{ color: "primary.main", fontWeight: "bold" }}>
+            <Typography
+              variant="h5"
+              sx={{ color: "error.main", fontWeight: "bold" }}
+            >
               {product.price}
             </Typography>
           )}

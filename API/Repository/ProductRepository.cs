@@ -53,6 +53,7 @@ namespace API.Repository
             };
         }
 
+
         private async Task<List<Product>> GetRelatedProducts(Product product){
             const decimal upperLimit = 1.10M;
             const decimal lowerLimit = 0.91M;
@@ -69,11 +70,12 @@ namespace API.Repository
                 .Where(p => p.Id != product.Id)
                 .Where(p => p.CategoryId == product.CategoryId)
                 // .Where(p => p.SubCategoryId == product.SubCategoryId)
-                .Where(p => 
+                .Where(p =>
                     p.DiscountPrice.HasValue
                     ? p.DiscountPrice.Value >= lowerPrice && p.DiscountPrice.Value <= upperPrice
-                    : p.Price >= lowerPrice && p.Price <= upperPrice )
+                    : p.Price >= lowerPrice && p.Price <= upperPrice)
                 .Include(p => p.Reviews)
+                .Include(p => p.ProductImages)
                 .OrderByDescending(p => p.Reviews.Any()
                     ? p.Reviews.Average(r => r.Rating)
                     : 0)

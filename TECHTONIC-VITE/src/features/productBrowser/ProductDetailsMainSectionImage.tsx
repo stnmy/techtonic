@@ -50,7 +50,7 @@ export default function ProductDetailsMainSectionImage({images} :Props) {
         {/* MAIN IMAGE */}
         <Grid size={11}>
             <Paper
-            elevation={2}
+            elevation={0}
             sx={{
                 width:'100%',
                 height: '600px',

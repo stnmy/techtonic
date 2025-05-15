@@ -1600,10 +1600,7 @@ namespace API.Data
                         new ProductReview { ReviewerName = "TUF_Gamer", Comment = "Runs everything smoothly, feels really solid and durable.", Rating = 5, CreatedAt = DateTime.UtcNow.AddDays(-90) },
                         new ProductReview { ReviewerName = "ValueHunter", Comment = "Great performance for the money. Screen could be brighter, but it's fine for gaming.", Rating = 4, CreatedAt = DateTime.UtcNow.AddDays(-60) }
                     },
-                    Questions = new List<ProductQuestion>
-                    {
-                        new ProductQuestion { Question = "How is the cooling performance?", Answer = "The TUF series generally has robust cooling for its price point, capable of handling sustained gaming loads, although fans can become audible under stress.", CreatedAt = DateTime.UtcNow.AddDays(-45) }
-                    },
+                    Questions = new List<ProductQuestion>{},
                     Visits = new List<ProductVisit>
                     {
 
