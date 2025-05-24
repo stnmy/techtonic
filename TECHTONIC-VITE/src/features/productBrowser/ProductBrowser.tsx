@@ -2,40 +2,23 @@ import { useEffect, useState } from "react"
 import {ProductCardType } from "../../app/models/product"
 
 import ProductList from "./ProductList";
+import { useFetchProductsQuery } from "./productBrowserApi";
+import NotFound from "../../app/error/NotFound";
 
 export default function ProductBrowser() {
-  const [products, setProducts] = useState<ProductCardType[]>([]);
-  // const [filters, setFilters] = useState<Filter[]>([]);
-  // const[loading, setLoading] = useState(true);
+  const {data, isLoading} = useFetchProductsQuery();
 
-  useEffect(() => {
-    fetch("https://localhost:5001/api/products/laptop")
-      .then((response) => response.json())
-      .then((data: ProductCardType[]) => {
-        setProducts(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching products", error)
-      });
-  }, []);
+  if(isLoading){
+    return <div>Loadin...</div>
+  }
 
-  // useEffect(() => {
-  //   fetch("https://localhost:5001/api/products/filters/laptop")
-  //   .then((response) => response.json())
-  //   .then((data: Filter[]) => {
-  //     setFilters(data);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error fetching Filters", error)
-  //   });
-  // },[]);
-
-
-
+  if(!data){
+    return <NotFound/>
+  }
 
   return (
 
-      <ProductList products={products}/>
+      <ProductList products={data}/>
 
   );
 }

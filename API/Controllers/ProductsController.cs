@@ -8,16 +8,12 @@ using API.Data.Enums;
 using API.DTOS;
 using API.Interfaces;
 using API.Mappers;
-using API.Models.Product;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseApiController
     {
         private readonly IProductRepository _productRepository;
         private readonly ApplicationDbContext _context;

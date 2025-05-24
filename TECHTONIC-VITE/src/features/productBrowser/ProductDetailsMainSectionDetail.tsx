@@ -14,12 +14,14 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useAddItemToCartMutation } from "../cart/cartApi";
 type Props = {
   product: ProductDetailsType;
 };
 
 export default function ProductDetailsMainSectionDetail({ product }: Props) {
   const [quantity, setQuantity] = useState(1);
+  const [addItemToCart] = useAddItemToCartMutation();
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -103,36 +105,54 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
 
       {/* Price */}
       <Grid>
-          {product.discountPrice ? (
-            <Grid sx={{display:'flex', alignItems:'center', justifyItems:'center', gap: 1, mt:7, mb:7}}>
-              <Typography variant="h6">Price:</Typography>
-              <Typography
-                variant="h3"
-                sx={{ fontWeight: "bold", color: "error.main" }}
-              >
-                {product.discountPrice} BDT
-              </Typography>
-              <Typography
-                variant="h6"
-                sx={{
-                  textDecoration: "line-through",
-                  color: "text.secondary",
-                }}
-              >
-                {product.price}
-              </Typography>
-            </Grid>
-          ) : (
-            <Grid sx={{display:'flex', alignItems:'center', justifyItems:'center', gap: 1, mt:7, mb:7}}>
-              <Typography variant="h6">Price:</Typography>
-              <Typography
-                variant="h3"
-                sx={{ fontWeight: "bold", color: "error.main" }}
-              >
-                {product.price} BDT
-              </Typography>
-            </Grid>
-          )}
+        {product.discountPrice ? (
+          <Grid
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyItems: "center",
+              gap: 1,
+              mt: 7,
+              mb: 7,
+            }}
+          >
+            <Typography variant="h6">Price:</Typography>
+            <Typography
+              variant="h3"
+              sx={{ fontWeight: "bold", color: "error.main" }}
+            >
+              {product.discountPrice} BDT
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                textDecoration: "line-through",
+                color: "text.secondary",
+              }}
+            >
+              {product.price}
+            </Typography>
+          </Grid>
+        ) : (
+          <Grid
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyItems: "center",
+              gap: 1,
+              mt: 7,
+              mb: 7,
+            }}
+          >
+            <Typography variant="h6">Price:</Typography>
+            <Typography
+              variant="h3"
+              sx={{ fontWeight: "bold", color: "error.main" }}
+            >
+              {product.price} BDT
+            </Typography>
+          </Grid>
+        )}
       </Grid>
 
       {/* Add To cart section */}
@@ -189,12 +209,19 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
           startIcon={<ShoppingCartIcon />}
           disabled={quantity === 0}
           sx={{ width: 250 }}
+          onClick={() =>
+            addItemToCart({ productId: product.id, quantity: quantity })
+          }
         >
           Add to Cart
         </Button>
 
-        <Button variant="contained" size="large" sx={{backgroundColor:'error.main'}}>
-          <FavoriteIcon/>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{ backgroundColor: "error.main" }}
+        >
+          <FavoriteIcon />
         </Button>
       </Grid>
     </Grid>

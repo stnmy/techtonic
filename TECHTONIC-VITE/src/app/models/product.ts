@@ -58,6 +58,11 @@ export interface ProductDetailsType {
     image: string
   }
 
+  export interface ProductDetailsApiResponse {
+  product: ProductDetailsType;
+  relatedProducts: RelatedProduct[];
+}
+
 
   export interface Filter {
     filterName: string

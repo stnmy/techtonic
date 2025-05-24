@@ -43,7 +43,7 @@ export default function ProductDetailsReviewSection({ product }: Props) {
           alignItems: "center",
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 900 }}>
+        <Typography variant="h5" sx={{ fontWeight: 900 }}>
           Reviews
         </Typography>
         <Button variant="contained" startIcon={<CommentIcon />} sx={{backgroundColor:'primary.main'}}>
@@ -103,7 +103,7 @@ export default function ProductDetailsReviewSection({ product }: Props) {
           boxShadow: "none",
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 400 }}>
+        <Typography variant="h5" sx={{ fontWeight: 400 }}>
           Add Review
         </Typography>
         <Divider sx={{ mt: 2 }} />

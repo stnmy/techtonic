@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOS;
-using API.Models.Product;
+using API.Models.ProductModels;
 using API.Models.Utility;
 
 namespace API.Interfaces
@@ -17,6 +17,6 @@ namespace API.Interfaces
         Task<List<FilterDto>> GetFiltersForCategoryAsync(string categorySlug);
         Task<Product?> GetDealOfTheDayAsync();
         Task<List<Product>> GetMostVisitedProductsAsync(int count, DateTime? fromDate = null);
-        
+
     }
 }

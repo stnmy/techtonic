@@ -1,9 +1,11 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Container, LinearProgress, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../store/store";
 
 const brands = ["HP", "ASUS", "Apple", "Microsoft", "Dell", "Lenovo", "MSI", "Gigabyte", "Huawei", "Xiaomi"];
 
 export default function SecondaryNavbar() {
+  
   return (
     <AppBar position="sticky" sx={styles.appBar}>
       <Toolbar sx={styles.toolbar}>
@@ -25,6 +27,7 @@ export default function SecondaryNavbar() {
           ))}
         </Container>
       </Toolbar>
+
     </AppBar>
   );
 }

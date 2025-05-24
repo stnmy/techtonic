@@ -9,12 +9,14 @@ import {
 } from "@mui/material";
 import { ProductCardType } from "../../app/models/product";
 import { Link } from "react-router-dom";
+import { useAddItemToCartMutation } from "../cart/cartApi";
 
 type Props = {
   product: ProductCardType;
 };
 
 export default function ProductCard({ product }: Props) {
+  const [addItemToCart, { isLoading }] = useAddItemToCartMutation();
   return (
     <Card
       sx={{
@@ -29,7 +31,7 @@ export default function ProductCard({ product }: Props) {
         "&:hover": {
           // transform:"translateY(-4px)",
           transform: "scale(1.01)",
-          boxShadow: "0 12px 20px rgba(0,0,0,0.2)",
+          boxShadow: "0 3px 5px rgba(0,0,0,0.2)",
         },
       }}
     >
@@ -132,6 +134,10 @@ export default function ProductCard({ product }: Props) {
 
         <Box sx={{ textAlign: "center", marginTop: "16px" }}>
           <Button
+            disabled={isLoading}
+            onClick={() =>
+              addItemToCart({ productId: product.id, quantity: 1 })
+            }
             variant="contained"
             color="primary"
             sx={{ minWidth: "220px" }}

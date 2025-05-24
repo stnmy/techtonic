@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Models.Product;
+using API.Models.CartModels;
+using API.Models.ProductModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -18,6 +19,8 @@ namespace API.Data
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<ProductQuestion> ProductQuestions { get; set; }
         public DbSet<ProductVisit> ProductVisits { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

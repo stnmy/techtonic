@@ -3,28 +3,20 @@ import { useParams } from "react-router-dom"
 import {ProductDetailsType, RelatedProduct } from "../../app/models/product"
 
 import ProductDetailsMainSection from "./ProductDetailsMainSection";
+import { useFetchProductDetailsQuery } from "./productBrowserApi";
 
 export default function ProductDetails() {
   const {id} = useParams()
-  const [product, setProduct] = useState<ProductDetailsType | null>(null);
-  const[relatedProducts, setRelatedProducts] = useState<RelatedProduct[] | []>([])
+  const {data, isLoading} = useFetchProductDetailsQuery(id? +id :0)
 
-
-
-  useEffect(() => {
-    fetch(`https://localhost:5001/api/products/${id}`)
-      .then(response => response.json())
-      .then(data => {
-        setProduct(data.product)
-        setRelatedProducts(data.relatedProducts || [])
-      })
-
-      .catch(error => console.log(error))
-  }, [id])
-
-  if (!product) {
+    if (isLoading || !data) {
     return <div>Product not found</div>;
   }
+  const product = data.product
+  const relatedProducts = data.relatedProducts;
+
+
+
 
   return (
     <ProductDetailsMainSection product={product} relatedProducts={relatedProducts}/>

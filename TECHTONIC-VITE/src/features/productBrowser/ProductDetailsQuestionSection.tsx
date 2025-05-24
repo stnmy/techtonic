@@ -44,7 +44,7 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
           //   ml: 2,
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 900 }}>
+        <Typography variant="h5" sx={{ fontWeight: 900 }}>
           Questions
         </Typography>
         <Button variant="contained" startIcon={<ChatBubbleOutlineIcon />} sx={{backgroundColor:'primary.main'}}>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace API.Models.Product
+namespace API.Models.ProductModels
 {
     public class Category
     {
@@ -14,7 +14,7 @@ namespace API.Models.Product
         [JsonIgnore]
         public ICollection<Product> Products { get; set; } = new List<Product>();
         [JsonIgnore]
-        public ICollection<SubCategory> SubCategories {get; set;} = new List<SubCategory>();
-        public ICollection<FilterAttribute> Filters {get; set;} = new List<FilterAttribute>();
+        public ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
+        public ICollection<FilterAttribute> Filters { get; set; } = new List<FilterAttribute>();
     }
 }

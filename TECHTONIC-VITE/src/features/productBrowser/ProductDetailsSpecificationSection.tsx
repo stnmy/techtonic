@@ -46,7 +46,7 @@ export default function ProductDetailsSpecificationSection({ product }: Props) {
       }}
     >
       <Typography
-        variant="h4"
+        variant="h5"
         gutterBottom
         component="h2"
         sx={{ fontWeight: "900" }}

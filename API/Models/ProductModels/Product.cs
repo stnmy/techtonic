@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace API.Models.Product
+namespace API.Models.ProductModels
 {
     public class Product
     {
@@ -23,12 +23,12 @@ namespace API.Models.Product
         public int CategoryId { get; set; }
         [JsonIgnore]
         public Category Category { get; set; } = null!;
-        
+
         public int? SubCategoryId { get; set; }
 
         [JsonIgnore]
         public SubCategory? SubCategory { get; set; }
-        public required int StockQuantity {get; set;}
+        public required int StockQuantity { get; set; }
 
         public bool IsFeatured { get; set; }
         public bool IsDealOfTheDay { get; set; }

@@ -8,7 +8,7 @@ using API.Data.Enums;
 using API.DTOS;
 using API.Interfaces;
 using API.Mappers;
-using API.Models.Product;
+using API.Models.ProductModels;
 using API.Models.Utility;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,17 +34,19 @@ namespace API.Repository
                 .Include(p => p.Questions)
                 .Include(p => p.Visits)
                 .FirstOrDefaultAsync(p => p.Id == id);
-            
-            if(product == null){
+
+            if (product == null)
+            {
                 return null;
-            }   
-            
-            _context.ProductVisits.Add( new ProductVisit{
+            }
+
+            _context.ProductVisits.Add(new ProductVisit
+            {
                 ProductId = product.Id,
                 VisitTime = DateTime.UtcNow
-            });            
+            });
             await _context.SaveChangesAsync();
-            
+
             var relatedProducts = await GetRelatedProducts(product);
             return new ProductWithRelatedProductsDto
             {
@@ -54,17 +56,18 @@ namespace API.Repository
         }
 
 
-        private async Task<List<Product>> GetRelatedProducts(Product product){
+        private async Task<List<Product>> GetRelatedProducts(Product product)
+        {
             const decimal upperLimit = 1.10M;
             const decimal lowerLimit = 0.91M;
 
             decimal lowerPrice = product.DiscountPrice.HasValue
                 ? product.DiscountPrice.Value * lowerLimit
-                : product.Price * lowerLimit ;
+                : product.Price * lowerLimit;
 
             decimal upperPrice = product.DiscountPrice.HasValue
                 ? product.DiscountPrice.Value * upperLimit
-                : product.Price * upperLimit ;
+                : product.Price * upperLimit;
 
             return await _context.Products
                 .Where(p => p.Id != product.Id)
@@ -198,13 +201,13 @@ namespace API.Repository
             var product = await _context.Products
                             .Include(p => p.AttributeValues)
                             .Include(p => p.ProductImages)
-                            .FirstOrDefaultAsync( p => p.IsDealOfTheDay == true);
+                            .FirstOrDefaultAsync(p => p.IsDealOfTheDay == true);
             return product;
         }
 
         public async Task<List<Product>> GetMostVisitedProductsAsync(int count, DateTime? fromDate = null)
         {
-                // Get visited products first
+            // Get visited products first
             var visitedProductsQuery = _context.Products
                 .Include(p => p.ProductImages)
                 .Include(p => p.Visits)

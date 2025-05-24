@@ -25,7 +25,7 @@ export default function ProductDetailsRelatedProductsSection({
           justifyContent:"center"
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 900 }}>
+        <Typography variant="h5" sx={{ fontWeight: 900 }}>
           Related Products
         </Typography>
       </Box>
@@ -92,7 +92,7 @@ export default function ProductDetailsRelatedProductsSection({
               </Grid>
             </Grid>
           </Grid>
-          {index < relatedProducts.length - 1 && <Divider />}
+          {index < relatedProducts.length - 1 && <Divider sx={{mt:1}}/>}
         </Grid>
       ))}
     </Box>

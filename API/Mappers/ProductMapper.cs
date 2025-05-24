@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOS;
-using API.Models.Product;
+using API.Models.ProductModels;
 
 namespace API.Mappers
 {
@@ -73,8 +73,10 @@ namespace API.Mappers
             };
         }
 
-        public static RelatedProductCardDto toRelatedProductCardDto (this Product product){
-            return new RelatedProductCardDto{
+        public static RelatedProductCardDto toRelatedProductCardDto(this Product product)
+        {
+            return new RelatedProductCardDto
+            {
                 Id = product.Id,
                 Name = product.Name,
                 Slug = product.Slug,

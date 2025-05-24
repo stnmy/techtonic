@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Models.Product;
 
-namespace API.Models
+namespace API.Models.ProductModels
 {
     public class FilterAttribute
     {
