@@ -85,5 +85,29 @@ namespace API.Mappers
                 Image = product.ProductImages.FirstOrDefault()?.ImageUrl ?? "/images/placeholder.jpg",
             };
         }
+
+
+        public static ProductCardPageResult ToProductCardPageResult(
+            int count,
+            int actualPageNumber,
+            int actualPageSize,
+            List<Product> products)
+        {
+            var productDtos = products.Select(p => p.toProductCardDto()).ToList();
+
+            return new ProductCardPageResult
+            {
+                paginationData = new PaginationDataDto
+                {
+                    totalCount = count,
+                    start = ((actualPageNumber - 1) * actualPageSize) + 1,
+                    end = actualPageNumber * actualPageSize <= count ? actualPageNumber * actualPageSize : count,
+                    pageSize = actualPageSize,
+                    currentPage = actualPageNumber,
+                    totalPageNumber = (int)Math.Ceiling((double)count / actualPageSize)
+                },
+                productCardDtos = productDtos,
+            };
+        }
     }
 }

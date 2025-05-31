@@ -1,5 +1,8 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
-import { ProductDetailsType, RelatedProduct } from "../../app/models/product";
+import {
+  ProductDetailsType,
+  RelatedProduct,
+} from "../../../app/models/product";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -20,9 +23,9 @@ export default function ProductDetailsRelatedProductsSection({
     >
       <Box
         sx={{
-          display:'flex',
+          display: "flex",
           alignItems: "center",
-          justifyContent:"center"
+          justifyContent: "center",
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: 900 }}>
@@ -46,10 +49,10 @@ export default function ProductDetailsRelatedProductsSection({
                   fontWeight: 600,
                   textDecoration: "none",
                   color: "primary.main",
-                  transition: 'color 0.3s text-decoration 0.3s',
-                  "&:hover" :{
-                    textDecoration:'underline'
-                  }
+                  transition: "color 0.3s text-decoration 0.3s",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
                 }}
               >
                 {rp.name}
@@ -92,7 +95,7 @@ export default function ProductDetailsRelatedProductsSection({
               </Grid>
             </Grid>
           </Grid>
-          {index < relatedProducts.length - 1 && <Divider sx={{mt:1}}/>}
+          {index < relatedProducts.length - 1 && <Divider sx={{ mt: 1 }} />}
         </Grid>
       ))}
     </Box>

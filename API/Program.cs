@@ -14,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
 builder.Services.AddCors();
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();

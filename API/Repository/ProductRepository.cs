@@ -72,7 +72,6 @@ namespace API.Repository
             return await _context.Products
                 .Where(p => p.Id != product.Id)
                 .Where(p => p.CategoryId == product.CategoryId)
-                // .Where(p => p.SubCategoryId == product.SubCategoryId)
                 .Where(p =>
                     p.DiscountPrice.HasValue
                     ? p.DiscountPrice.Value >= lowerPrice && p.DiscountPrice.Value <= upperPrice
@@ -86,21 +85,66 @@ namespace API.Repository
                 .ToListAsync();
         }
 
-        public async Task<List<Product>> GetProducts()
+        public async Task<ProductCardPageResult> GetProducts(
+            string? orderBy = null,
+            string? filters = null,
+            int? pageNumber = 1,
+            int? pageSize = 5,
+            string? search = null,
+            string? priceRange = null)
         {
-            var products = await _context.Products
-                .Include(p => p.Brand)
-                .Include(p => p.SubCategory)
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)
-                .Include(p => p.AttributeValues) // 
-                .Include(p => p.Reviews)
-                .Include(p => p.Questions)
-                .Include(p => p.Visits)
-                .ToListAsync();
-            return products;
+
+            var query = BuildProductQuery(orderBy, filters, search, priceRange);
+
+            var count = await query.CountAsync();
+            var (actualPageNumber, actualPageSize, paginationQuery) = ApplyPagination(query, pageNumber, pageSize);
+
+            var products = await paginationQuery.ToListAsync();
+            return ProductMapper.ToProductCardPageResult(count, actualPageNumber, actualPageSize, products);
         }
 
+        private (int actualPageNumber, int actualPageSize, IQueryable<Product> query) ApplyPagination(
+            IQueryable<Product> query, int? pageNumber, int? pageSize, int minPageSize = 5, int maxPageSize = 10)
+        {
+            int actualPageNumber = (pageNumber.HasValue && pageNumber.Value >= 1) ? pageNumber.Value : 1;
+            int actualPageSize = (pageSize.HasValue && pageSize.Value >= minPageSize && pageSize.Value <= maxPageSize)
+                ? pageSize.Value
+                : minPageSize;
+
+            var paginationQuery = query
+                .Skip((actualPageNumber - 1) * actualPageSize)
+                .Take(actualPageSize);
+
+            return (actualPageNumber, actualPageSize, paginationQuery);
+        }
+
+        public IQueryable<Product> BuildProductQuery(
+            string? orderBy,
+            string? filters,
+            string? search,
+            string? priceRange
+        )
+        {
+            var query = _context.Products
+                .Include(p => p.ProductImages)
+                .Include(p => p.AttributeValues)
+                .AsQueryable();
+
+
+            query = ApplyPriceRangeFilter(query, priceRange);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = ApplySearch(query, search);
+            }
+            else if (!string.IsNullOrWhiteSpace(filters))
+            {
+                query = ApplyAttributeFilters(query, filters);
+            }
+            query = ApplyOrdering(query, orderBy);
+
+            return query;
+        }
         public async Task<List<IdentifiedSlug>> IdentifySlugsAsync(string[] slugs)
         {
             var categories = await _context.Categories.Select(c => c.Slug.ToLower()).ToListAsync();
@@ -172,16 +216,37 @@ namespace API.Repository
             return await query.ToListAsync();
         }
 
-        public async Task<List<FilterDto>> GetFiltersForCategoryAsync(string categorySlug)
+        public async Task<TotalFilterDto> GetFiltersForCategoryAsync(string categorySlug)
         {
             var category = await _context.Categories
                 .Include(c => c.Filters)
                     .ThenInclude(f => f.DefaultValues)
                 .FirstOrDefaultAsync(c => c.Slug == categorySlug);
 
-            if (category == null) return new();
+            if (category == null)
+            {
+                return new TotalFilterDto
+                {
+                    priceRangeDto = null,
+                    filterDtos = Array.Empty<FilterDto>()
+                };
+            }
 
-            return category.Filters
+            var products = await _context.Products
+                .Where(p => p.Category.Slug == categorySlug)
+                .ToListAsync();
+
+            PriceRangeDto? priceRange = null;
+            if (products.Any())
+            {
+                priceRange = new PriceRangeDto
+                {
+                    minPrice = (int)products.Min(p => p.Price),
+                    maxPrice = (int)products.Max(p => p.Price)
+                };
+            }
+
+            var filters = category.Filters
                 .Select(f => new FilterDto
                 {
                     FilterName = f.FilterName,
@@ -192,8 +257,15 @@ namespace API.Repository
                             Id = df.Id,
                             Value = df.Value
                         })
-                        .OrderBy(v => v.Value).ToList()
-                }).ToList();
+                        .ToList()
+                })
+                .ToArray();
+            return new TotalFilterDto
+            {
+                priceRangeDto = priceRange,
+                filterDtos = filters
+            };
+
         }
 
         public async Task<Product?> GetDealOfTheDayAsync()
@@ -240,5 +312,118 @@ namespace API.Repository
             return visitedProducts.Concat(additionalProducts).ToList();
         }
 
+        private IQueryable<Product> ApplySearch(IQueryable<Product> query, string? searchValue)
+        {
+            if (!string.IsNullOrWhiteSpace(searchValue))
+            {
+                var lowerCaseSearchValue = searchValue.Trim().ToLower();
+                query = query.Where(p =>
+                    p.Name.ToLower().Contains(lowerCaseSearchValue) ||
+                    (p.Description != null && p.Description.ToLower().Contains(lowerCaseSearchValue))
+                );
+            }
+            return query;
+        }
+
+        private IQueryable<Product> ApplyOrdering(IQueryable<Product> query, string? orderBy)
+        {
+            return orderBy switch
+            {
+                "priceasc" => query.OrderBy(x => x.DiscountPrice ?? x.Price),
+                "pricedesc" => query.OrderByDescending(x => x.DiscountPrice ?? x.Price),
+                "ratinghigh" => query.OrderByDescending(x => x.Reviews.Any() ? x.Reviews.Average(r => r.Rating) : 4),
+                "ratinglow" => query.OrderBy(x => x.Reviews.Any() ? x.Reviews.Average(r => r.Rating) : 4),
+                "mostpopular" => query.OrderByDescending(x => x.Visits.Count),
+                "leastpopular" => query.OrderBy(x => x.Visits.Count),
+                "name" => query.OrderBy(x => x.Name),
+                _ => query.OrderBy(x => x.Name)
+            };
+        }
+
+        private IQueryable<Product> ApplyFiltering(IQueryable<Product> query, List<int> filterIds)
+        {
+            if (filterIds == null || filterIds.Count == 0)
+            {
+                return query;
+            }
+            var filterPairs = _context.FilterAttributeValues
+                .Where(fv => filterIds.Contains(fv.Id))
+                .Select(fv => new { Group = fv.FilterAttribute.FilterSlug, valueId = fv.Id });
+
+            var groups = filterPairs.ToList().GroupBy(fp => fp.Group).ToList();
+
+            foreach (var group in groups)
+            {
+                var groupIds = group.Select(g => g.valueId).ToList();
+                query = query.Where(p =>
+                    p.AttributeValues.Any(av =>
+                        av.FilterAttributeValueId.HasValue && groupIds.Contains(av.FilterAttributeValueId.Value)
+                    )
+                );
+            }
+
+            return query;
+        }
+
+        private IQueryable<Product> ApplyPriceRangeFilter(IQueryable<Product> query, string? priceRange)
+        {
+            if (!string.IsNullOrWhiteSpace(priceRange))
+            {
+                var (minPrice, maxPrice) = parsePriceRange(priceRange);
+                query = query.Where(p => (p.DiscountPrice ?? p.Price) >= minPrice &&
+                    (p.DiscountPrice ?? p.Price) <= maxPrice);
+            }
+            return query;
+        }
+
+        private IQueryable<Product> ApplyAttributeFilters(IQueryable<Product> query, string? filters)
+        {
+            if (!string.IsNullOrWhiteSpace(filters))
+            {
+                var filterIds = filters.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => int.TryParse(s, out var id) ? id : -1)
+                    .Where(id => id > 0)
+                    .ToList();
+                query = ApplyFiltering(query, filterIds);
+            }
+            return query;
+        }
+
+        private Tuple<int, int> parsePriceRange(string priceRange)
+        {
+            if (!string.IsNullOrWhiteSpace(priceRange))
+            {
+                var priceRangeParts = priceRange.Split("-");
+                if (priceRangeParts.Length == 2)
+                {
+                    if (int.TryParse(priceRangeParts[0], out var minPrice) &&
+                      int.TryParse(priceRangeParts[1], out var maxPrice))
+                    {
+                        return Tuple.Create(minPrice, maxPrice);
+                    }
+                }
+            }
+            throw new ArgumentException("Invalid Price Range Format", nameof(priceRange));
+        }
+
+        public async Task<ProductQuestion?> AskQuestionAsync(int productId, string question)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null)
+            {
+                return null;
+            }
+
+            var productQuestion = new ProductQuestion
+            {
+                ProductId = productId,
+                Question = question,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.ProductQuestions.Add(productQuestion);
+            await _context.SaveChangesAsync();
+            return productQuestion;
+        }
     }
 }

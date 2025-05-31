@@ -8,13 +8,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ProductDetailsType } from "../../app/models/product";
+import { ProductDetailsType } from "../../../app/models/product";
 import React, { useState } from "react";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useAddItemToCartMutation } from "../cart/cartApi";
+import { useAddItemToCartMutation } from "../../cart/cartApi";
 type Props = {
   product: ProductDetailsType;
 };
@@ -53,7 +53,7 @@ export default function ProductDetailsMainSectionDetail({ product }: Props) {
           Brand: <strong>{product.brandName}</strong>
         </Typography>
 
-        <Typography variant="body1" sx={{ mt: 1 }}>
+        <Typography variant="body1" sx={{ mt: 1 }} component="span">
           Availability:
           {product.stockQuantity > 0 ? (
             <Chip

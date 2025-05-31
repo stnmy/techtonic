@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOS;
+using API.Interfaces;
 using API.Mappers;
 using API.Models.CartModels;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,12 @@ namespace API.Controllers
 {
     public class CartController : BaseApiController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICartRepository _cartRepository;
 
 
-        public CartController(ApplicationDbContext context)
+        public CartController(ICartRepository cartRepository)
         {
-            _context = context;
+            _cartRepository = cartRepository;
         }
 
         [HttpGet]
@@ -44,11 +45,7 @@ namespace API.Controllers
                 cart = CreateCart();
             }
 
-            var product = await _context.Products
-                .Include(p => p.Brand)
-                .Include(p => p.Category)
-                .Include(p => p.ProductImages)
-                .FirstOrDefaultAsync(p => p.Id == productId);
+            var product = await _cartRepository.GetProduct(productId);
 
 
             if (product == null)
@@ -57,7 +54,7 @@ namespace API.Controllers
             }
 
             cart.AddCartItem(product, quantity);
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _cartRepository.SaveChangesAsync();
             if (result)
             {
                 return CreatedAtAction(nameof(GetCart), cart.toCartDto());
@@ -77,7 +74,7 @@ namespace API.Controllers
             };
             Response.Cookies.Append("cartCookieId", cartCookieId, cookieOptions);
             var cart = new Cart { CartCookieId = cartCookieId };
-            _context.Carts.Add(cart);
+            _cartRepository.AddCart(cart);
             return cart;
 
         }
@@ -85,18 +82,15 @@ namespace API.Controllers
 
         private async Task<Cart?> RetrieveCart()
         {
-            return await _context.Carts
-            .Include(x => x.CartItems)
-                .ThenInclude(x => x.Product)
-                    .ThenInclude(x => x.Brand)
-            .Include(x => x.CartItems)
-                .ThenInclude(x => x.Product)
-                    .ThenInclude(x => x.Category)
-            .Include(x => x.CartItems)
-                .ThenInclude(x => x.Product)
-                    .ThenInclude(x => x.ProductImages)
-            .FirstOrDefaultAsync(x => x.CartCookieId == Request.Cookies["cartCookieId"]);
+            var cartCookieId = Request.Cookies["cartCookieId"];
+            if (cartCookieId == null)
+            {
+                return null;
+            }
+            return await _cartRepository.RetrieveCart(cartCookieId);
+
         }
+
 
         [HttpDelete]
         public async Task<ActionResult> DeleteItemFromCart(int productId, int quantity)
@@ -108,7 +102,7 @@ namespace API.Controllers
 
             }
             cart.RemoveItem(productId, quantity);
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _cartRepository.SaveChangesAsync();
 
             if (result)
             {

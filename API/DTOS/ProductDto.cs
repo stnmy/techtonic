@@ -58,8 +58,19 @@ namespace API.DTOS
     public class FilterValueDto
     {
         public int Id { get; set; }
-        public string Value { get; set; } = string.Empty ;
+        public string Value { get; set; } = string.Empty;
     }
 
+    public class PriceRangeDto
+    {
+        public int minPrice { get; set; }
+        public int maxPrice { get; set; }
+    }
+
+    public class TotalFilterDto
+    {
+        public PriceRangeDto? priceRangeDto { get; set; }
+        public FilterDto[]? filterDtos { get; set; }
+    }
 
 }

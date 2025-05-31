@@ -42,6 +42,37 @@ namespace API.Data
                 new Brand { Name = "Microsoft", Slug = "microsoft" }
             };
 
+            FilterAttributeValue favCatUltrabook, favCatGaming, favCatConsumer, favCatOffice;
+
+            FilterAttributeValue favProcI7, favProcRyzen9, favProcRyzen5, favProcI5, favProcI3,
+                                 favProcRyzen7, favProcRyzen3, favProcAppleM1Pro;
+
+            FilterAttributeValue favGenIntel11, favGenIntel12, favGenIntel13, favGenIntel14, favGenIntel10,
+                                 favGenRyzen5000, favGenRyzen3000, favGenRyzen4000, favGenRyzen6000,
+                                 favGenRyzen7000, favGenRyzen8000;
+
+            FilterAttributeValue favDisplayIps, favDisplayTouch, favDisplayOled, favDisplayTn, favDisplayVa;
+
+            FilterAttributeValue favDisplaySize14, favDisplaySize15_6, favDisplaySize13_3,
+                                 favDisplaySize16, favDisplaySize17_3; // Make sure to declare for "16\""
+
+            FilterAttributeValue favRam16, favRam8, favRam4, favRam12, favRam32;
+            FilterAttributeValue favRamDdr4, favRamDdr5;
+            FilterAttributeValue favHdd500, favHdd1tb, favHdd2tb;
+            FilterAttributeValue favSsd512, favSsd1tb, favSsd128, favSsd256, favSsd2tb, favSsd4tb; // favSsd1tb will be used
+
+            FilterAttributeValue favGfxShared, favGfx2gb, favGfx4gb, favGfx6gb, favGfx8gb, favGfx10gb,
+                                 favGfx12gb, favGfx16gb, favGfx24gb; // favGfx8gb will be used
+
+            FilterAttributeValue favOsWin11Pro, favOsWin11Home, favOsWin10Pro, favOsWin10Home,
+                                 favOsMac, favOsChrome, favOsLinux; // favOsWin11Home will be used
+
+            FilterAttributeValue favFeatBacklit, favFeatFingerprint, favFeatRgb, favFeatAdaptiveSync,
+                                 favFeatStylus, favFeatConvertible, favFeatThinLight, favFeatHighRefresh;
+
+            FilterAttributeValue favBrandAsus, favBrandLenovo, favBrandAcer, favBrandHuawei, favBrandApple,
+                                 favBrandXiaomi, favBrandMsi, favBrandDell, favBrandHp, favBrandMicrosoft;
+
             var categories = new List<Category>
             {
                 new Category
@@ -50,131 +81,148 @@ namespace API.Data
                     Slug = "laptop",
                     Filters = new List<FilterAttribute>
                     {
+                        new FilterAttribute
+                            {
+                                FilterName = "Brand",FilterSlug = "brand",DefaultValues = new List<FilterAttributeValue>
+                                {
+                                    (favBrandAsus = new FilterAttributeValue { Value = "Asus" }),
+                                    (favBrandLenovo = new FilterAttributeValue { Value = "Lenovo" }),
+                                    (favBrandAcer = new FilterAttributeValue { Value = "Acer" }),
+                                    (favBrandHuawei = new FilterAttributeValue { Value = "Huawei" }),
+                                    (favBrandApple = new FilterAttributeValue { Value = "Apple" }),
+                                    (favBrandXiaomi = new FilterAttributeValue { Value = "Xiaomi" }),
+                                    (favBrandMsi = new FilterAttributeValue { Value = "MSI" }),
+                                    (favBrandDell = new FilterAttributeValue { Value = "DELL" }),
+                                    (favBrandHp = new FilterAttributeValue { Value = "HP" }),
+                                    (favBrandMicrosoft = new FilterAttributeValue { Value = "Microsoft" })
+                                }
+                            },
                         new FilterAttribute { FilterName = "Category", FilterSlug = "category", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "Ultrabook" },
-                                new FilterAttributeValue { Value = "Gaming" },
-                                new FilterAttributeValue { Value = "Consumer" },
-                                new FilterAttributeValue { Value = "Office" }
+                                (favCatUltrabook = new FilterAttributeValue { Value = "Ultrabook" }),
+                                (favCatGaming = new FilterAttributeValue { Value = "Gaming" }),
+                                (favCatConsumer = new FilterAttributeValue { Value = "Consumer" }),
+                                (favCatOffice = new FilterAttributeValue { Value = "Office" })
                             }
                         },
                         new FilterAttribute { FilterName = "Processor Type", FilterSlug = "processor-type", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "Intel Core i7" },
-                                new FilterAttributeValue { Value = "AMD Ryzen 9" },
-                                new FilterAttributeValue { Value = "AMD Ryzen 5" },
-                                new FilterAttributeValue { Value = "Intel Core i5" },
-                                new FilterAttributeValue { Value = "Intel Core i3" },
-                                new FilterAttributeValue { Value = "AMD Ryzen 7" },
-                                new FilterAttributeValue { Value = "AMD Ryzen 3" },
-                                new FilterAttributeValue { Value = "Apple M1 Pro" },
+                                (favProcI7 = new FilterAttributeValue { Value = "Intel Core i7" }),
+                                (favProcRyzen9 = new FilterAttributeValue { Value = "AMD Ryzen 9" }),
+                                (favProcRyzen5 = new FilterAttributeValue { Value = "AMD Ryzen 5" }),
+                                (favProcI5 = new FilterAttributeValue { Value = "Intel Core i5" }),
+                                (favProcI3 = new FilterAttributeValue { Value = "Intel Core i3" }),
+                                (favProcRyzen7 = new FilterAttributeValue { Value = "AMD Ryzen 7" }),
+                                (favProcRyzen3 = new FilterAttributeValue { Value = "AMD Ryzen 3" }),
+                                (favProcAppleM1Pro = new FilterAttributeValue { Value = "Apple M1 Pro" })
                             }
                         },
                         new FilterAttribute { FilterName = "Generation/Series", FilterSlug = "generation-series", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "Intel 11th Gen" },
-                                new FilterAttributeValue { Value = "Intel 12th Gen" },
-                                new FilterAttributeValue { Value = "Intel 13th Gen" },
-                                new FilterAttributeValue { Value = "Intel 14th Gen" },
-                                new FilterAttributeValue { Value = "Intel 10th Gen" },
-                                new FilterAttributeValue { Value = "Ryzen 5000 Series" },
-                                new FilterAttributeValue { Value = "Ryzen 3000 Series" },
-                                new FilterAttributeValue { Value = "Ryzen 4000 Series" },
-                                new FilterAttributeValue { Value = "Ryzen 6000 Series" },
-                                new FilterAttributeValue { Value = "Ryzen 7000 Series" },
-                                new FilterAttributeValue { Value = "Ryzen 8000 Series" }
+                                (favGenIntel11 = new FilterAttributeValue { Value = "Intel 11th Gen" }),
+                                (favGenIntel12 = new FilterAttributeValue { Value = "Intel 12th Gen" }),
+                                (favGenIntel13 = new FilterAttributeValue { Value = "Intel 13th Gen" }),
+                                (favGenIntel14 = new FilterAttributeValue { Value = "Intel 14th Gen" }),
+                                (favGenIntel10 = new FilterAttributeValue { Value = "Intel 10th Gen" }),
+                                (favGenRyzen5000 = new FilterAttributeValue { Value = "Ryzen 5000 Series" }),
+                                (favGenRyzen3000 = new FilterAttributeValue { Value = "Ryzen 3000 Series" }),
+                                (favGenRyzen4000 = new FilterAttributeValue { Value = "Ryzen 4000 Series" }),
+                                (favGenRyzen6000 = new FilterAttributeValue { Value = "Ryzen 6000 Series" }),
+                                (favGenRyzen7000 = new FilterAttributeValue { Value = "Ryzen 7000 Series" }),
+                                (favGenRyzen8000 = new FilterAttributeValue { Value = "Ryzen 8000 Series" })
                             }
                         },
                         new FilterAttribute { FilterName = "Display Type", FilterSlug = "display-type", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "IPS" },
-                                new FilterAttributeValue { Value = "Touch Display" },
-                                new FilterAttributeValue { Value = "OLED" },
-                                new FilterAttributeValue { Value = "TN" },
-                                new FilterAttributeValue { Value = "VA" }
+                                (favDisplayIps = new FilterAttributeValue { Value = "IPS" }),
+                                (favDisplayTouch = new FilterAttributeValue { Value = "Touch Display" }),
+                                (favDisplayOled = new FilterAttributeValue { Value = "OLED" }),
+                                (favDisplayTn = new FilterAttributeValue { Value = "TN" }),
+                                (favDisplayVa = new FilterAttributeValue { Value = "VA" })
                             }
                         },
                         new FilterAttribute { FilterName = "Display Size", FilterSlug = "display-size", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "14\"" },
-                                new FilterAttributeValue { Value = "15.6\"" },
-                                new FilterAttributeValue { Value = "13.3\"" },
-                                new FilterAttributeValue { Value = "16\"" },
-                                new FilterAttributeValue { Value = "17.3\"" }
+                                (favDisplaySize14 = new FilterAttributeValue { Value = "14\"" }),
+                                (favDisplaySize15_6 = new FilterAttributeValue { Value = "15.6\"" }),
+                                (favDisplaySize13_3 = new FilterAttributeValue { Value = "13.3\"" }),
+                                (favDisplaySize16 = new FilterAttributeValue { Value = "16\"" }),
+                                (favDisplaySize17_3 = new FilterAttributeValue { Value = "17.3\"" })
                             }
                         },
                         new FilterAttribute { FilterName = "RAM Size", FilterSlug = "ram-size", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "16GB" },
-                                new FilterAttributeValue { Value = "8GB" },
-                                new FilterAttributeValue { Value = "4GB" },
-                                new FilterAttributeValue { Value = "12GB" },
-                                new FilterAttributeValue { Value = "32GB" }
+                                (favRam16 = new FilterAttributeValue { Value = "16GB" }),
+                                (favRam8 = new FilterAttributeValue { Value = "8GB" }),
+                                (favRam4 = new FilterAttributeValue { Value = "4GB" }),
+                                (favRam12 = new FilterAttributeValue { Value = "12GB" }),
+                                (favRam32 = new FilterAttributeValue { Value = "32GB" })
                             }
                         },
                         new FilterAttribute { FilterName = "RAM Type", FilterSlug = "ram-type", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "DDR4" },
-                                new FilterAttributeValue { Value = "DDR5" }
-
+                                (favRamDdr4 = new FilterAttributeValue { Value = "DDR4" }),
+                                (favRamDdr5 = new FilterAttributeValue { Value = "DDR5" })
                             }
                         },
                         new FilterAttribute { FilterName = "HDD", FilterSlug = "hdd", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "500GB" },
-                                new FilterAttributeValue { Value = "1TB" },
-                                new FilterAttributeValue { Value = "2TB" }
+                                (favHdd500 = new FilterAttributeValue { Value = "500GB" }),
+                                (favHdd1tb = new FilterAttributeValue { Value = "1TB" }),
+                                (favHdd2tb = new FilterAttributeValue { Value = "2TB" })
                             }
                         },
                         new FilterAttribute { FilterName = "SSD", FilterSlug = "ssd", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "512GB" },
-                                new FilterAttributeValue { Value = "1TB" },
-                                new FilterAttributeValue { Value = "128GB" },
-                                new FilterAttributeValue { Value = "256GB" },
-                                new FilterAttributeValue { Value = "2TB" },
-                                new FilterAttributeValue { Value = "4TB" },
+                                (favSsd512 = new FilterAttributeValue { Value = "512GB" }),
+                                (favSsd1tb = new FilterAttributeValue { Value = "1TB" }),
+                                (favSsd128 = new FilterAttributeValue { Value = "128GB" }),
+                                (favSsd256 = new FilterAttributeValue { Value = "256GB" }),
+                                (favSsd2tb = new FilterAttributeValue { Value = "2TB" }),
+                                (favSsd4tb = new FilterAttributeValue { Value = "4TB" })
                             }
                         },
                         new FilterAttribute { FilterName = "Graphics", FilterSlug = "graphics-memory", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "Shared/Integrated" },
-                                new FilterAttributeValue { Value = "Dedicated 2GB" },
-                                new FilterAttributeValue { Value = "Dedicated 4GB" },
-                                new FilterAttributeValue { Value = "Dedicated 6GB" },
-                                new FilterAttributeValue { Value = "Dedicated 8GB" },
-                                new FilterAttributeValue { Value = "Dedicated 10GB" },
-                                new FilterAttributeValue { Value = "Dedicated 12GB" },
-                                new FilterAttributeValue { Value = "Dedicated 16GB" },
-                                new FilterAttributeValue { Value = "Dedicated 24GB" },
+                                (favGfxShared = new FilterAttributeValue { Value = "Shared/Integrated" }),
+                                (favGfx2gb = new FilterAttributeValue { Value = "Dedicated 2GB" }),
+                                (favGfx4gb = new FilterAttributeValue { Value = "Dedicated 4GB" }),
+                                (favGfx6gb = new FilterAttributeValue { Value = "Dedicated 6GB" }),
+                                (favGfx8gb = new FilterAttributeValue { Value = "Dedicated 8GB" }),
+                                (favGfx10gb = new FilterAttributeValue { Value = "Dedicated 10GB" }),
+                                (favGfx12gb = new FilterAttributeValue { Value = "Dedicated 12GB" }),
+                                (favGfx16gb = new FilterAttributeValue { Value = "Dedicated 16GB" }),
+                                (favGfx24gb = new FilterAttributeValue { Value = "Dedicated 24GB" })
                             }
                         },
                         new FilterAttribute { FilterName = "Operating System", FilterSlug = "operating-system", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "Windows 11 Pro" },
-                                new FilterAttributeValue { Value = "Windows 11 Home" },
-                                new FilterAttributeValue { Value = "Windows 10 Pro" },
-                                new FilterAttributeValue { Value = "Windows 10 Home" },
-                                new FilterAttributeValue { Value = "macOS" },
-                                new FilterAttributeValue { Value = "ChromeOS" },
-                                new FilterAttributeValue { Value = "Linux" }
+                                (favOsWin11Pro = new FilterAttributeValue { Value = "Windows 11 Pro" }),
+                                (favOsWin11Home = new FilterAttributeValue { Value = "Windows 11 Home" }),
+                                (favOsWin10Pro = new FilterAttributeValue { Value = "Windows 10 Pro" }),
+                                (favOsWin10Home = new FilterAttributeValue { Value = "Windows 10 Home" }),
+                                (favOsMac = new FilterAttributeValue { Value = "macOS" }),
+                                (favOsChrome = new FilterAttributeValue { Value = "ChromeOS" }),
+                                (favOsLinux = new FilterAttributeValue { Value = "Linux" })
                             }
                         },
                         new FilterAttribute { FilterName = "Special Feature", FilterSlug = "feature", DefaultValues = new List<FilterAttributeValue>
                             {
-                                new FilterAttributeValue { Value = "Backlit Keyboard" },
-                                new FilterAttributeValue { Value = "Fingerprint Reader" },
-                                new FilterAttributeValue { Value = "RGB Keyboard" },
-                                new FilterAttributeValue { Value = "Adaptive Sync" },
-                                new FilterAttributeValue { Value = "Stylus Support" },
-                                new FilterAttributeValue { Value = "Convertible" },
-                                new FilterAttributeValue { Value = "Thin and Light" },
-                                new FilterAttributeValue { Value = "High Refresh Rate Display" }
+                                (favFeatBacklit = new FilterAttributeValue { Value = "Backlit Keyboard" }),
+                                (favFeatFingerprint = new FilterAttributeValue { Value = "Fingerprint Reader" }),
+                                (favFeatRgb = new FilterAttributeValue { Value = "RGB Keyboard" }),
+                                (favFeatAdaptiveSync = new FilterAttributeValue { Value = "Adaptive Sync" }),
+                                (favFeatStylus = new FilterAttributeValue { Value = "Stylus Support" }),
+                                (favFeatConvertible = new FilterAttributeValue { Value = "Convertible" }),
+                                (favFeatThinLight = new FilterAttributeValue { Value = "Thin and Light" }),
+                                (favFeatHighRefresh = new FilterAttributeValue { Value = "High Refresh Rate Display" })
                             }
                         }
                     }
-                },
+                }
+                // Potentially other categories here, with their own FilterAttributeValue variables if needed
             };
+
 
             var subCategories = new List<SubCategory>
             {
@@ -216,39 +264,41 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes (pulled from category filters)
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "16\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics" }, // Corresponds to RTX 4070 8GB
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-rgb", Value = "RGB Keyboard", SpecificationCategory = "Key Feature" }, // Key Feature 1
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature" }, // Key Feature 2
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-adaptive-sync", Value = "Adaptive Sync", SpecificationCategory = "Display" }, // Related to display
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Lenovo", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandLenovo.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Gaming", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatGaming.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "16\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize16.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfx8gb.Id }, // Corresponds to RTX 4070 8GB
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-rgb", Value = "RGB Keyboard", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatRgb.Id }, // Key Feature 1
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatHighRefresh.Id }, // Key Feature 2 - Added ID
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-adaptive-sync", Value = "Adaptive Sync", SpecificationCategory = "Display", FilterAttributeValueId = favFeatAdaptiveSync.Id }, // Related to display
 
-                        // Detailed Attributes (expanding on filters and adding more)
-                        new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-13700HX", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "16 Cores / 24 Threads", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Processor Max Turbo Frequency", Slug="processor-max-turbo", Value = "5.0 GHz", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Processor Cache", Slug="processor-cache", Value = "30MB L3", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "2560x1600 (WQXGA)", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Refresh Rate", Slug="display-refresh-rate", Value = "240Hz", SpecificationCategory = "Display" }, // Explicit value
-                        new ProductAttributeValue { Name = "Display Brightness", Slug="display-brightness", Value = "500 nits", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Color Gamut", Slug="display-color-gamut", Value = "100% sRGB", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Memory Speed", Slug="memory-speed", Value = "4800MHz", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "NVMe PCIe 4.0 SSD", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Card Model", Slug="graphics-model", Value = "NVIDIA GeForce RTX 4070 Laptop GPU", SpecificationCategory = "Graphics" }, // Explicit GPU model
-                        new ProductAttributeValue { Name = "Graphics TGP", Slug="graphics-tgp", Value = "140W", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "MUX Switch", Slug="mux-switch", Value = "Yes, with Advanced Optimus", SpecificationCategory = "Key Feature" }, // Key Feature 3
-                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6E, Bluetooth 5.2", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "1x Thunderbolt 4, 3x USB-A 3.2, 1x USB-C 3.2 (DP/PD), HDMI 2.1, Ethernet (RJ-45), Audio Jack", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "1080p FHD with E-Shutter", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Battery", Slug="battery", Value = "80Wh", SpecificationCategory = "Power" },
-                        new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Approx. 2.5 kg", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Cooling System", Slug="cooling-system", Value = "Legion ColdFront 5.0", SpecificationCategory = "Key Feature" } // Key Feature 4
+                        // Detailed Attributes (expanding on filters and adding more - FilterAttributeValueId will be null)
+                        new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-13700HX", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "16 Cores / 24 Threads", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Processor Max Turbo Frequency", Slug="processor-max-turbo", Value = "5.0 GHz", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Processor Cache", Slug="processor-cache", Value = "30MB L3", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "2560x1600 (WQXGA)", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Refresh Rate", Slug="display-refresh-rate", Value = "240Hz", SpecificationCategory = "Display", FilterAttributeValueId = null }, // Explicit value
+                        new ProductAttributeValue { Name = "Display Brightness", Slug="display-brightness", Value = "500 nits", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Color Gamut", Slug="display-color-gamut", Value = "100% sRGB", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Memory Speed", Slug="memory-speed", Value = "4800MHz", SpecificationCategory = "Memory", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "NVMe PCIe 4.0 SSD", SpecificationCategory = "Storage", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Graphics Card Model", Slug="graphics-model", Value = "NVIDIA GeForce RTX 4070 Laptop GPU", SpecificationCategory = "Graphics", FilterAttributeValueId = null }, // Explicit GPU model
+                        new ProductAttributeValue { Name = "Graphics TGP", Slug="graphics-tgp", Value = "140W", SpecificationCategory = "Graphics", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "MUX Switch", Slug="mux-switch", Value = "Yes, with Advanced Optimus", SpecificationCategory = "Key Feature", FilterAttributeValueId = null }, // Key Feature 3
+                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6E, Bluetooth 5.2", SpecificationCategory = "Connectivity", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "1x Thunderbolt 4, 3x USB-A 3.2, 1x USB-C 3.2 (DP/PD), HDMI 2.1, Ethernet (RJ-45), Audio Jack", SpecificationCategory = "Connectivity", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "1080p FHD with E-Shutter", SpecificationCategory = "Features", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Battery", Slug="battery", Value = "80Wh", SpecificationCategory = "Power", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Approx. 2.5 kg", SpecificationCategory = "Physical", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Cooling System", Slug="cooling-system", Value = "Legion ColdFront 5.0", SpecificationCategory = "Key Feature", FilterAttributeValueId = null } // Key Feature 4
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -287,38 +337,41 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Apple M2", SpecificationCategory = "Processor" }, // Specific value not in filter defaults, but fits category
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Apple Silicon M2", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "13.6\"", SpecificationCategory = "Display" }, // Slightly different from filter default
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "Liquid Retina", SpecificationCategory = "Display" }, // Brand-specific type
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "Unified Memory", SpecificationCategory = "Memory" }, // Brand-specific type
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "256GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Integrated GPU
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "macOS", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" }, // Touch ID
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature" }, // Key Feature 1
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Apple", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandApple.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatUltrabook.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Apple M2", SpecificationCategory = "Processor", FilterAttributeValueId = null }, // "Apple M2" is not in favProc* list
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Apple Silicon M2", SpecificationCategory = "Processor", FilterAttributeValueId = null }, // Not in favGen* list
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "13.6\"", SpecificationCategory = "Display", FilterAttributeValueId = null }, // "13.6\"" is not in favDisplaySize* list (favDisplaySize13_3 is "13.3\"")
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "Liquid Retina", SpecificationCategory = "Display", FilterAttributeValueId = null }, // "Liquid Retina" is not in favDisplay* list
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam8.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "Unified Memory", SpecificationCategory = "Memory", FilterAttributeValueId = null }, // "Unified Memory" is not in favRamDdr* list
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "256GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd256.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "macOS", SpecificationCategory = "Software", FilterAttributeValueId = favOsMac.Id },
+                        // For "Special Feature", match based on Value if the ProductAttributeValue.Slug aligns with FilterAttribute.FilterSlug="feature"
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id }, // Touch ID
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatThinLight.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
 
                         // Detailed Attributes
-                        new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Apple M2 chip", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Processor Cores", Slug="processor-cores", Value = "8-core CPU (4 performance, 4 efficiency)", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "GPU Cores", Slug="gpu-cores", Value = "8-core GPU", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "Neural Engine", Slug="neural-engine", Value = "16-core", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "2560x1664", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Brightness", Slug="display-brightness", Value = "500 nits", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Technology", Slug="display-technology", Value = "True Tone technology", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Memory Bandwidth", Slug="memory-bandwidth", Value = "100GB/s", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "Superfast SSD storage", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6 (802.11ax), Bluetooth 5.3", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "2x Thunderbolt / USB 4 ports, MagSafe 3 charging port, 3.5mm headphone jack", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "1080p FaceTime HD camera", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Four-speaker sound system with Spatial Audio", SpecificationCategory = "Key Feature" }, // Key Feature 2
-                        new ProductAttributeValue { Name = "Keyboard", Slug="keyboard", Value = "Magic Keyboard with Touch ID", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Trackpad", Slug="trackpad", Value = "Force Touch trackpad", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Battery Life", Slug="battery-life", Value = "Up to 18 hours", SpecificationCategory = "Key Feature" }, // Key Feature 3
-                        new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "1.24 kg (2.7 pounds)", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "Recycled Aluminum Enclosure", SpecificationCategory = "Key Feature" } // Key Feature 4
+                        new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Apple M2 chip", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Processor Cores", Slug="processor-cores", Value = "8-core CPU (4 performance, 4 efficiency)", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "GPU Cores", Slug="gpu-cores", Value = "8-core GPU", SpecificationCategory = "Graphics", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Neural Engine", Slug="neural-engine", Value = "16-core", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "2560x1664", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Brightness", Slug="display-brightness", Value = "500 nits", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Technology", Slug="display-technology", Value = "True Tone technology", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Memory Bandwidth", Slug="memory-bandwidth", Value = "100GB/s", SpecificationCategory = "Memory", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "Superfast SSD storage", SpecificationCategory = "Storage", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6 (802.11ax), Bluetooth 5.3", SpecificationCategory = "Connectivity", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "2x Thunderbolt / USB 4 ports, MagSafe 3 charging port, 3.5mm headphone jack", SpecificationCategory = "Connectivity", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "1080p FaceTime HD camera", SpecificationCategory = "Features", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Four-speaker sound system with Spatial Audio", SpecificationCategory = "Key Feature", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Keyboard", Slug="keyboard", Value = "Magic Keyboard with Touch ID", SpecificationCategory = "Keyboard", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Trackpad", Slug="trackpad", Value = "Force Touch trackpad", SpecificationCategory = "Features", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Battery Life", Slug="battery-life", Value = "Up to 18 hours", SpecificationCategory = "Key Feature", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "1.24 kg (2.7 pounds)", SpecificationCategory = "Physical", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "Recycled Aluminum Enclosure", SpecificationCategory = "Key Feature", FilterAttributeValueId = null }
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -355,42 +408,45 @@ namespace API.Data
                         new ProductImage { ImageUrl = "/images/products/XPS-15-9530-a-9440.png" },
                         new ProductImage { ImageUrl = "/images/products/XPS-15-9530-d-2553.png" },
                     },
+                    // Product 3: Dell XPS 15 (Example)
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "OLED", SpecificationCategory = "Key Feature" }, // Key Feature 1 - OLED Display
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Display" }, // Is also touch
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 6GB", SpecificationCategory = "Graphics" }, // Corresponds to RTX 4050 6GB
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Physical" }, // Characteristic, maybe not key 'feature'
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Dell", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandDell.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatUltrabook.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "OLED", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayOled.Id }, // OLED Display
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayTouch.Id }, // Is also touch
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 6GB", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfx6gb.Id }, // Corresponds to RTX 4050 6GB
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Pro.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Physical", FilterAttributeValueId = favFeatThinLight.Id },
 
                         // Detailed Attributes
-                        new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-13700H", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "14 Cores (6P+8E) / 20 Threads", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Processor Max Turbo Frequency", Slug="processor-max-turbo", Value = "5.0 GHz", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "3456x2160 (3.5K)", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Aspect Ratio", Slug="display-aspect-ratio", Value = "16:10", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Brightness", Slug="display-brightness", Value = "400 nits", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Color Gamut", Slug="display-color-gamut", Value = "100% DCI-P3", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Memory Speed", Slug="memory-speed", Value = "4800MHz", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "NVMe PCIe 4.0 SSD", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Card Model", Slug="graphics-model", Value = "NVIDIA GeForce RTX 4050 Laptop GPU", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Intel Killer Wi-Fi 6E, Bluetooth 5.3", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "2x Thunderbolt 4 (DP/PD), 1x USB-C 3.2 Gen 2 (DP/PD), SD card reader, 3.5mm jack", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "720p HD with Windows Hello IR", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Quad-speaker design with Waves Nx 3D audio", SpecificationCategory = "Key Feature" }, // Key Feature 2 - Premium Audio
-                        new ProductAttributeValue { Name = "Battery", Slug="battery", Value = "86Wh", SpecificationCategory = "Power" },
-                        new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Starting at 1.92 kg (4.23 lbs)", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "CNC Machined Aluminum, Carbon Fiber Palm Rest", SpecificationCategory = "Key Feature" }, // Key Feature 3 - Premium Build
-                        new ProductAttributeValue { Name = "InfinityEdge Display", Slug="infinityedge-display", Value = "Minimal Bezel Design", SpecificationCategory = "Key Feature" } // Key Feature 4 - Design Element
+                        new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-13700H", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "14 Cores (6P+8E) / 20 Threads", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Processor Max Turbo Frequency", Slug="processor-max-turbo", Value = "5.0 GHz", SpecificationCategory = "Processor", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "3456x2160 (3.5K)", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Aspect Ratio", Slug="display-aspect-ratio", Value = "16:10", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Brightness", Slug="display-brightness", Value = "400 nits", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Display Color Gamut", Slug="display-color-gamut", Value = "100% DCI-P3", SpecificationCategory = "Display", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Memory Speed", Slug="memory-speed", Value = "4800MHz", SpecificationCategory = "Memory", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "NVMe PCIe 4.0 SSD", SpecificationCategory = "Storage", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Graphics Card Model", Slug="graphics-model", Value = "NVIDIA GeForce RTX 4050 Laptop GPU", SpecificationCategory = "Graphics", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Intel Killer Wi-Fi 6E, Bluetooth 5.3", SpecificationCategory = "Connectivity", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "2x Thunderbolt 4 (DP/PD), 1x USB-C 3.2 Gen 2 (DP/PD), SD card reader, 3.5mm jack", SpecificationCategory = "Connectivity", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "720p HD with Windows Hello IR", SpecificationCategory = "Features", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Quad-speaker design with Waves Nx 3D audio", SpecificationCategory = "Key Feature", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Battery", Slug="battery", Value = "86Wh", SpecificationCategory = "Power", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Starting at 1.92 kg (4.23 lbs)", SpecificationCategory = "Physical", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "CNC Machined Aluminum, Carbon Fiber Palm Rest", SpecificationCategory = "Key Feature", FilterAttributeValueId = null },
+                        new ProductAttributeValue { Name = "InfinityEdge Display", Slug="infinityedge-display", Value = "Minimal Bezel Design", SpecificationCategory = "Key Feature", FilterAttributeValueId = null }
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -429,22 +485,24 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "13.5\"", SpecificationCategory = "Display" }, // Close to 13.3" filter
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-oled", Value = "OLED", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Touch & Convertible Nature
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR4x (Onboard)", SpecificationCategory = "Memory" }, // Specific type
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-stylus", Value = "Stylus Support", SpecificationCategory = "Features" }, // Comes with Pen
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Key Feature" }, // Key Feature 2 - 360 Hinge
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "HP", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandHp.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatUltrabook.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "13.5\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize13_3.Id }, // Closest match
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-oled", Value = "OLED", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayOled.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR4x (Onboard)", SpecificationCategory = "Memory" }, // No exact match
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-stylus", Value = "Stylus Support", SpecificationCategory = "Features", FilterAttributeValueId = favFeatStylus.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatConvertible.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
 
-                        // Detailed Attributes
+                        // Detailed Attributes (remain unchanged as they don't have filter matches)
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-1355U", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "10 Cores (2P+8E) / 12 Threads", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Max Turbo Frequency", Slug="processor-max-turbo", Value = "5.0 GHz", SpecificationCategory = "Processor" },
@@ -456,11 +514,11 @@ namespace API.Data
                         new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Intel Wi-Fi 6E AX211, Bluetooth 5.3", SpecificationCategory = "Connectivity" },
                         new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "2x Thunderbolt 4 (DP/PD), 1x USB-A 3.2 Gen 2, MicroSD card reader, 3.5mm jack", SpecificationCategory = "Connectivity" },
                         new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "HP True Vision 5MP IR camera with shutter", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Audio by Bang & Olufsen; Quad speakers", SpecificationCategory = "Key Feature" }, // Key Feature 3 - B&O Audio
+                        new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Audio by Bang & Olufsen; Quad speakers", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Battery", Slug="battery", Value = "66Wh", SpecificationCategory = "Power" },
                         new ProductAttributeValue { Name = "Included Accessories", Slug="included-accessories", Value = "HP Rechargeable MPP2.0 Tilt Pen", SpecificationCategory = "Features" },
                         new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Approx. 1.36 kg (3.0 lbs)", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "Aluminum chassis with gem-cut design", SpecificationCategory = "Key Feature" } // Key Feature 4 - Design/Build Quality
+                        new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "Aluminum chassis with gem-cut design", SpecificationCategory = "Key Feature" }
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -500,21 +558,23 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 9", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" }, // ROG Nebula Display is IPS-level
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics" }, // RTX 4060 8GB
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - 165Hz Display
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-adaptive-sync", Value = "Adaptive Sync", SpecificationCategory = "Display" }, // FreeSync Premium
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature" }, // Key Feature 2 - Portability for Gaming
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Asus", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandAsus.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Gaming", SpecificationCategory = "subcategory", FilterAttributeValueId =  favCatGaming.Id},
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 9", SpecificationCategory = "Processor", FilterAttributeValueId = favProcRyzen9.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor", FilterAttributeValueId = favGenRyzen7000.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfx8gb.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatHighRefresh.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-adaptive-sync", Value = "Adaptive Sync", SpecificationCategory = "Display", FilterAttributeValueId = favFeatAdaptiveSync.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatThinLight.Id },
 
-                        // Detailed Attributes
+                        // Detailed Attributes (remain unchanged as they don't have filter matches)
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "AMD Ryzen 9 7940HS", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "8 Cores / 16 Threads", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Max Boost Clock", Slug="processor-max-boost", Value = "Up to 5.2 GHz", SpecificationCategory = "Processor" },
@@ -524,7 +584,7 @@ namespace API.Data
                         new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "2560x1600 (QHD+)", SpecificationCategory = "Display" },
                         new ProductAttributeValue { Name = "Display Name", Slug="display-name", Value = "ROG Nebula Display", SpecificationCategory = "Display" },
                         new ProductAttributeValue { Name = "Display Refresh Rate", Slug="display-refresh-rate", Value = "165Hz", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Color Gamut", Slug="display-color-gamut", Value = "100% DCI-P3, Pantone Validated", SpecificationCategory = "Key Feature" }, // Key Feature 3 - Color Accuracy
+                        new ProductAttributeValue { Name = "Display Color Gamut", Slug="display-color-gamut", Value = "100% DCI-P3, Pantone Validated", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Memory Configuration", Slug="memory-config", Value = "8GB Onboard + 8GB SODIMM", SpecificationCategory = "Memory" },
                         new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "NVMe PCIe 4.0 SSD", SpecificationCategory = "Storage" },
                         new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6E, Bluetooth 5.3", SpecificationCategory = "Connectivity" },
@@ -533,7 +593,7 @@ namespace API.Data
                         new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Quad Speakers with Dolby Atmos", SpecificationCategory = "Features" },
                         new ProductAttributeValue { Name = "Battery", Slug="battery", Value = "76Wh", SpecificationCategory = "Power" },
                         new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Approx. 1.72 kg (3.79 lbs)", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "AniMe Matrix Display", Slug="anime-matrix", Value = "Optional LED display on lid", SpecificationCategory = "Key Feature" } // Key Feature 4 (Optional, but notable feature of the line)
+                        new ProductAttributeValue { Name = "AniMe Matrix Display", Slug="anime-matrix", Value = "Optional LED display on lid", SpecificationCategory = "Key Feature" }
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -571,39 +631,41 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 12th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "13.5\"", SpecificationCategory = "Display" }, // Close to 13.3" filter
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - PixelSense Touchscreen
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display" }, // PixelSense is IPS-based
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5x (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-stylus", Value = "Stylus Support", SpecificationCategory = "Features" }, // Surface Pen support
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Microsoft", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandMicrosoft.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Office", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatOffice.Id  },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI5.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 12th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel12.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "13.5\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize13_3.Id }, // Closest match
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam8.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5x (Onboard)", SpecificationCategory = "Memory" }, // No exact match
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Physical", FilterAttributeValueId = favFeatThinLight.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-stylus", Value = "Stylus Support", SpecificationCategory = "Features", FilterAttributeValueId = favFeatStylus.Id },
 
-                        // Detailed Attributes
+                        // Detailed Attributes (remain unchanged as they don't have filter matches)
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i5-1235U", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "10 Cores (2P+8E) / 12 Threads", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Graphics Card Model", Slug="graphics-model", Value = "Intel Iris Xe Graphics", SpecificationCategory = "Graphics" },
                         new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "2256 x 1504", SpecificationCategory = "Display" },
                         new ProductAttributeValue { Name = "Display Name", Slug="display-name", Value = "PixelSense Display", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Aspect Ratio", Slug="display-aspect-ratio", Value = "3:2", SpecificationCategory = "Key Feature" }, // Key Feature 2 - 3:2 Aspect Ratio
+                        new ProductAttributeValue { Name = "Display Aspect Ratio", Slug="display-aspect-ratio", Value = "3:2", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Display Protection", Slug="display-protection", Value = "Corning Gorilla Glass 5", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "Removable NVMe SSD", SpecificationCategory = "Storage" }, // Removable is notable for Surface
+                        new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "Removable NVMe SSD", SpecificationCategory = "Storage" },
                         new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6, Bluetooth 5.1", SpecificationCategory = "Connectivity" },
                         new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "1x USB-C with Thunderbolt 4, 1x USB-A 3.1, Surface Connect port, 3.5mm jack", SpecificationCategory = "Connectivity" },
-                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "720p HD with Windows Hello face authentication", SpecificationCategory = "Security" }, // Windows Hello is Key
+                        new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "720p HD with Windows Hello face authentication", SpecificationCategory = "Security" },
                         new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Omnisonic Speakers with Dolby Atmos", SpecificationCategory = "Features" },
-                        new ProductAttributeValue { Name = "Keyboard", Slug="keyboard", Value = "Backlit Keyboard with Alcantara or Metal finish option", SpecificationCategory = "Key Feature" }, // Key Feature 3 - Alcantara Option
+                        new ProductAttributeValue { Name = "Keyboard", Slug="keyboard", Value = "Backlit Keyboard with Alcantara or Metal finish option", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Battery Life", Slug="battery-life", Value = "Up to 18 hours (typical usage)", SpecificationCategory = "Power" },
                         new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Starting at 1.27 kg (2.80 lbs)", SpecificationCategory = "Physical" },
                         new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "Aluminum Casing", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Security Features", Slug="security-features", Value = "Firmware TPM 2.0, Windows Hello Face Sign-in", SpecificationCategory = "Key Feature" }, // Key Feature 4 - Security Focus
+                        new ProductAttributeValue { Name = "Security Features", Slug="security-features", Value = "Firmware TPM 2.0, Windows Hello Face Sign-in", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Included Software", Slug="included-software", Value = "Microsoft 365 Family 30-day trial", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Color", Slug="color", Value = "Platinum", SpecificationCategory = "Physical" } // Added one more to reach 30
+                        new ProductAttributeValue { Name = "Color", Slug="color", Value = "Platinum", SpecificationCategory = "Physical" }
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -643,19 +705,21 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 12th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR4", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" },
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Acer", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandAcer.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Consumer", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatConsumer.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI5.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 12th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel12.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam8.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR4", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr4.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
 
-                        // Detailed Attributes
+                        // Detailed Attributes (remain unchanged as they don't have filter matches)
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i5-1235U", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Cores/Threads", Slug="processor-cores-threads", Value = "10 Cores (2P+8E) / 12 Threads", SpecificationCategory = "Processor" },
                         new ProductAttributeValue { Name = "Processor Max Turbo Frequency", Slug="processor-max-turbo", Value = "Up to 4.4 GHz", SpecificationCategory = "Processor" },
@@ -663,10 +727,10 @@ namespace API.Data
                         new ProductAttributeValue { Name = "Display Resolution", Slug="display-resolution", Value = "1920x1080 (Full HD)", SpecificationCategory = "Display" },
                         new ProductAttributeValue { Name = "Display Technology", Slug="display-technology", Value = "Acer ComfyView (Matte)", SpecificationCategory = "Display" },
                         new ProductAttributeValue { Name = "Memory Speed", Slug="memory-speed", Value = "3200MHz", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "Memory Slots", Slug="memory-slots", Value = "2x SODIMM (Upgradeable)", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Upgradeable RAM
+                        new ProductAttributeValue { Name = "Memory Slots", Slug="memory-slots", Value = "2x SODIMM (Upgradeable)", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Storage Type", Slug="storage-type", Value = "NVMe SSD", SpecificationCategory = "Storage" },
                         new ProductAttributeValue { Name = "Storage Slots", Slug="storage-slots", Value = "1x M.2 Slot", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6, Bluetooth 5.2", SpecificationCategory = "Key Feature" }, // Key Feature 2 - Wi-Fi 6 at this price
+                        new ProductAttributeValue { Name = "Wireless Connectivity", Slug="wireless-connectivity", Value = "Wi-Fi 6, Bluetooth 5.2", SpecificationCategory = "Key Feature" },
                         new ProductAttributeValue { Name = "Ports", Slug="ports", Value = "1x USB-C 3.2 Gen 2 (Thunderbolt 4 optional), 3x USB-A 3.2 Gen 1, HDMI 2.1, Ethernet (RJ-45), 3.5mm jack", SpecificationCategory = "Connectivity" },
                         new ProductAttributeValue { Name = "Webcam", Slug="webcam", Value = "720p HD Webcam", SpecificationCategory = "Features" },
                         new ProductAttributeValue { Name = "Audio", Slug="audio", Value = "Acer TrueHarmony", SpecificationCategory = "Features" },
@@ -674,8 +738,8 @@ namespace API.Data
                         new ProductAttributeValue { Name = "Battery Life", Slug="battery-life", Value = "Up to 8 hours", SpecificationCategory = "Power" },
                         new ProductAttributeValue { Name = "Weight", Slug="weight", Value = "Approx. 1.77 kg (3.9 lbs)", SpecificationCategory = "Physical" },
                         new ProductAttributeValue { Name = "Build Material", Slug="build-material", Value = "Plastic Chassis, Aluminum Top Cover", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Numeric Keypad", Slug="numeric-keypad", Value = "Yes", SpecificationCategory = "Key Feature" }, // Key Feature 3 - Included Numpad
-                        new ProductAttributeValue { Name = "Value Proposition", Slug="value-prop", Value = "Strong performance for the price", SpecificationCategory = "Key Feature" } // Key Feature 4 - Value aspect
+                        new ProductAttributeValue { Name = "Numeric Keypad", Slug="numeric-keypad", Value = "Yes", SpecificationCategory = "Key Feature" },
+                        new ProductAttributeValue { Name = "Value Proposition", Slug="value-prop", Value = "Strong performance for the price", SpecificationCategory = "Key Feature" }
                     },
                     Reviews = new List<ProductReview>
                     {
@@ -714,17 +778,19 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" }, // IPS-Level Panel
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics" }, // RTX 4060 8GB
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - 144Hz
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-rgb-keyboard", Value = "RGB Keyboard", SpecificationCategory = "Keyboard" }, // 4-Zone RGB
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Msi", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandMsi.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Gamin", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatGaming.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfx8gb.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatHighRefresh.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-rgb-keyboard", Value = "RGB Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatRgb.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-13620H", SpecificationCategory = "Processor" },
@@ -786,18 +852,19 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14.2\"", SpecificationCategory = "Display" }, // Close to 14" filter
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ltps", Value = "LTPS", SpecificationCategory = "Display" }, // Low-Temperature Polycrystalline Silicon - High-end LCD
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Portability/Design
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Huawei", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandHuawei.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatUltrabook.Id },
+                         new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14.2\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatThinLight.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-1360P", SpecificationCategory = "Processor" },
@@ -857,18 +924,20 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" }, // Often referred to as "Super Retina" display
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Radeon 780M
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - 120Hz Display
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Xiaomi", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandXiaomi.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Consumer", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatConsumer.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcRyzen7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor", FilterAttributeValueId = favGenRyzen7000.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatHighRefresh.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "AMD Ryzen 7 7840HS", SpecificationCategory = "Processor" },
@@ -927,17 +996,19 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i3", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Touch at this price
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-tn", Value = "TN", SpecificationCategory = "Display" }, // Often TN panel at this price point
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory" }, // May vary, check model
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "256GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel UHD Graphics
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" }, // Check model, sometimes included
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Lenovo", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandLenovo.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Office", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatOffice.Id  },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i3", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI3.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-tn", Value = "TN", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayTn.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam8.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "256GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd256.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i3-1315U", SpecificationCategory = "Processor" },
@@ -998,18 +1069,20 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor" }, // 7730U is Zen 3 based but launched in 7000 series naming
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Touch/Convertible
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR4", SpecificationCategory = "Memory" }, // Check model, some Envys use DDR4
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Radeon Graphics
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Physical" }, // Related to touch feature
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "HP", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandHp.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Consumer", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatConsumer.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcRyzen7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor", FilterAttributeValueId = favGenRyzen7000.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR4", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr4.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Physical", FilterAttributeValueId = favFeatConvertible.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "AMD Ryzen 7 7730U", SpecificationCategory = "Processor" },
@@ -1069,16 +1142,18 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "WVA (Wide Viewing Angle)", SpecificationCategory = "Display" }, // Similar to IPS
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 6GB", SpecificationCategory = "Graphics" }, // RTX 3050 is often 6GB now
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - 120Hz
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Dell", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandDell.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Gaming", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatGaming.Id  },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI5.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "WVA (Wide Viewing Angle)", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id }, // Assuming WVA is similar to IPS
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam8.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 6GB", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfx6gb.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatHighRefresh.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i5-13450HX", SpecificationCategory = "Processor" },
@@ -1140,18 +1215,20 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-oled", Value = "OLED", SpecificationCategory = "Key Feature" }, // Key Feature 1 - OLED Display
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature" }, // Key Feature 2 - Portability
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Asus", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandAsus.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId =favCatUltrabook.Id  },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI5.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-oled", Value = "OLED", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayOled.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatThinLight.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i5-1340P", SpecificationCategory = "Processor" },
@@ -1209,18 +1286,20 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes (Adapting where needed for ChromeOS)
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Touch/Convertible
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR4x (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "256GB", SpecificationCategory = "Storage" }, // Technically NVMe SSD storage
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "ChromeOS", SpecificationCategory = "Key Feature" }, // Key Feature 2 - ChromeOS
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-stylus", Value = "Stylus Support", SpecificationCategory = "Features" }, // USI Stylus support
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Acer", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandAcer.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatUltrabook.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI5.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "8GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam8.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR4x (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr4.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "256GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd256.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "ChromeOS", SpecificationCategory = "Key Feature", FilterAttributeValueId = favOsChrome.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Physical", FilterAttributeValueId = favFeatConvertible.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-stylus", Value = "Stylus Support", SpecificationCategory = "Features", FilterAttributeValueId = favFeatStylus.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i5-1335U", SpecificationCategory = "Processor" },
@@ -1280,19 +1359,21 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "16\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Large Touch Display
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Physical" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Lenovo", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandLenovo.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Consumer", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatConsumer.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "16\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize16.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-touch", Value = "Touch Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favDisplayTouch.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type-ips", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-convertible", Value = "Convertible", SpecificationCategory = "Physical", FilterAttributeValueId = favFeatConvertible.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-1355U", SpecificationCategory = "Processor" },
@@ -1351,18 +1432,21 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" }, // IPS-Level
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Windows 11 Pro
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Physical" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" },
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Msi", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandMsi.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Office", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatOffice.Id },
+                         new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "LPDDR5 (Onboard)", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "1TB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd1tb.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Key Feature", FilterAttributeValueId = favOsWin11Pro.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-thin-light", Value = "Thin and Light", SpecificationCategory = "Physical", FilterAttributeValueId = favFeatThinLight.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
+
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i7-13700H", SpecificationCategory = "Processor" }, // H-series in an Evo is potent
@@ -1421,17 +1505,19 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes (Adapting)
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Apple M3 Pro", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Apple Silicon M3", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14.2\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "Liquid Retina XDR", SpecificationCategory = "Key Feature" }, // Key Feature 1 - XDR Display
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "18GB", SpecificationCategory = "Memory" }, // Unified Memory
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "Unified Memory", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Integrated in M3 Pro
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "macOS", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" }, // Touch ID
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" }, // Magic Keyboard
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Apple", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandApple.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "Ultrabook", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatUltrabook.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Apple M3 Pro", SpecificationCategory = "Processor", FilterAttributeValueId = favProcAppleM1Pro.Id }, // Using M1 Pro as closest match
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Apple Silicon M3", SpecificationCategory = "Processor" }, // No direct filter match
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14.2\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "Liquid Retina XDR", SpecificationCategory = "Key Feature" }, // No direct filter match
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "18GB", SpecificationCategory = "Memory" }, // No direct filter match
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "Unified Memory", SpecificationCategory = "Memory" }, // No direct filter match
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "macOS", SpecificationCategory = "Software", FilterAttributeValueId = favOsMac.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Apple M3 Pro chip", SpecificationCategory = "Processor" },
@@ -1491,17 +1577,19 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" }, // Anti-Glare typical
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR4", SpecificationCategory = "Memory" }, // Latitudes often stick with DDR4 for compatibility/cost
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics" }, // Intel Iris Xe
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Key Feature" }, // Key Feature 1 - Windows Pro for Business
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security" }, // Often optional or standard
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Dell", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandDell.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "office", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatOffice.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "Intel Core i5", SpecificationCategory = "Processor", FilterAttributeValueId = favProcI5.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Intel 13th Gen", SpecificationCategory = "Processor", FilterAttributeValueId = favGenIntel13.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "14\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize14.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR4", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr4.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Shared/Integrated", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfxShared.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Pro", SpecificationCategory = "Key Feature", FilterAttributeValueId = favOsWin11Pro.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-fingerprint", Value = "Fingerprint Reader", SpecificationCategory = "Security", FilterAttributeValueId = favFeatFingerprint.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "Core i5-1335U", SpecificationCategory = "Processor" },
@@ -1561,18 +1649,20 @@ namespace API.Data
                     AttributeValues = new List<ProductAttributeValue>
                     {
                         // Filter Attributes
-                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 7", SpecificationCategory = "Processor" },
-                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor" }, // 7735HS is Zen 3+ based
-                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display" },
-                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display" }, // IPS-level
-                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory" },
-                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage" },
-                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics" }, // RTX 4060 8GB
-                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software" },
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature" }, // Key Feature 1 - 144Hz
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-adaptive-sync", Value = "Adaptive Sync", SpecificationCategory = "Display" }, // G-Sync/FreeSync support
-                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard" }, // Often single-zone RGB or color
+                        new ProductAttributeValue { Name = "Brand", Slug="brand", Value = "Asus", SpecificationCategory = "Brand", FilterAttributeValueId = favBrandAsus.Id },
+                        new ProductAttributeValue { Name = "Subcategory", Slug="subcategory", Value = "gaming", SpecificationCategory = "subcategory", FilterAttributeValueId = favCatGaming.Id },
+                        new ProductAttributeValue { Name = "Processor Type", Slug="processor-type", Value = "AMD Ryzen 7", SpecificationCategory = "Processor", FilterAttributeValueId = favProcRyzen7.Id },
+                        new ProductAttributeValue { Name = "Generation/Series", Slug="generation-series", Value = "Ryzen 7000 Series", SpecificationCategory = "Processor", FilterAttributeValueId = favGenRyzen7000.Id },
+                        new ProductAttributeValue { Name = "Display Size", Slug="display-size", Value = "15.6\"", SpecificationCategory = "Display", FilterAttributeValueId = favDisplaySize15_6.Id },
+                        new ProductAttributeValue { Name = "Display Type", Slug="display-type", Value = "IPS", SpecificationCategory = "Display", FilterAttributeValueId = favDisplayIps.Id },
+                        new ProductAttributeValue { Name = "RAM Size", Slug="ram-size", Value = "16GB", SpecificationCategory = "Memory", FilterAttributeValueId = favRam16.Id },
+                        new ProductAttributeValue { Name = "RAM Type", Slug="ram-type", Value = "DDR5", SpecificationCategory = "Memory", FilterAttributeValueId = favRamDdr5.Id },
+                        new ProductAttributeValue { Name = "SSD", Slug="ssd", Value = "512GB", SpecificationCategory = "Storage", FilterAttributeValueId = favSsd512.Id },
+                        new ProductAttributeValue { Name = "Graphics Memory", Slug="graphics-memory", Value = "Dedicated 8GB", SpecificationCategory = "Graphics", FilterAttributeValueId = favGfx8gb.Id },
+                        new ProductAttributeValue { Name = "Operating System", Slug="operating-system", Value = "Windows 11 Home", SpecificationCategory = "Software", FilterAttributeValueId = favOsWin11Home.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-high-refresh", Value = "High Refresh Rate Display", SpecificationCategory = "Key Feature", FilterAttributeValueId = favFeatHighRefresh.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-adaptive-sync", Value = "Adaptive Sync", SpecificationCategory = "Display", FilterAttributeValueId = favFeatAdaptiveSync.Id },
+                        new ProductAttributeValue { Name = "Special Feature", Slug="feature-backlit-keyboard", Value = "Backlit Keyboard", SpecificationCategory = "Keyboard", FilterAttributeValueId = favFeatBacklit.Id },
 
                         // Detailed Attributes
                         new ProductAttributeValue { Name = "Processor Model", Slug="processor-model", Value = "AMD Ryzen 7 7735HS", SpecificationCategory = "Processor" },
@@ -1608,9 +1698,6 @@ namespace API.Data
                 },
 
             };
-
-
-
             context.Products.AddRange(products);
             context.SaveChanges();
 

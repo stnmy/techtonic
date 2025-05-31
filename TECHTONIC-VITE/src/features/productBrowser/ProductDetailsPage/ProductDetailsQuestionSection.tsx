@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductDetailsType } from "../../app/models/product";
+import { ProductDetailsType } from "../../../app/models/product";
 import {
   Box,
   Button,
@@ -22,7 +22,6 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
 
   const handleAskQuestionSubmit = () => {
     if (newQuestion.trim()) {
-
     }
   };
   return (
@@ -47,7 +46,11 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
         <Typography variant="h5" sx={{ fontWeight: 900 }}>
           Questions
         </Typography>
-        <Button variant="contained" startIcon={<ChatBubbleOutlineIcon />} sx={{backgroundColor:'primary.main'}}>
+        <Button
+          variant="contained"
+          startIcon={<ChatBubbleOutlineIcon />}
+          sx={{ backgroundColor: "primary.main" }}
+        >
           Ask Question
         </Button>
       </Box>

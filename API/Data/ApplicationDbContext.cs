@@ -13,6 +13,7 @@ namespace API.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<FilterAttributeValue> FilterAttributeValues { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }

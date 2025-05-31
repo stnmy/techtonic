@@ -4,13 +4,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { uiSlice } from "../layout/uiSlice";
 import { errorApi } from "../error/errorApi";
 import { cartApi } from "../../features/cart/cartApi";
+import { productBrowserSlice } from "../../features/productBrowser/productBrowserSlice";
 
 export const store = configureStore({
     reducer: {
         [productBrowserApi.reducerPath]: productBrowserApi.reducer,
         [errorApi.reducerPath]: errorApi.reducer,
         [cartApi.reducerPath]: cartApi.reducer,
-        ui: uiSlice.reducer
+        ui: uiSlice.reducer,
+        productBrowser: productBrowserSlice.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

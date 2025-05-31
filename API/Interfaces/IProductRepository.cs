@@ -10,13 +10,17 @@ namespace API.Interfaces
 {
     public interface IProductRepository
     {
-        Task<List<Product>> GetProducts();
+        Task<ProductCardPageResult> GetProducts(string? orderBy = null,
+            string? filters = null, int? pageNumber = 1, int? pageSize = 5,
+            string? search = null, string? priceRange = null);
         Task<ProductWithRelatedProductsDto> GetProductById(int id);
         Task<List<IdentifiedSlug>> IdentifySlugsAsync(string[] slugs);
         Task<List<Product>> GetProductsBySlugs(string? categorySlug, string? subCategorySlug, string? brandSlug, List<int>? filterIds);
-        Task<List<FilterDto>> GetFiltersForCategoryAsync(string categorySlug);
+        Task<TotalFilterDto> GetFiltersForCategoryAsync(string categorySlug);
         Task<Product?> GetDealOfTheDayAsync();
+
         Task<List<Product>> GetMostVisitedProductsAsync(int count, DateTime? fromDate = null);
+        Task<ProductQuestion?> AskQuestionAsync(int productId, string question);
 
     }
 }

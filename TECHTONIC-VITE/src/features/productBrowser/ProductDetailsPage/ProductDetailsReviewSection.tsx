@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductDetailsType } from "../../app/models/product";
+import { ProductDetailsType } from "../../../app/models/product";
 import {
   Box,
   Button,
@@ -46,7 +46,11 @@ export default function ProductDetailsReviewSection({ product }: Props) {
         <Typography variant="h5" sx={{ fontWeight: 900 }}>
           Reviews
         </Typography>
-        <Button variant="contained" startIcon={<CommentIcon />} sx={{backgroundColor:'primary.main'}}>
+        <Button
+          variant="contained"
+          startIcon={<CommentIcon />}
+          sx={{ backgroundColor: "primary.main" }}
+        >
           Post Review
         </Button>
       </Box>
@@ -118,8 +122,8 @@ export default function ProductDetailsReviewSection({ product }: Props) {
           }}
           sx={{
             mb: 2,
-            mt:2,
-            fontSize:60,
+            mt: 2,
+            fontSize: 60,
           }}
         />
         <TextField

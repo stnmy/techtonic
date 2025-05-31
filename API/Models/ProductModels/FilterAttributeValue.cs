@@ -10,6 +10,7 @@ namespace API.Models.ProductModels
         public int Id { get; set; }
         public int FilterAttributeId { get; set; }
         public string Value { get; set; } = string.Empty;
+        public FilterAttribute FilterAttribute { get; set; }
     }
 
 }

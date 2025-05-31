@@ -11,11 +11,20 @@ import {
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import { useFetchCartQuery } from "../../features/cart/cartApi";
+import { useState } from "react";
 
 export default function Navbar() {
   const { data: cart } = useFetchCartQuery();
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && search.trim() !== "") {
+      navigate(`/search/${encodeURIComponent(search.trim())}`);
+    }
+  };
 
   const cartItemCount =
     cart?.cartItems.reduce((sum, cartItem) => sum + cartItem.quantity, 0) || 0;
@@ -32,14 +41,6 @@ export default function Navbar() {
             justifyContent: "space-between",
           }}
         >
-          {/* <Typography
-            variant="h3"
-            sx={{ fontWeight: "900", textDecoration: "none", color: "white" }}
-            component={NavLink}
-            to="/"
-          >
-            Techtonic
-          </Typography> */}
           <NavLink to="/" style={{ textDecoration: "none" }}>
             <img
               src="/images/Need/Navlogosolid.png"
@@ -52,6 +53,9 @@ export default function Navbar() {
             variant="outlined"
             placeholder="Search for laptops..."
             size="small"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
             sx={{
               width: "700px",
               backgroundColor: "white",
@@ -67,9 +71,9 @@ export default function Navbar() {
               gap: "8px",
               cursor: "pointer",
               textDecoration: "none",
-              padding: "8px", // Add padding for better click area
-              // borderRadius: "4px", // Add rounded corners
-              transition: "background-color 0.3s, transform 0.2s", // Smooth transitions
+              padding: "8px",
+
+              transition: "background-color 0.3s, transform 0.2s",
               "&:hover": {
                 // backgroundColor: "rgba(255, 255, 255, 0.1)", // Light background on hover
                 transform: "scale(1.05)", // Slight zoom effect

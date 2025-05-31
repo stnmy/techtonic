@@ -20,9 +20,9 @@ export default function ProductCard({ product }: Props) {
   return (
     <Card
       sx={{
-        maxWidth: 250,
+        maxWidth: 243,
         height: 620,
-        margin: "auto",
+        // marginTop:,
         border: "1px solid #acc",
         flexDirection: "column",
         justifyContent: "space-between",

@@ -9,7 +9,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { Attribute, ProductDetailsType } from "../../app/models/product";
+import { Attribute, ProductDetailsType } from "../../../app/models/product";
 
 type Props = {
   product: ProductDetailsType;
@@ -40,9 +40,9 @@ export default function ProductDetailsSpecificationSection({ product }: Props) {
     <Box
       sx={{
         my: 4,
-        border:'1px solid #e0e0e0',
+        border: "1px solid #e0e0e0",
         // boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.15)",
-        p:2,
+        p: 2,
       }}
     >
       <Typography
@@ -53,7 +53,7 @@ export default function ProductDetailsSpecificationSection({ product }: Props) {
       >
         Specification
       </Typography>
-      <Divider sx={{mt:2}}/>
+      <Divider sx={{ mt: 2 }} />
       {sortedCategoryNames.map((category, index) => {
         const attributesInCategory = groupedAttributes[category].sort((a, b) =>
           a.name.localeCompare(b.name)
@@ -82,10 +82,7 @@ export default function ProductDetailsSpecificationSection({ product }: Props) {
               <Table size="small">
                 <TableBody>
                   {attributesInCategory.map((attr, attrIndex) => (
-                    <TableRow
-                      key={`${category}-${attr.name}-${attrIndex}`}
-
-                    >
+                    <TableRow key={`${category}-${attr.name}-${attrIndex}`}>
                       <TableCell
                         component="th"
                         scope="row"

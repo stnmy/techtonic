@@ -10,7 +10,7 @@ namespace API.Models.ProductModels
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
-
+        public int? FilterAttributeValueId { get; set; }
         public required string Name { get; set; }
         public required string Slug { get; set; }
         public required string Value { get; set; }
