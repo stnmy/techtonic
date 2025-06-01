@@ -4,23 +4,58 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Models;
 using API.Models.ProductModels;
+using API.Models.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
     public class DbInitializer
     {
-        public static void InitDb(WebApplication app)
+        public static async Task InitDb(WebApplication app)
         {
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>()
                 ?? throw new InvalidOperationException("Failed to retrieve ApplicationDbContext");
-            SeedData(context);
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>()
+                ?? throw new InvalidOperationException("Failed to retrieve User Manager");
+            await SeedData(context, userManager);
         }
 
-        private static void SeedData(ApplicationDbContext context)
+        private static async Task SeedData(ApplicationDbContext context, UserManager<User> userManager)
         {
             context.Database.Migrate();
+
+            if (!userManager.Users.Any())
+            {
+                var customer = new User
+                {
+                    UserName = "customer@gmail.com",
+                    Email = "customer@gmail.com"
+                };
+
+                await userManager.CreateAsync(customer, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(customer, "Customer");
+
+
+                var moderator = new User
+                {
+                    UserName = "moderator@gmail.com",
+                    Email = "moderator@gmail.com"
+                };
+
+                await userManager.CreateAsync(moderator, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(moderator, ["Customer", "Moderator"]);
+
+                var admin = new User
+                {
+                    UserName = "admin@gmail.com",
+                    Email = "admin@gmail.com"
+                };
+
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(admin, ["Customer", "Moderator", "Admin"]);
+            }
 
             if (context.Categories.Any() || context.Products.Any())
             {

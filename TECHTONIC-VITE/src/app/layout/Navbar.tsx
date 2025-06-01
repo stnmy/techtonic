@@ -11,12 +11,19 @@ import {
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useFetchCartQuery } from "../../features/cart/cartApi";
 import { useState } from "react";
+import {
+  useLoginMutation,
+  useLogoutMutation,
+  useUserInfoQuery,
+} from "../../features/account/accountApi";
 
 export default function Navbar() {
   const { data: cart } = useFetchCartQuery();
+  const { data: userInfo, isLoading, isError } = useUserInfoQuery();
+  const [logout] = useLogoutMutation();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
@@ -60,7 +67,7 @@ export default function Navbar() {
               width: "700px",
               backgroundColor: "white",
               borderRadius: "4px",
-              marginRight: 15,
+              marginRight: 10,
             }}
           />
 
@@ -69,27 +76,27 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              cursor: "pointer",
               textDecoration: "none",
               padding: "8px",
-
-              transition: "background-color 0.3s, transform 0.2s",
-              "&:hover": {
-                // backgroundColor: "rgba(255, 255, 255, 0.1)", // Light background on hover
-                transform: "scale(1.05)", // Slight zoom effect
-              },
-              "&:active": {
-                // backgroundColor: "rgba(255, 255, 255, 0.2)", // Darker background on click
-                transform: "scale(0.95)", // Slight shrink effect
-              },
             }}
             component={NavLink}
             to="/offers"
           >
             <CardGiftcardIcon sx={{ color: "white", fontSize: "32px" }} />
-            <Typography variant="h5" sx={{ color: "white" }}>
-              Offers
-            </Typography>
+            <Box display="flex" flexDirection="column">
+              <Typography variant="h6" sx={{ color: "white", fontWeight: 600 }}>
+                Offers
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontWeight: 400,
+                  color: "white",
+                }}
+              >
+                Latest Offers
+              </Typography>
+            </Box>
           </Box>
 
           <Box
@@ -97,22 +104,94 @@ export default function Navbar() {
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              cursor: "pointer",
               padding: "8px",
-
-              transition: "background-color 0.3s, transform 0.2s",
-              "&:hover": {
-                transform: "scale(1.05)",
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
             }}
           >
             <AccountCircleIcon sx={{ color: "white", fontSize: "32px" }} />
-            <Typography variant="h5" sx={{ color: "white" }}>
-              Account
-            </Typography>
+            <Box display="flex" flexDirection="column">
+              <Typography variant="h6" sx={{ color: "white", fontWeight: 600 }}>
+                Account
+              </Typography>
+              {userInfo ? (
+                <Box display="flex">
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: 400,
+                      color: "white",
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "error.main",
+                      },
+                    }}
+                    component={NavLink}
+                    to="/account"
+                  >
+                    Profile
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 400, color: "white", mx: 0.5 }}
+                  >
+                    or
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: 400,
+                      color: "white",
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "error.main",
+                      },
+                      cursor: "pointer",
+                    }}
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </Typography>
+                </Box>
+              ) : (
+                <Box display="flex">
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: 400,
+                      color: "white",
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "error.main",
+                      },
+                    }}
+                    component={NavLink}
+                    to="/login"
+                  >
+                    Login
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 400, color: "white", mx: 0.5 }}
+                  >
+                    or
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: 400,
+                      color: "white",
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "error.main",
+                      },
+                    }}
+                    component={NavLink}
+                    to="/register"
+                  >
+                    Register
+                  </Typography>
+                </Box>
+              )}
+            </Box>
           </Box>
 
           <IconButton component={Link} to="/cart" sx={{ color: "white" }}>

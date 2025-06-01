@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Models.CartModels;
 using API.Models.ProductModels;
+using API.Models.Users;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
+    public class ApplicationDbContext(DbContextOptions options) : IdentityDbContext<User>(options)
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -26,6 +29,13 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityRole>()
+                .HasData(
+                    new IdentityRole { Id = "fa72adec-45b1-46f2-b08f-5c8fa426a5e6", Name = "Customer", NormalizedName = "CUSTOMER" },
+                    new IdentityRole { Id = "92b2c167-3a86-4467-9580-5f7c53294001", Name = "Moderator", NormalizedName = "MODERATOR" },
+                    new IdentityRole { Id = "c7960a54-b394-4669-877b-d152f26416bf", Name = "Admin", NormalizedName = "ADMIN" }
+                );
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)

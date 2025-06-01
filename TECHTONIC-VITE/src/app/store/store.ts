@@ -5,20 +5,24 @@ import { uiSlice } from "../layout/uiSlice";
 import { errorApi } from "../error/errorApi";
 import { cartApi } from "../../features/cart/cartApi";
 import { productBrowserSlice } from "../../features/productBrowser/productBrowserSlice";
+import { accountApi } from "../../features/account/accountApi";
 
 export const store = configureStore({
     reducer: {
         [productBrowserApi.reducerPath]: productBrowserApi.reducer,
         [errorApi.reducerPath]: errorApi.reducer,
         [cartApi.reducerPath]: cartApi.reducer,
+        [accountApi.reducerPath]: accountApi.reducer,
         ui: uiSlice.reducer,
-        productBrowser: productBrowserSlice.reducer
+        productBrowser: productBrowserSlice.reducer,
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
             productBrowserApi.middleware,
             errorApi.middleware,
-            cartApi.middleware
+            cartApi.middleware,
+            accountApi.middleware
         )
 });
 
