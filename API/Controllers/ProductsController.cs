@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Data.Enums;
 using API.DTOS;
+using API.DTOS.Product;
 using API.Interfaces;
 using API.Mappers;
-using API.Models.ProductModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -17,11 +18,10 @@ namespace API.Controllers
     public class ProductsController : BaseApiController
     {
         private readonly IProductRepository _productRepository;
-        private readonly ApplicationDbContext _context;
         public ProductsController(IProductRepository productRepository, ApplicationDbContext context)
         {
             _productRepository = productRepository;
-            _context = context;
+
         }
 
         [HttpGet]
@@ -57,89 +57,22 @@ namespace API.Controllers
             return productWithRelatedProducts;
         }
 
-
-        // [HttpGet("{slug1}/{slug2?}/{slug3?}")]
-        // public async Task<ActionResult<List<ProductCardDto>>> GetDynamicSlugUrl(
-        //     string slug1, string? slug2, string? slug3,
-        //     [FromQuery(Name = "filter")] string? filter)
-        // {
-        //     var slugs = new[] { slug1, slug2, slug3 }
-        //         .Where(s => !string.IsNullOrEmpty(s))
-        //         .Select(s => s!)
-        //         .ToArray();
-
-        //     var(categorySlug,brandSlug, subcategorySlug) = await GetValidSlugsAsync(slugs);
-
-        //     if( categorySlug == null && brandSlug == null  && subcategorySlug == null )
-        //     {
-        //         return NotFound("No Products Found");
-        //     };
-
-        //     var filters = !string.IsNullOrEmpty(categorySlug)
-        //     ? await _productRepository.GetFiltersForCategoryAsync(categorySlug)
-        //     : new List<FilterDto>();
-
-
-        //     List<int> filterIds = new();
-        //     if (!string.IsNullOrWhiteSpace(filter))
-        //     {
-        //         if (filter.All(c => char.IsDigit(c) || c == ','))
-        //         {
-        //             filterIds = filter
-        //                 .Split(',', StringSplitOptions.RemoveEmptyEntries)
-        //                 .Select(s => int.TryParse(s, out var id) ? id : -1)
-        //                 .Where(id => id > 0)
-        //                 .ToList();
-        //         }
-        //         else
-        //         {
-        //             return BadRequest("Invalid filter format");
-        //         }
-        //     }
-
-
-        //     var products = await _productRepository.GetProductsBySlugs(categorySlug, subcategorySlug, brandSlug, filterIds);
-
-        //     if (products == null || products.Count == 0)
-        //     {
-        //         return NotFound("No Products Found");
-        //     }
-        //     var productCardDtos = products.Select(p => p.toProductCardDto()).ToList();
-
-        //     return Ok(productCardDtos);
-        // }
-
         [HttpGet("filters")]
         public async Task<ActionResult<TotalFilterDto>> GetFiltersForCategory()
         {
             var categorySlug = "laptop";
-            var result = await _productRepository.GetFiltersForCategoryAsync(categorySlug);
-            if (result.filterDtos == null || result.filterDtos.Length == 0)
+            var filters = await _productRepository.GetFiltersAttributesAsync(categorySlug);
+            var prices = await _productRepository.GetPriceRangeAsync(categorySlug);
+            if (filters == null || filters.Count == 0)
             {
                 return Ok(new TotalFilterDto());
             }
-
-            return Ok(result);
+            return new TotalFilterDto
+            {
+                filterDtos = filters,
+                priceRangeDto = prices
+            };
         }
-
-        // private async Task<(string? CategorySlug, string? BrandSlug, string? SubCategorySlug)> GetValidSlugsAsync(string[] slugs)
-        // {
-        //     var identifiedSlugs = await _productRepository.IdentifySlugsAsync(slugs);
-
-        //     var hasDuplicateTypes = identifiedSlugs
-        //         .GroupBy(s => s.Type)
-        //         .Any(g => g.Count() > 1);
-
-        //     if (hasDuplicateTypes || identifiedSlugs.Count() == 0)
-        //         return (null, null, null);
-
-        //     return (
-        //         identifiedSlugs.FirstOrDefault(s => s.Type == SlugType.Category)?.Slug,
-        //         identifiedSlugs.FirstOrDefault(s => s.Type == SlugType.Brand)?.Slug,
-        //         identifiedSlugs.FirstOrDefault(s => s.Type == SlugType.SubCategory)?.Slug
-        //     );
-        // }
-
 
         [HttpGet("DealOfTheDay")]
         public async Task<ActionResult<ProductCardDto>> GetDealOfTheDay()
@@ -197,7 +130,7 @@ namespace API.Controllers
             }
             return Ok(result);
         }
+
+
     }
-
-
 }

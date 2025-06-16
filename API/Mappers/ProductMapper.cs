@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOS;
+using API.DTOS.Product;
 using API.Models.ProductModels;
+using API.Models.Utility;
 
 namespace API.Mappers
 {
@@ -109,5 +111,69 @@ namespace API.Mappers
                 productCardDtos = productDtos,
             };
         }
+
+        public static Product mapToProduct(this CreateProductDto dto, List<ProductImage> uploadedImages)
+        {
+            return new Product
+            {
+                Name = dto.Name,
+                Slug = HelperMethods.GenerateSlug(dto.Name),
+                Description = dto.Description,
+                Price = dto.Price,
+                StockQuantity = dto.StockQuantity,
+                IsFeatured = dto.IsFeatured,
+                IsDealOfTheDay = dto.IsDealOfTheDay,
+                BrandId = dto.BrandId,
+                CategoryId = dto.CategoryId,
+                SubCategoryId = dto.SubCategoryId,
+                CreatedAt = DateTime.UtcNow,
+                ProductImages = uploadedImages,
+                AttributeValues = dto.AttributeValues.Select(attr => new ProductAttributeValue
+                {
+                    FilterAttributeValueId = attr.FilterAttributeValueId,
+                    Name = attr.Name,
+                    Slug = HelperMethods.GenerateSlug(attr.Name),
+                    Value = attr.Value,
+                    SpecificationCategory = attr.SpecificationCategory
+                }).ToList()
+            };
+        }
+
+
+        public static void UpdateProductFromDto(this Product product, UpdateProductDto dto)
+        {
+            product.Name = dto.Name;
+            product.Slug = HelperMethods.GenerateSlug(dto.Name);
+            product.Description = dto.Description;
+            product.Price = dto.Price;
+            product.StockQuantity = dto.StockQuantity;
+            product.IsFeatured = dto.IsFeatured;
+            product.IsDealOfTheDay = dto.IsDealOfTheDay;
+        }
+
+        public static UpdateProductViewDto ToUpdateProductViewDto(this Product product)
+        {
+            return new UpdateProductViewDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                DiscountPrice = product.DiscountPrice,
+                StockQuantity = product.StockQuantity,
+                IsFeatured = product.IsFeatured,
+                IsDealOfTheDay = product.IsDealOfTheDay,
+                ProductImageUrls = product.ProductImages.Select(img => img.ImageUrl).ToList(),
+                AttributeValues = product.AttributeValues
+                    .Select(attr => new ProductAttributeValueCreateDto
+                    {
+                        FilterAttributeValueId = attr.FilterAttributeValueId,
+                        Name = attr.Name,
+                        Value = attr.Value,
+                        SpecificationCategory = attr.SpecificationCategory
+                    }).ToList()
+            };
+        }
+
     }
 }

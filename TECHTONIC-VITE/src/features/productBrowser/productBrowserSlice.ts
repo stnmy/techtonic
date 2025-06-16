@@ -37,7 +37,8 @@ export const productBrowserSlice = createSlice({
             state.priceRange = action.payload;
         },
         setSearch(state, action: PayloadAction<string>) {
-            state.search = action.payload
+            state.search = action.payload;
+            state.pageNumber = 1;
         }
     }
 });

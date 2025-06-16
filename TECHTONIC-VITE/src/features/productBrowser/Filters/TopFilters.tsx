@@ -3,19 +3,33 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  TextField,
   Typography,
+  Button,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { useAppDispatch, useAppSelector } from "../../../app/store/store";
-import { setOrderBy, setPageSize } from "../productBrowserSlice";
+import { setOrderBy, setPageSize, setSearch } from "../productBrowserSlice";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
-  name: string | undefined;
+  name?: string;
+  showSearch?: boolean;
+  showCreateButton?: boolean;
 };
 
-export default function TopFilters({ name }: Props) {
+export default function TopFilters({
+  name,
+  showSearch = false,
+  showCreateButton = false,
+}: Props) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const orderBy = useAppSelector((state) => state.productBrowser.orderBy);
   const pageSize = useAppSelector((state) => state.productBrowser.pageSize);
+  const search = useAppSelector((state) => state.productBrowser.search);
 
   const handleOrderByChange = (e: SelectChangeEvent<string>) => {
     dispatch(setOrderBy(e.target.value));
@@ -23,6 +37,14 @@ export default function TopFilters({ name }: Props) {
 
   const handlePageSizeChange = (e: SelectChangeEvent<string>) => {
     dispatch(setPageSize({ pageNumber: 1, pageSize: Number(e.target.value) }));
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearch(e.target.value));
+  };
+
+  const handleCreate = () => {
+    navigate("/admin/products/create");
   };
 
   return (
@@ -40,9 +62,46 @@ export default function TopFilters({ name }: Props) {
         padding: 1.8,
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: 400 }}>
-        {name}
-      </Typography>
+      <Box display="flex" alignItems="center" gap={2}>
+        <Typography variant="h6" sx={{ fontWeight: 400 }}>
+          {name}
+        </Typography>
+        {showSearch && (
+          <TextField
+            size="small"
+            placeholder="Search by Product name..."
+            value={search}
+            onChange={handleSearchChange}
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 1,
+              width: 400,
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => dispatch(setSearch(search))}
+                    edge="end"
+                  >
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        )}
+        {showCreateButton && (
+          <Button
+            variant="contained"
+            onClick={handleCreate}
+            sx={{ ml: 2, backgroundColor: "#1976d2", color: "white" }}
+          >
+            Create Product
+          </Button>
+        )}
+      </Box>
+
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography variant="body1" sx={{ mr: 1 }}>
           Show:

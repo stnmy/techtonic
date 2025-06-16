@@ -8,7 +8,7 @@ using API.Interfaces;
 using API.Mappers;
 using API.Models.CartModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace API.Controllers
 {

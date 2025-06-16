@@ -70,7 +70,7 @@ namespace API.DTOS
     public class TotalFilterDto
     {
         public PriceRangeDto? priceRangeDto { get; set; }
-        public FilterDto[]? filterDtos { get; set; }
+        public List<FilterDto?> filterDtos { get; set; } = new();
     }
 
 }

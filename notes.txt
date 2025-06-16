@@ -1,1 +1,59 @@
-Gotta check with No reviews
+✅ Admin Dashboard Features to Implement
+📊 Sales & Product Insights
+
+Total Sales
+With filters: This Week / This Month / This Year / All Time
+Display numeric value + chart
+
+Top Selling Products
+Filterable by: Week / Month / Year / All
+Show product name, units sold, revenue
+
+Most Viewed Products
+Same filters as above
+
+
+Top Carted Products
+Products most frequently added to cart
+
+Total Products
+Show overall product count
+
+Also show:
+📅 Added This Week
+📅 Added This Month
+📅 Added This Year
+
+Order Trends
+Order count by week/month/year
+Show:
+📦 Total Orders
+❌ Cancelled Orders
+🔁 Cancellation Rate (%)
+Include a line or bar chart
+
+Top Selling Brands
+Sorted by total units sold
+
+
+📦 Inventory Health
+Low Stock Products
+List of laptops with stockQuantity < threshold (e.g. 5)
+Include stock count & edit link
+Optional export to CSV
+
+Out-of-Stock Products
+All products with stockQuantity = 0
+
+
+🧮 Operational Metrics
+Average Order Value (AOV)
+Formula: Total Revenue / Total Orders
+Filter by: week / month / year
+
+Order Time Heatmap
+Visualize when customers place orders
+Heatmap grouped by:
+Hour of Day (x-axis)
+Day of Week (y-axis)
+Helpful for identifying peak buying hours

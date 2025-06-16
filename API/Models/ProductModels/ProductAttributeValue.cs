@@ -12,7 +12,7 @@ namespace API.Models.ProductModels
         public int ProductId { get; set; }
         public int? FilterAttributeValueId { get; set; }
         public required string Name { get; set; }
-        public required string Slug { get; set; }
+        public string Slug { get; set; }
         public required string Value { get; set; }
         public required string SpecificationCategory { get; set; }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Models.CartModels;
+using API.Models.OrderModels;
 using API.Models.ProductModels;
 using API.Models.Users;
 using Microsoft.AspNetCore.Identity;
@@ -23,8 +24,11 @@ namespace API.Data
         public DbSet<ProductReview> ProductReviews { get; set; }
         public DbSet<ProductQuestion> ProductQuestions { get; set; }
         public DbSet<ProductVisit> ProductVisits { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<FilterAttribute> FilterAttributes { get; set; }
 
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,6 +64,24 @@ namespace API.Data
                 .HasForeignKey(pv => pv.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.Subtotal)
+                .HasColumnType("decimal(18, 2)");
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.UnitPrice)
+                .HasColumnType("decimal(18, 2)");
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(oi => oi.TotalPrice)
+                .HasColumnType("decimal(18, 2)");
         }
 
     }

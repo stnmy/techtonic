@@ -6,6 +6,8 @@ using API.Controllers;
 using API.Data;
 using API.Data.Enums;
 using API.DTOS;
+using API.DTOS.Product;
+using API.DTOS.ProductManagement;
 using API.Interfaces;
 using API.Mappers;
 using API.Models.ProductModels;
@@ -33,6 +35,7 @@ namespace API.Repository
                 .Include(p => p.Reviews)
                 .Include(p => p.Questions)
                 .Include(p => p.Visits)
+                .Where(p => !p.IsDeleted)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
@@ -70,6 +73,7 @@ namespace API.Repository
                 : product.Price * upperLimit;
 
             return await _context.Products
+                .Where(p => !p.IsDeleted)
                 .Where(p => p.Id != product.Id)
                 .Where(p => p.CategoryId == product.CategoryId)
                 .Where(p =>
@@ -84,6 +88,7 @@ namespace API.Repository
                 .Take(4)
                 .ToListAsync();
         }
+
 
         public async Task<ProductCardPageResult> GetProducts(
             string? orderBy = null,
@@ -104,12 +109,12 @@ namespace API.Repository
         }
 
         private (int actualPageNumber, int actualPageSize, IQueryable<Product> query) ApplyPagination(
-            IQueryable<Product> query, int? pageNumber, int? pageSize, int minPageSize = 5, int maxPageSize = 10)
+            IQueryable<Product> query, int? pageNumber, int? pageSize, int minPageSize = 5, int maxPageSize = 20)
         {
             int actualPageNumber = (pageNumber.HasValue && pageNumber.Value >= 1) ? pageNumber.Value : 1;
             int actualPageSize = (pageSize.HasValue && pageSize.Value >= minPageSize && pageSize.Value <= maxPageSize)
                 ? pageSize.Value
-                : minPageSize;
+                : 10;
 
             var paginationQuery = query
                 .Skip((actualPageNumber - 1) * actualPageSize)
@@ -126,6 +131,7 @@ namespace API.Repository
         )
         {
             var query = _context.Products
+                .Where(p => !p.IsDeleted)
                 .Include(p => p.ProductImages)
                 .Include(p => p.AttributeValues)
                 .AsQueryable();
@@ -216,7 +222,8 @@ namespace API.Repository
             return await query.ToListAsync();
         }
 
-        public async Task<TotalFilterDto> GetFiltersForCategoryAsync(string categorySlug)
+
+        public async Task<List<FilterDto>> GetFiltersAttributesAsync(string categorySlug)
         {
             var category = await _context.Categories
                 .Include(c => c.Filters)
@@ -224,29 +231,9 @@ namespace API.Repository
                 .FirstOrDefaultAsync(c => c.Slug == categorySlug);
 
             if (category == null)
-            {
-                return new TotalFilterDto
-                {
-                    priceRangeDto = null,
-                    filterDtos = Array.Empty<FilterDto>()
-                };
-            }
+                return new List<FilterDto>();
 
-            var products = await _context.Products
-                .Where(p => p.Category.Slug == categorySlug)
-                .ToListAsync();
-
-            PriceRangeDto? priceRange = null;
-            if (products.Any())
-            {
-                priceRange = new PriceRangeDto
-                {
-                    minPrice = (int)products.Min(p => p.Price),
-                    maxPrice = (int)products.Max(p => p.Price)
-                };
-            }
-
-            var filters = category.Filters
+            return category.Filters
                 .Select(f => new FilterDto
                 {
                     FilterName = f.FilterName,
@@ -259,14 +246,25 @@ namespace API.Repository
                         })
                         .ToList()
                 })
-                .ToArray();
-            return new TotalFilterDto
-            {
-                priceRangeDto = priceRange,
-                filterDtos = filters
-            };
-
+                .ToList();
         }
+
+        public async Task<PriceRangeDto?> GetPriceRangeAsync(string categorySlug)
+        {
+            var products = await _context.Products
+                .Where(p => p.Category.Slug == categorySlug && !p.IsDeleted)
+                .ToListAsync();
+
+            if (!products.Any())
+                return null;
+
+            return new PriceRangeDto
+            {
+                minPrice = (int)products.Min(p => p.Price),
+                maxPrice = (int)products.Max(p => p.Price)
+            };
+        }
+
 
         public async Task<Product?> GetDealOfTheDayAsync()
         {
@@ -425,5 +423,7 @@ namespace API.Repository
             await _context.SaveChangesAsync();
             return productQuestion;
         }
+
+
     }
 }

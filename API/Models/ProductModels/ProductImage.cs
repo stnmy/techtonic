@@ -9,6 +9,7 @@ namespace API.Models.ProductModels
     {
         public int Id { get; set; }
         public required string ImageUrl { get; set; }
+        public string? publicId { get; set; }
         public int ProductId { get; set; }
     }
 }

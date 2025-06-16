@@ -25,6 +25,7 @@ namespace API.Models.ProductModels
         public Category Category { get; set; } = null!;
 
         public int? SubCategoryId { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         [JsonIgnore]
         public SubCategory? SubCategory { get; set; }
