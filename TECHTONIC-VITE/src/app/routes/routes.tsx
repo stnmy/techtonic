@@ -20,7 +20,7 @@ import Account from "../../features/account/Account";
 // Auth-guarded user pages
 import RequireAuth from "./RequireAuth";
 import RequireModeratorAuth from "./RequireModeratorAuth";
-import RequireAdminAuth from "./RequireAdminAuth"; // ✅ FIXED: added import
+import RequireAdminAuth from "./RequireAdminAuth";
 
 import Orders from "../../features/order/Orders";
 import OrderDetails from "../../features/order/OrderDetails";
@@ -31,6 +31,11 @@ import DashboardStatistics from "../../features/management/DashboardStatistics";
 import Inventory from "../../features/management/Inventory";
 import CreateProduct from "../../features/management/CreateProduct";
 import EditProduct from "../../features/management/EditProduct";
+import AdminOrders from "../../features/management/AdminOrders";
+import UnansweredQuestions from "../../features/management/UnansweredQuestions";
+import AdminProductReviews from "../../features/management/AdminProductReviews";
+import CriteriarManagement from "../../features/management/CriteriaManagement";
+import AdminUserRoleManagement from "../../features/management/AdminUserRoleManagement";
 
 export const router = createBrowserRouter([
   // Public and shop-related routes (with main layout)
@@ -66,18 +71,33 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // 🛠️ Admin dashboard routes (separated layout)
   {
     path: "/admin",
-    element: <RequireModeratorAuth />, // could swap for RequireAdminAuth if stricter
+    element: <RequireModeratorAuth />,
     children: [
       {
-        element: <DashboardLayout />, // has Sidebar + Outlet
+        element: <DashboardLayout />,
         children: [
-          { path: "", element: <DashboardStatistics /> }, // /admin
-          { path: "products", element: <Inventory /> }, // /admin/products
+          { path: "products", element: <Inventory /> },
           { path: "products/create", element: <CreateProduct /> },
           { path: "products/edit/:id", element: <EditProduct /> },
+          { path: "orders", element: <AdminOrders /> },
+          { path: "unansweredQuestions", element: <UnansweredQuestions /> },
+          { path: "reviews", element: <AdminProductReviews /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <RequireAdminAuth />,
+    children: [
+      {
+        element: <DashboardLayout />,
+        children: [
+          { path: "", element: <DashboardStatistics /> },
+          { path: "criteria", element: <CriteriarManagement /> },
+          { path: "roleManagement", element: <AdminUserRoleManagement /> },
         ],
       },
     ],

@@ -15,17 +15,36 @@ import {
 import CommentIcon from "@mui/icons-material/Comment";
 import { format } from "date-fns";
 import SendIcon from "@mui/icons-material/Send";
+import { useSubmitProductReviewMutation } from "../productBrowserApi";
+
 type Props = {
   product: ProductDetailsType;
 };
+
 export default function ProductDetailsReviewSection({ product }: Props) {
   const [newReview, setNewReview] = useState("");
-  const [newRating, setNewRating] = useState(0);
+  const [newRating, setNewRating] = useState<number>(0);
+  const [submitReview, { isLoading }] = useSubmitProductReviewMutation();
 
-  const handleNewReviewSubmit = () => {
-    if (!newReview.trim()) {
+  const handleNewReviewSubmit = async () => {
+    if (!newReview.trim() || newRating === 0) return;
+
+    try {
+      await submitReview({
+        productId: product.id,
+        review: {
+          comment: newReview,
+          rating: Math.round(newRating), // ✅ backend accepts int
+        },
+      }).unwrap();
+
+      setNewReview("");
+      setNewRating(0);
+    } catch (err) {
+      console.error("Failed to submit review:", err);
     }
   };
+
   return (
     <Box
       sx={{
@@ -133,14 +152,13 @@ export default function ProductDetailsReviewSection({ product }: Props) {
           value={newReview}
           onChange={(e) => setNewReview(e.target.value)}
           InputProps={{
-            // Using InputProps with endAdornment (still common)
             endAdornment: (
               <InputAdornment position="end">
                 <Button
                   onClick={handleNewReviewSubmit}
                   endIcon={<SendIcon />}
                   variant="contained"
-                  disabled={!newReview.trim()}
+                  disabled={!newReview.trim() || newRating === 0 || isLoading}
                 >
                   Post
                 </Button>

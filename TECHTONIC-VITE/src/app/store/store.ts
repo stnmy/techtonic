@@ -8,6 +8,10 @@ import { productBrowserSlice } from "../../features/productBrowser/productBrowse
 import { accountApi } from "../../features/account/accountApi";
 import { orderApi } from "../../features/order/orderApi";
 import { managementApi } from "../../features/management/managementApi";
+import { adminProductBrowserSlice } from "../../features/management/AdminProductBrowserSlice";
+import { adminOrderBrowserSlice } from "../../features/management/AdminOrderBrowserSlice";
+// Corrected import for the admin product review browser slice
+import { adminProductReviewBrowserSlice } from "../../features/management/AdminProductReviewBrowserSlice";
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +23,10 @@ export const store = configureStore({
         [managementApi.reducerPath]: managementApi.reducer,
         ui: uiSlice.reducer,
         productBrowser: productBrowserSlice.reducer,
-
+        adminProductBrowserSlice: adminProductBrowserSlice.reducer,
+        adminOrderBrowserSlice: adminOrderBrowserSlice.reducer,
+        // Corrected reducer entry
+        adminProductReviewBrowserSlice: adminProductReviewBrowserSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

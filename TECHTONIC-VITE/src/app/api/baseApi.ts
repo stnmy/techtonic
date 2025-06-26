@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { router } from "../routes/routes";
 
 const customBaseQuery = fetchBaseQuery({
-    baseUrl: 'https://localhost:5001/api',
+    baseUrl: 'https://localhost:44333/api',
     credentials: 'include'
 })
 

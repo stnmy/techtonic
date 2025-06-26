@@ -31,6 +31,17 @@ import {
 } from "./managementApi";
 import { SPECIFICATION_CATEGORIES } from "../../app/models/productManagement";
 
+// Helper function to create mock File objects from URLs
+// This helper is primarily for display purposes now, less for submission
+const createImageFileFromUrl = async (
+  url: string,
+  name: string
+): Promise<File> => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new File([blob], name, { type: blob.type });
+};
+
 export default function EditProduct() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -62,20 +73,14 @@ export default function EditProduct() {
     name: "attributeValues",
   });
 
-  const [imagePreviews, setImagePreviews] = useState<(string | null)[]>([
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
-  const [imageFiles, setImageFiles] = useState<(File | null)[]>([
-    null,
-    null,
-    null,
-    null,
-    null,
-  ]);
+  // imagePreviews will store URLs for displaying
+  const [imagePreviews, setImagePreviews] = useState<(string | null)[]>([]);
+  // imageFormValues will directly store what goes into the form's productImages field
+  // It will contain either { file: File } or { url: string }
+  const [imageFormValues, setImageFormValues] = useState<
+    ({ file: File } | { url: string } | null)[]
+  >(Array(5).fill(null)); // Initialize with 5 nulls
+
   const [attributeFilterOptions, setAttributeFilterOptions] = useState<
     ({ id: number; value: string; group: string } | null)[]
   >([]);
@@ -83,7 +88,12 @@ export default function EditProduct() {
   useEffect(() => {
     if (!product || !filters.length) return;
 
-    const enrichedAttributes = product.attributeValues.map((attr) => {
+    let enrichedAttributes;
+    let initialImageFormValues: ({ file: File } | { url: string } | null)[] =
+      [];
+
+    // Process attributes first
+    enrichedAttributes = product.attributeValues.map((attr) => {
       const updatedAttr = { ...attr };
       if (attr.filterAttributeValueId != null) {
         for (const filter of filters) {
@@ -121,16 +131,78 @@ export default function EditProduct() {
 
     setAttributeFilterOptions(selectedAutocompleteOptions);
 
-    reset({
-      ...product,
-      attributeValues: enrichedAttributes,
-      productImages: [], // images will be selected manually via UI
-    });
+    // Initialize image previews and form values
+    const loadExistingImages = async () => {
+      try {
+        const existingPreviews: string[] = [];
+        const existingFormValues: ({ file: File } | { url: string })[] = [];
 
-    const previews = product.productImageUrls;
-    const padded = [...previews, ...Array(5 - previews.length).fill(null)];
-    setImagePreviews(padded);
-  }, [product, filters, reset]);
+        for (const url of product.productImageUrls) {
+          // Attempt to create a mock file for display
+          try {
+            const file = await createImageFileFromUrl(
+              url,
+              url.substring(url.lastIndexOf("/") + 1)
+            );
+            existingPreviews.push(URL.createObjectURL(file));
+            existingFormValues.push({ file }); // Store as a file object in form values
+          } catch (fileError) {
+            console.warn(`Could not create mock file for ${url}:`, fileError);
+            existingPreviews.push(url); // Fallback to raw URL for preview
+            existingFormValues.push({ url }); // Store as URL object in form values
+          }
+        }
+
+        // Pad to 5 slots
+        const paddedPreviews = [
+          ...existingPreviews,
+          ...Array(5 - existingPreviews.length).fill(null),
+        ];
+        const paddedFormValues = [
+          ...existingFormValues,
+          ...Array(5 - existingFormValues.length).fill(null),
+        ];
+
+        setImagePreviews(paddedPreviews);
+        setImageFormValues(paddedFormValues);
+
+        reset({
+          ...product,
+          attributeValues: enrichedAttributes,
+          productImages: paddedFormValues.filter(Boolean) as (
+            | {
+                file: File;
+              }
+            | {
+                url: string;
+              }
+          )[],
+        });
+      } catch (error) {
+        console.error("Error loading existing images:", error);
+        // Fallback: Use original URLs directly for form and display if any part of mock file creation fails
+        const paddedPreviews = [
+          ...product.productImageUrls,
+          ...Array(5 - product.productImageUrls.length).fill(null),
+        ];
+        const paddedFormValues = [
+          ...product.productImageUrls.map((url) => ({ url })),
+          ...Array(5 - product.productImageUrls.length).fill(null),
+        ];
+
+        setImagePreviews(paddedPreviews);
+        setImageFormValues(paddedFormValues);
+
+        reset({
+          ...product,
+          attributeValues: enrichedAttributes,
+          productImages: product.productImageUrls.map((url) => ({ url })),
+        });
+      }
+    };
+
+    loadExistingImages();
+  }, [product, filters, reset, setValue]);
 
   const handleSingleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -140,16 +212,21 @@ export default function EditProduct() {
     if (file) {
       const url = URL.createObjectURL(file);
       const updatedPreviews = [...imagePreviews];
-      const updatedFiles = [...imageFiles];
-      updatedPreviews[index] = url;
-      updatedFiles[index] = file;
-      setImagePreviews(updatedPreviews);
-      setImageFiles(updatedFiles);
+      const updatedFormValues = [...imageFormValues];
 
-      const validFiles = updatedFiles.filter((f): f is File => f !== null);
+      updatedPreviews[index] = url;
+      updatedFormValues[index] = { file }; // Store as file object
+
+      setImagePreviews(updatedPreviews);
+      setImageFormValues(updatedFormValues);
+
+      // Update react-hook-form state
       setValue(
         "productImages",
-        validFiles.map((f) => ({ file: f })),
+        updatedFormValues.filter(Boolean) as (
+          | { file: File }
+          | { url: string }
+        )[],
         { shouldValidate: true }
       );
     }
@@ -158,35 +235,49 @@ export default function EditProduct() {
   const handleBatchImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
+
     const newPreviews = [...imagePreviews];
-    const newFiles = [...imageFiles];
+    const newFormValues = [...imageFormValues];
     let filled = 0;
+
     for (let i = 0; i < newPreviews.length && filled < files.length; i++) {
-      if (!newFiles[i]) {
-        const url = URL.createObjectURL(files[filled]);
+      if (!newFormValues[i]) {
+        const file = files[filled];
+        const url = URL.createObjectURL(file);
         newPreviews[i] = url;
-        newFiles[i] = files[filled];
+        newFormValues[i] = { file }; // Store as file object
         filled++;
       }
     }
     setImagePreviews(newPreviews);
-    setImageFiles(newFiles);
+    setImageFormValues(newFormValues);
 
-    const validFiles = newFiles.filter((f): f is File => f !== null);
+    // Update react-hook-form state
     setValue(
       "productImages",
-      validFiles.map((f) => ({ file: f })),
+      newFormValues.filter(Boolean) as ({ file: File } | { url: string })[],
       { shouldValidate: true }
     );
   };
 
   const handleRemoveImage = (index: number) => {
     const newPreviews = [...imagePreviews];
-    const newFiles = [...imageFiles];
+    const newFormValues = [...imageFormValues];
+
+    if (newPreviews[index]) URL.revokeObjectURL(newPreviews[index] as string); // Clean up old object URL
+
     newPreviews[index] = null;
-    newFiles[index] = null;
+    newFormValues[index] = null;
+
     setImagePreviews(newPreviews);
-    setImageFiles(newFiles);
+    setImageFormValues(newFormValues);
+
+    // Update react-hook-form state
+    setValue(
+      "productImages",
+      newFormValues.filter(Boolean) as ({ file: File } | { url: string })[],
+      { shouldValidate: true }
+    );
   };
 
   const onSubmit = async (data: UpdateProductSchema) => {
@@ -202,12 +293,32 @@ export default function EditProduct() {
       if (data.discountPrice != null)
         formData.append("DiscountPrice", data.discountPrice.toString());
 
-      imageFiles
-        .filter((file): file is File => file !== null)
-        .forEach((file) => {
-          formData.append("ProductImages", file);
-        });
+      const existingImageUrls: string[] = [];
+      const newImageFiles: File[] = [];
 
+      // Iterate through the `productImages` array directly from the form data
+      data.productImages.forEach((image) => {
+        if ("file" in image && image.file instanceof File) {
+          newImageFiles.push(image.file);
+        } else if ("url" in image) {
+          existingImageUrls.push(image.url);
+        }
+      });
+
+      // Append existing URLs to FormData
+      if (existingImageUrls.length > 0) {
+        formData.append("ExistingImageUrls", JSON.stringify(existingImageUrls));
+      } else {
+        // If no existing URLs are left, send an empty array to signal deletion
+        formData.append("ExistingImageUrls", JSON.stringify([]));
+      }
+
+      // Append new files to FormData
+      newImageFiles.forEach((file) => {
+        formData.append("ProductImages", file); // Name this 'ProductImages' for your backend's file array
+      });
+
+      // Add attributes
       data.attributeValues?.forEach((attr, index) => {
         formData.append(`AttributeValues[${index}].Name`, attr.name);
         formData.append(`AttributeValues[${index}].Value`, attr.value);
@@ -227,6 +338,7 @@ export default function EditProduct() {
       navigate("/admin/products");
     } catch (err) {
       console.error("❌ Failed to update product:", err);
+      alert("Failed to update product. Please check the console for details.");
     }
   };
 
@@ -234,29 +346,22 @@ export default function EditProduct() {
     return <Typography>Loading...</Typography>;
 
   return (
-    <Box
-      component="form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(onSubmit, (errors) => {
-          console.error("❌ Zod validation errors:", errors);
-          alert("Validation failed! Check the console for more info.");
-        })(e);
-      }}
-      sx={{ p: 4 }}
-    >
+    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 4 }}>
       <Typography variant="h3" mb={2} sx={{ fontWeight: 600 }}>
         Update Product
       </Typography>
 
       <Grid container spacing={2}>
         <Grid size={12}>
+          {" "}
+          {/* Changed size to item xs */}
           <TextField
             fullWidth
             label="Name"
             {...register("name")}
             error={!!errors.name}
             helperText={errors.name?.message}
+            InputLabelProps={{ shrink: true }} // Add this line
           />
         </Grid>
         <Grid size={12}>
@@ -268,6 +373,7 @@ export default function EditProduct() {
             {...register("description")}
             error={!!errors.description}
             helperText={errors.description?.message}
+            InputLabelProps={{ shrink: true }} // Add this line
           />
         </Grid>
         <Grid size={2}>
@@ -278,6 +384,7 @@ export default function EditProduct() {
             {...register("price", { valueAsNumber: true })}
             error={!!errors.price}
             helperText={errors.price?.message}
+            InputLabelProps={{ shrink: true }} // Add this line
           />
         </Grid>
         <Grid size={2}>
@@ -296,6 +403,7 @@ export default function EditProduct() {
                 }}
                 error={!!errors.discountPrice}
                 helperText={errors.discountPrice?.message}
+                InputLabelProps={{ shrink: true }} // Add this line
               />
             )}
           />
@@ -308,16 +416,21 @@ export default function EditProduct() {
             {...register("stockQuantity", { valueAsNumber: true })}
             error={!!errors.stockQuantity}
             helperText={errors.stockQuantity?.message}
+            InputLabelProps={{ shrink: true }} // Add this line
           />
         </Grid>
         <Grid container spacing={2} mt={3}>
           <Grid>
+            {" "}
+            {/* Changed size to item */}
             <FormControlLabel
               control={<Checkbox {...register("isFeatured")} />}
               label="Featured Product"
             />
           </Grid>
           <Grid>
+            {" "}
+            {/* Changed size to item */}
             <FormControlLabel
               control={<Checkbox {...register("isDealOfTheDay")} />}
               label="Deal of the Day"
@@ -405,6 +518,15 @@ export default function EditProduct() {
               </Box>
             ))}
           </Box>
+          {errors.productImages && (
+            <Typography
+              color="error"
+              variant="caption"
+              sx={{ mt: 1, display: "block" }}
+            >
+              {errors.productImages.message}
+            </Typography>
+          )}
         </Grid>
       </Grid>
 

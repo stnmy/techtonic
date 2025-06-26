@@ -1,3 +1,5 @@
+import { PaginationData } from "./product";
+
 export type PaymentMethod =
     | "Card"
     | "CashOnDelivery"
@@ -22,8 +24,13 @@ export interface OrderCardDto {
     orderDate: string
     subtotal: number
     paymentStatus: string
-    status: number
+    status: string
     userEmail: string
+}
+
+export interface OrderPageResultDto {
+    orders: OrderCardDto[];
+    paginationData: PaginationData;
 }
 
 export interface OrderDetailsDto {

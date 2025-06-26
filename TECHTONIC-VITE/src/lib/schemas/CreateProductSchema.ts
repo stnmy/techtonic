@@ -1,7 +1,12 @@
+// Your schema definitions below (no changes needed for the error)
 import { z } from "zod";
 
 const productImageSchema = z.object({
     file: z.instanceof(File),
+});
+
+const productImageUrlSchema = z.object({
+    url: z.string().url(),
 });
 
 const productAttributeValueSchema = z.object({
@@ -24,7 +29,6 @@ export const createProductSchema = z.object({
     subCategoryId: z.number().int().nullable().optional(),
     productImages: z
         .array(productImageSchema)
-        .min(1, "Upload at least one image")
         .max(5, "You can upload up to 5 images only"),
     attributeValues: z.array(productAttributeValueSchema).optional(),
 });
@@ -41,11 +45,12 @@ export const updateProductSchema = z.object({
     isFeatured: z.boolean().optional(),
     isDealOfTheDay: z.boolean().optional(),
     productImages: z
-        .array(productImageSchema)
-        .min(1, "Upload at least one image")
+        .array(z.union([productImageSchema, productImageUrlSchema]))
+        .min(1, "Upload at least one image") // Keep this if you want at least one image always
         .max(5, "You can upload up to 5 images only"),
     attributeValues: z.array(productAttributeValueSchema).optional(),
 });
+
 export type UpdateProductSchema = z.infer<typeof updateProductSchema>;
 
 export const updateProductViewSchema = z.object({
@@ -60,6 +65,5 @@ export const updateProductViewSchema = z.object({
     productImageUrls: z.array(z.string().url()),
     attributeValues: z.array(productAttributeValueSchema),
 });
+
 export type UpdateProductViewSchema = z.infer<typeof updateProductViewSchema>;
-
-

@@ -1,7 +1,14 @@
+import { Grid } from "@mui/material";
+import HomeTopDiscountedProducts from "./HomeTopDiscountedProducts";
+import HomeMostVisitedProducts from "./HomeMostVisitedProducts";
+import ImageCarousel from "./ImageCarousel";
+
 export default function HomePage() {
   return (
-    <div>
-      HomePage
-    </div>
-  )
+    <Grid container>
+      <ImageCarousel />
+      <HomeTopDiscountedProducts />
+      <HomeMostVisitedProducts />
+    </Grid>
+  );
 }

@@ -20,7 +20,8 @@ type Props = {
 };
 
 export default function FilterSection({ singleFilter }: Props) {
-  const [collapsed, setCollapsed] = useState(false);
+  // Changed initial state to true, so it starts collapsed
+  const [collapsed, setCollapsed] = useState(true);
   const dispatch = useAppDispatch();
   const selectedFilters = useAppSelector(
     (state) => state.productBrowser.filters
@@ -62,10 +63,12 @@ export default function FilterSection({ singleFilter }: Props) {
           onClick={() => setCollapsed((prev) => !prev)}
           sx={{ marginRight: 1 }}
         >
-          {collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          {collapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}{" "}
+          {/* Icon logic remains correct */}
         </IconButton>
       </Box>
       <Divider />
+      {/* Collapse in={!collapsed} will now be in={!true} which is in={false} initially */}
       <Collapse in={!collapsed}>
         <Box
           sx={{

@@ -16,7 +16,7 @@ export const accountApi = createApi({
         login: builder.mutation<void, loginSchema>({
             query: (creds) => {
                 return {
-                    url: 'login?useCookies=true',
+                    url: 'account/login?useCookies=true',
                     method: 'POST',
                     body: creds
                 }

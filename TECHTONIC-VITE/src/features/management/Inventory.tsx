@@ -1,16 +1,18 @@
 import { Typography, CircularProgress, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useFetchProductsQuery } from "../productBrowser/productBrowserApi";
-import { useAppSelector } from "../../app/store/store";
+import { useAppDispatch, useAppSelector } from "../../app/store/store";
+import { useFetchAdminProductsQuery } from "./managementApi";
+import { setAdminPageNumber } from "./AdminProductBrowserSlice";
 import ProductInventoryTable from "./ProductInventoryTable";
-import TopFilters from "../productBrowser/Filters/TopFilters";
 import AppPagination from "../../app/layout/AppPagination";
 import { useDeleteProductMutation } from "./managementApi";
+import AdminTopFilters from "./AdminTopFilters"; // ✅ Recommended
 
 export default function Inventory() {
-  const productBrowserParams = useAppSelector((state) => state.productBrowser);
-  const { data, isLoading, isError } =
-    useFetchProductsQuery(productBrowserParams);
+  const dispatch = useAppDispatch();
+  const adminParams = useAppSelector((state) => state.adminProductBrowserSlice);
+
+  const { data, isLoading, isError } = useFetchAdminProductsQuery(adminParams);
   const [deleteProduct] = useDeleteProductMutation();
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function Inventory() {
       try {
         await deleteProduct(id).unwrap();
         console.log(`✅ Deleted product with ID ${id}`);
-        // Optionally refetch or invalidate cache here
+        // Optionally refetch or invalidate cache
       } catch (error) {
         console.error("❌ Failed to delete product:", error);
         alert("Failed to delete product. Please try again.");
@@ -40,7 +42,7 @@ export default function Inventory() {
       </Typography>
 
       <Box sx={{ mb: 2 }}>
-        <TopFilters name="Filters" showSearch showCreateButton />
+        <AdminTopFilters />
       </Box>
 
       {isLoading ? (
@@ -67,6 +69,7 @@ export default function Inventory() {
                   totalPageNumber: 1,
                 }
               }
+              onPageChange={(page) => dispatch(setAdminPageNumber(page))} // ✅ Hook up admin dispatch
             />
           </Box>
         </>

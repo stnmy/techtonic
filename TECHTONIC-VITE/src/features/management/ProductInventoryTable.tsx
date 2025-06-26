@@ -9,10 +9,10 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import { ProductCardType } from "../../app/models/product";
+import { AdminProductCardType } from "../../app/models/product";
 
 interface Props {
-  products: ProductCardType[];
+  products: AdminProductCardType[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
@@ -42,6 +42,12 @@ export default function ProductInventoryTable({
             <TableCell>
               <strong>Discount Price</strong>
             </TableCell>
+            <TableCell>
+              <strong>Units Sold</strong>
+            </TableCell>
+            <TableCell>
+              <strong>In Stock</strong>
+            </TableCell>
             <TableCell align="right">
               <strong>Actions</strong>
             </TableCell>
@@ -63,9 +69,11 @@ export default function ProductInventoryTable({
               <TableCell>{product.price.toLocaleString()}৳</TableCell>
               <TableCell>
                 {product.discountPrice
-                  ? product.discountPrice.toLocaleString() + "৳"
+                  ? `${product.discountPrice.toLocaleString()}৳`
                   : "—"}
               </TableCell>
+              <TableCell>{product.unitsSold}</TableCell>
+              <TableCell>{product.stockQuantity}</TableCell>
               <TableCell align="right">
                 <Stack direction="row" spacing={1} justifyContent="flex-end">
                   <Button

@@ -1,18 +1,18 @@
 import { Box, Pagination, PaginationItem, Typography } from "@mui/material";
-import { PaginationData } from "../models/product";
 import React from "react";
-import { useAppDispatch } from "../store/store";
-import { setPageNumber } from "../../features/productBrowser/productBrowserSlice";
+import { PaginationData } from "../models/product";
 
 type Props = {
   paginationData: PaginationData;
+  onPageChange: (pageNumber: number) => void; // ✅ add callback
 };
-export default function AppPagination({ paginationData }: Props) {
-  const dispatch = useAppDispatch();
+
+export default function AppPagination({ paginationData, onPageChange }: Props) {
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
-    dispatch(setPageNumber(value));
+    onPageChange(value); // ✅ call passed-in handler
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
   return (
     <Box
       display="flex"
@@ -40,11 +40,9 @@ export default function AppPagination({ paginationData }: Props) {
                 backgroundColor: "primary.main",
                 color: "white",
                 fontWeight: "bold",
-                borderRadius: "4px",
               },
               "&:hover": {
                 backgroundColor: "#ced4da",
-                borderRadius: "4px",
               },
               marginX: 0.5,
               minWidth: "32px",

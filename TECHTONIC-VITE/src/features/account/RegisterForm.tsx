@@ -71,6 +71,7 @@ export default function RegisterForm() {
           flexDirection="column"
           gap={3}
           marginY={3}
+          autoComplete="off" // Add autocomplete="off" here
         >
           <TextField
             fullWidth
@@ -79,6 +80,7 @@ export default function RegisterForm() {
             {...register("email")}
             error={!!errors.email}
             helperText={errors.email?.message}
+            autoComplete="off" // Add autocomplete="off" to email field
           />
           <TextField
             fullWidth
@@ -88,6 +90,7 @@ export default function RegisterForm() {
             {...register("password")}
             error={!!errors.password}
             helperText={errors.password?.message}
+            autoComplete="new-password" // Use "new-password" for password field
           />
           <Button
             disabled={isLoading || !isValid}

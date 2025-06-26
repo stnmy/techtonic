@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { ProductCardPageResult, ProductDetailsApiResponse, TotalFilterDto } from "../../app/models/product";
+import { ProductCardPageResult, ProductCardType, ProductDetailsApiResponse, ProductReviewDto, TotalFilterDto } from "../../app/models/product";
 import { baseQueryWithErrorHandling } from "../../app/api/baseApi";
 import { ProductBrowserParams } from "../../app/models/productBrowerParams";
 
@@ -36,8 +36,49 @@ export const productBrowserApi = createApi({
         }),
         fetchFilters: builder.query<TotalFilterDto, void>({
             query: () => ({ url: 'products/filters' })
-        })
+        }),
+        askQuestion: builder.mutation<void, { productId: number; question: string }>({
+            query: ({ productId, question }) => ({
+                url: `products/question/${productId}`,
+                method: "POST",
+                body: { question },
+            }),
+        }),
+        submitProductReview: builder.mutation<void, { productId: number; review: ProductReviewDto }>({
+            query: ({ productId, review }) => ({
+                url: `products/review/${productId}`,
+                method: "POST",
+                body: review,
+            }),
+        }),
+        fetchTopDiscountedProducts: builder.query<ProductCardType[], number | void>({
+            query: (count = 4) => `products/TopDiscounted?count=${count}`,
+        }),
+        fetchAllDiscountedProducts: builder.query<ProductCardType[], void>({
+            query: () => `products/Discounted`,
+        }),
+        fetchMostVisitedProducts: builder.query<ProductCardType[], void>({
+            query: () => {
+                const params: Record<string, any> = {
+                    period: 'Week',
+                    count: 4
+                };
+                return {
+                    url: 'products/MostVisited',
+                    params: params,
+                };
+            },
+        }),
+
     })
 })
 
-export const { useFetchProductsQuery, useFetchProductDetailsQuery, useFetchFiltersQuery } = productBrowserApi
+export const {
+    useFetchProductsQuery,
+    useFetchProductDetailsQuery,
+    useFetchFiltersQuery,
+    useAskQuestionMutation,
+    useSubmitProductReviewMutation,
+    useFetchTopDiscountedProductsQuery,
+    useFetchAllDiscountedProductsQuery,
+    useFetchMostVisitedProductsQuery } = productBrowserApi

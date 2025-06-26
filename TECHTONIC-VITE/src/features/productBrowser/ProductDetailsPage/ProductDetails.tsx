@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-
+import { CircularProgress } from "@mui/material";
 import ProductDetailsMainSection from "./ProductDetailsMainSection";
 import { useFetchProductDetailsQuery } from "../productBrowserApi";
 
@@ -8,7 +8,11 @@ export default function ProductDetails() {
   const { data, isLoading } = useFetchProductDetailsQuery(id ? +id : 0);
 
   if (isLoading || !data) {
-    return <div>Product not found</div>;
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   }
   const product = data.product;
   const relatedProducts = data.relatedProducts;

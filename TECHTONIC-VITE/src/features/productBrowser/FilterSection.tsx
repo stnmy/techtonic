@@ -13,7 +13,7 @@ import { useState } from "react";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useAppDispatch, useAppSelector } from "../../app/store/store";
-import { setFilters } from "./ProductBrowserSlice";
+import { setFilters } from "./productBrowserSlice";
 
 type Props = {
   singleFilter: Filter;

@@ -70,6 +70,14 @@ export interface Filter {
   values: Value[]
 }
 
+export interface AdminFilter {
+  id: number;
+  filterName: string;
+  filterSlug: string;
+  values: Value[];
+}
+
+
 export interface Value {
   id: number
   value: string
@@ -97,4 +105,31 @@ export type TotalFilterDto = {
 export interface PriceRangeDto {
   minPrice: number
   maxPrice: number
+}
+
+export interface AdminProductCardType extends ProductCardType {
+  stockQuantity: number;
+  unitsSold: number;
+}
+
+export interface AdminProductCardPageResult {
+  paginationData: PaginationData;
+  productCardDtos: AdminProductCardType[];
+}
+export interface AdminProductReviewResponse {
+  data: AdminProductReview[];
+  totalCount: number;
+}
+
+export interface AdminProductReview {
+  id: number;
+  productId: number;
+  reviewerName: string;
+  comment: string;
+  rating: number;
+  createdAt: string; // ISO 8601 string (e.g., "2023-10-27T10:00:00Z")
+}
+export interface ProductReviewDto {
+  comment: string;
+  rating: number;
 }

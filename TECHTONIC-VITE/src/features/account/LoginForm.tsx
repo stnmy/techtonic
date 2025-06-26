@@ -60,6 +60,7 @@ export default function LoginForm() {
           flexDirection="column"
           gap={3}
           marginY={3}
+          autoComplete="off" // Add autocomplete="off" here
         >
           <TextField
             fullWidth
@@ -68,6 +69,7 @@ export default function LoginForm() {
             {...register("email")}
             error={!!errors.email}
             helperText={errors.email?.message}
+            autoComplete="off" // Add autocomplete="off" to email field
           />
           <TextField
             fullWidth
@@ -77,6 +79,7 @@ export default function LoginForm() {
             {...register("password")}
             error={!!errors.password}
             helperText={errors.password?.message}
+            autoComplete="new-password" // Use "new-password" for password fields
           />
           <Button disabled={isLoading} variant="contained" type="submit">
             Sign in

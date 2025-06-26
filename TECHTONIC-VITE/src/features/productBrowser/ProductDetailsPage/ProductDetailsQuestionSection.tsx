@@ -14,16 +14,30 @@ import {
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { format } from "date-fns";
 import SendIcon from "@mui/icons-material/Send";
+import { useAskQuestionMutation } from "../productBrowserApi"; // ✅ adjust path if needed
+
 type Props = {
   product: ProductDetailsType;
 };
+
 export default function ProductDetailsQuestionSection({ product }: Props) {
   const [newQuestion, setNewQuestion] = useState("");
+  const [askQuestion, { isLoading: isAsking }] = useAskQuestionMutation(); // ✅ RTK mutation
 
-  const handleAskQuestionSubmit = () => {
-    if (newQuestion.trim()) {
+  const handleAskQuestionSubmit = async () => {
+    if (!newQuestion.trim()) return;
+
+    try {
+      await askQuestion({
+        productId: product.id,
+        question: newQuestion.trim(),
+      }).unwrap();
+      setNewQuestion(""); // Clear input on success
+    } catch (error) {
+      console.error("Failed to submit question", error);
     }
   };
+
   return (
     <Box
       sx={{
@@ -39,8 +53,6 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          //   mb: 2,
-          //   ml: 2,
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: 900 }}>
@@ -54,7 +66,9 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
           Ask Question
         </Button>
       </Box>
+
       <Divider sx={{ mt: 2 }} />
+
       {product.questions.length === 0 ? (
         <Box
           sx={{
@@ -105,12 +119,13 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
                       </Typography>
                     </>
                   }
-                ></ListItemText>
+                />
               </ListItem>
             </Box>
           ))}
         </List>
       )}
+
       <Box sx={{ mt: 3 }}>
         <TextField
           fullWidth
@@ -119,14 +134,13 @@ export default function ProductDetailsQuestionSection({ product }: Props) {
           value={newQuestion}
           onChange={(e) => setNewQuestion(e.target.value)}
           InputProps={{
-            // Using InputProps with endAdornment (still common)
             endAdornment: (
               <InputAdornment position="end">
                 <Button
                   onClick={handleAskQuestionSubmit}
                   endIcon={<SendIcon />}
                   variant="contained"
-                  disabled={!newQuestion.trim()}
+                  disabled={!newQuestion.trim() || isAsking}
                 >
                   Ask
                 </Button>
