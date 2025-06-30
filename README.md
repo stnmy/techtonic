@@ -1,7 +1,7 @@
 User Interface
 ![image_url](https://github.com/stnmy/techtonic/blob/eab0aec9aaf09f6c4299b0dbefb1673cf06dfa4e/1.png)
 ![image_url](https://github.com/stnmy/techtonic/blob/eab0aec9aaf09f6c4299b0dbefb1673cf06dfa4e/2.png)
-![image_url](https://github.com/stnmy/techtonic/blob/eab0aec9aaf09f6c4299b0dbefb1673cf06dfa4e/10.png)
+![image_url](https://github.com/stnmy/techtonic/blob/d1eece20a016b90fcb32d12de8f4aa02a228ce83/10.png)
 ![image_url](https://github.com/stnmy/techtonic/blob/eab0aec9aaf09f6c4299b0dbefb1673cf06dfa4e/3.png)
 ![image_url](https://github.com/stnmy/techtonic/blob/eab0aec9aaf09f6c4299b0dbefb1673cf06dfa4e/4.png)
 ![image_url](https://github.com/stnmy/techtonic/blob/eab0aec9aaf09f6c4299b0dbefb1673cf06dfa4e/5.png)
